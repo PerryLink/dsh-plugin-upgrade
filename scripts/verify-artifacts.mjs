@@ -53,6 +53,15 @@ try {
   const skill = readFileSync(join(pkgRoot, 'skills/plugin-upgrade-015/SKILL.md'), 'utf8')
   if (!/^name:\s*plugin-upgrade-015\s*$/m.test(skill)) failures.push('packaged SKILL.md lost its frontmatter name')
 
+  // cordis.patch.yml must stay a top-level YAML ARRAY of loader patch entries:
+  // a mapping (`insert:` at column 0) mounts nothing and dsh reports
+  // "must be a top-level YAML array of loader patch entries" at profile load.
+  const patch = readFileSync(join(pkgRoot, 'cordis.patch.yml'), 'utf8')
+  const body = patch.split(/\r?\n/).filter(l => l.trim() !== '' && !l.trim().startsWith('#'))
+  if (!body[0]?.startsWith('- ')) failures.push(`cordis.patch.yml is not a top-level YAML array (starts with ${JSON.stringify(body[0]?.slice(0, 30))})`)
+  if (!body.some(l => /^-\s+insert:/.test(l))) failures.push('cordis.patch.yml has no top-level `- insert:` entry')
+  if (!body.some(l => /name:\s*dsh-plugin-upgrade\s*$/.test(l))) failures.push('cordis.patch.yml does not insert the dsh-plugin-upgrade row')
+
   // The skill-relative scanner entry must work from inside the tarball, because
   // the skill body resolves `./scripts/...` against the skill directory.
   const probe = join(staging, 'bad-probe')
