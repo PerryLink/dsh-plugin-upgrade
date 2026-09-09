@@ -1,0 +1,159 @@
+name: Compat
+
+# Compatibility verification against the published 0.1.5-alpha.1 line (monthly + on demand):
+#   1. bare-import: install the packed tarball plus the published peers into an empty
+#      project, import the entry, mount the REAL published SkillRegistry and assert the
+#      packaged skill registers with its body - catches devDependencies mistaken for
+#      dependencies and a skill bundle that only works in this repo's checkout.
+#   2. cli: run the shipped bin against a synthetic bad file and assert exit 1, so the
+#      published detector still fails a real seam.
+#   3. profile: install the tarball into a scratch DSH_HOME profile next to dsh-base +
+#      dsh-headless, assert the bundle row mounts (dump-config), and run one keyless
+#      headless task. MISSING_CREDENTIAL proves the plugin tree loaded; a hang (pending
+#      service) hits the 120s timeout and fails, which is how a missing injected service
+#      surfaces.
+#   4. uninstall: the profile install must be fully reversible.
+# Platform guard: every assertion here is platform-neutral.
+on:
+  schedule:
+    - cron: '0 4 1 * *'
+  workflow_dispatch:
+
+jobs:
+  bare-import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Pack
+        run: pnpm pack --pack-destination "$RUNNER_TEMP"
+
+      - name: Bare install + real-registry mount
+        run: |
+          set -euo pipefail
+          TARBALL="$(ls "$RUNNER_TEMP"/dsh-plugin-upgrade-*.tgz | head -n1)"
+          mkdir -p "$RUNNER_TEMP/bare" && cd "$RUNNER_TEMP/bare"
+          pnpm init >/dev/null
+          pnpm add "$TARBALL" '@deepseek-ai/cordis@4.0.2' '@deepseek-ai/dsh-skill@0.1.5-alpha.1' >/dev/null
+          cat > mount.mjs <<'JS'
+          import { Context } from '@deepseek-ai/cordis'
+          import SkillRegistry from '@deepseek-ai/dsh-skill'
+          import * as plugin from 'dsh-plugin-upgrade'
+          const ctx = new Context()
+          await ctx.plugin(SkillRegistry)
+          const fiber = await ctx.plugin(plugin)
+          const list = await ctx.skills.list()
+          if (!list.some(s => s.name === 'plugin-upgrade-015')) {
+            console.error('FAIL: plugin-upgrade-015 not registered from the tarball')
+            process.exit(1)
+          }
+          const def = await ctx.skills.get('plugin-upgrade-015')
+          if (!def.content.includes('Plugin upgrade')) {
+            console.error('FAIL: skill body is not the packaged card loop')
+            process.exit(1)
+          }
+          await fiber.dispose()
+          if ((await ctx.skills.list()).some(s => s.name === 'plugin-upgrade-015')) {
+            console.error('FAIL: skill survived dispose')
+            process.exit(1)
+          }
+          console.log('bare mount OK')
+          JS
+          node mount.mjs
+
+      - name: Published CLI still fails a real seam
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/bare"
+          mkdir -p bad && cat > bad/index.ts <<'TS'
+          ctx.on('tool/code-dispatch', () => {})
+          TS
+          set +e
+          npx --no-install dsh-plugin-upgrade-scan --repo bad --quiet
+          code="$?"
+          set -e
+          if [ "$code" -ne 1 ]; then
+            echo "FAIL: expected exit 1 for a tool/code-dispatch hit, got $code"
+            exit 1
+          fi
+          echo "CLI seam detection OK"
+
+  profile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Pack
+        run: pnpm pack --pack-destination "$RUNNER_TEMP"
+
+      - name: Install dsh CLI
+        run: npm install -g @deepseek-ai/dsh@0.1.5-alpha.1
+
+      - name: Install into a scratch profile (builds allowlisted)
+        run: |
+          set -euo pipefail
+          TARBALL="$(ls "$RUNNER_TEMP"/dsh-plugin-upgrade-*.tgz | head -n1)"
+          export DSH_HOME="$RUNNER_TEMP/dsh-home"
+          mkdir -p "$DSH_HOME/profiles/compat"
+          cat > "$DSH_HOME/profiles/compat/pnpm-workspace.yaml" <<'YAML'
+          packages:
+            - .
+          nodeLinker: hoisted
+          autoInstallPeers: false
+          allowBuilds:
+            '@deepseek-ai/dsh-subprocess-local': true
+            koffi: true
+            node-pty: true
+            protobufjs: true
+            '@google/genai': true
+          YAML
+          dsh plugin --profile compat add '@deepseek-ai/dsh-base@0.1.5-alpha.1' '@deepseek-ai/dsh-headless@0.1.5-alpha.1' "$TARBALL"
+
+      - name: Row-mount assertion
+        run: |
+          set -euo pipefail
+          export DSH_HOME="$RUNNER_TEMP/dsh-home"
+          dsh --profile compat --dump-config > dump.txt
+          grep -q "dsh-plugin-upgrade" dump.txt
+
+      - name: Keyless headless smoke
+        run: |
+          set -euo pipefail
+          export DSH_HOME="$RUNNER_TEMP/dsh-home"
+          set +e
+          timeout 120 dsh --profile compat "Reply with exactly: ok" > smoke.log 2>&1
+          code="$?"
+          set -e
+          if grep -q 'MISSING_CREDENTIAL' smoke.log; then
+            echo 'PASS: plugin tree loaded (keyless)'
+          elif [ "$code" -eq 0 ] && grep -qiE '(^|[^a-z])ok([^a-z]|$)' smoke.log; then
+            echo 'PASS: plugin tree loaded (with key)'
+          else
+            echo 'FAIL: headless smoke did not prove tree load'
+            cat smoke.log
+            exit 1
+          fi
+
+      - name: Uninstall
+        run: |
+          set -euo pipefail
+          export DSH_HOME="$RUNNER_TEMP/dsh-home"
+          dsh plugin --profile compat remove dsh-plugin-upgrade

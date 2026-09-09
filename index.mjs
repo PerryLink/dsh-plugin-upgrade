@@ -1,0 +1,105 @@
+// dsh-plugin-upgrade bundle entry point.
+//
+// Publishes the packaged 0.1.3-alpha.1 -> 0.1.5-alpha.1 plugin-upgrade skill as an
+// on-demand agent skill named `plugin-upgrade-015`. The skill body is this
+// package's `skills/plugin-upgrade-015/SKILL.md`; its relative references
+// (`./references/...`) and scripts (`./scripts/...`) resolve against the packaged
+// skills directory through the directory resourceBase, so the agent loads the
+// version card and the scanner only when a task needs them.
+//
+// The package imports nothing from the harness beyond the injected `skills`
+// service, so the cordis peer stays metadata-only.
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import Schema from '@deepseek-ai/schemastery'
+
+export const name = 'dsh-plugin-upgrade'
+export const inject = ['skills']
+
+/** Package root, used as the resourceBase for relative skill references. */
+const packageRoot = dirname(fileURLToPath(import.meta.url))
+
+/**
+ * Plugin configuration (Schemastery). Every knob is a deployment choice and is
+ * documented in cordis.patch.yml; there are no hardcoded tunables.
+ */
+export const Config = Schema.object({
+  /** Register the packaged skill (default true). */
+  enabled: Schema.boolean().default(true),
+  /** Skill name published to the model catalog. Defaults to the packaged corridor name. */
+  skillName: Schema.string().default('plugin-upgrade-015'),
+  /** Skill root inside the package; must contain `<skillName>/SKILL.md`. */
+  skillsRoot: Schema.string().default(join(packageRoot, 'skills')),
+  /** Mark the skill user-invocable in addition to model-invocable (default true). */
+  userInvocable: Schema.boolean().default(true),
+})
+
+/**
+ * Strip the YAML frontmatter block from SKILL.md and return its routing fields
+ * and body. A missing block falls back to the full text as the body.
+ * @param text - raw SKILL.md content.
+ * @returns the parsed description/whenToUse (when present) and the instruction body.
+ */
+export function splitFrontmatter(text) {
+  if (!text.startsWith('---\n')) return { description: undefined, whenToUse: undefined, body: text }
+  const end = text.indexOf('\n---', 4)
+  if (end < 0) return { description: undefined, whenToUse: undefined, body: text }
+  const meta = text.slice(4, end)
+  const body = text.slice(end + 4).replace(/^\n+/, '')
+  const scalar = (key) => new RegExp(`^${key}:\\s*(.+)$`, 'm').exec(meta)?.[1]?.trim()
+  return { description: scalar('description'), whenToUse: scalar('whenToUse'), body }
+}
+
+/**
+ * Read and validate the packaged skill bundle. Fails loud: a missing SKILL.md,
+ * an empty body, or a missing frontmatter `name` aborts the mount instead of
+ * registering an empty skill.
+ * @param skillsRoot - root directory holding `<skillName>/SKILL.md`.
+ * @param skillName - expected skill directory name.
+ * @returns the frontmatter name, routing fields, body, and the skill directory.
+ */
+export function readSkillBundle(skillsRoot, skillName) {
+  const skillPath = join(skillsRoot, skillName, 'SKILL.md')
+  let text
+  try {
+    text = readFileSync(skillPath, 'utf8')
+  } catch (error) {
+    throw new Error(`dsh-plugin-upgrade: cannot read skill bundle at ${skillPath}: ${error instanceof Error ? error.message : String(error)}`)
+  }
+  const { description, whenToUse, body } = splitFrontmatter(text)
+  if (body.trim() === '') throw new Error(`dsh-plugin-upgrade: skill body is empty at ${skillPath}`)
+  const frontmatterName = /^name:\s*(\S+)\s*$/m.exec(text.slice(0, text.indexOf('\n---', 4) + 1))?.[1]
+  if (frontmatterName === undefined) throw new Error(`dsh-plugin-upgrade: skill frontmatter is missing a name at ${skillPath}`)
+  return { frontmatterName, description, whenToUse, body, skillDir: join(skillsRoot, skillName) }
+}
+
+/**
+ * Register the packaged skill. Registration is an effect: the disposer returned
+ * by `ctx.skills.register()` removes the contribution on unload.
+ * @param ctx - Cordis context with the injected `skills` service.
+ * @param config - validated plugin configuration.
+ */
+export function apply(ctx, config = {}) {
+  const resolved = {
+    enabled: config.enabled ?? true,
+    skillName: config.skillName ?? 'plugin-upgrade-015',
+    skillsRoot: config.skillsRoot ?? join(packageRoot, 'skills'),
+    userInvocable: config.userInvocable ?? true,
+  }
+  if (!resolved.enabled) return
+  const { frontmatterName, description, whenToUse, body, skillDir } = readSkillBundle(resolved.skillsRoot, resolved.skillName)
+  ctx.effect(() =>
+    ctx.skills.register({
+      name: frontmatterName,
+      source: 'bundled',
+      description: description ?? 'DSH plugin upgrade · 0.1.3-alpha.1 -> 0.1.5-alpha.1: seam scanner and version card.',
+      ...whenToUse !== undefined ? { whenToUse } : {},
+      content: body,
+      // The base is the skill's own directory, so `./references/...` and
+      // `./scripts/...` in the body resolve inside the published tarball.
+      resourceBase: { kind: 'directory', path: skillDir },
+      invocation: { modelInvocable: true, userInvocable: resolved.userInvocable },
+    }),
+  )
+}

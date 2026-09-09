@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@deepseek-ai/dsh-session": ["../../../packages/core/session/lib/types/index.d.ts"],
+      "@deepseek-ai/cordis": ["../../../vendor/cordis/lib/types/index.d.ts"]
+    }
+  },
+  "include": ["src"]
+}

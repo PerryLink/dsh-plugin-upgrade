@@ -1,0 +1,19 @@
+# Node
+node_modules/
+
+# Packed artifacts
+*.tgz
+
+# Local gate / tool output
+scan-0.1.5-sweep.md
+release-notes.md
+dump.txt
+smoke.log
+coverage/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
