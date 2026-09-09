@@ -66,7 +66,7 @@ LICENSE               Apache-2.0
 
 ```sh
 pnpm install
-pnpm test                          # node --test (9 tests: scanner + real-registry mount)
+pnpm test                          # node --test (11 tests: scanner + real-registry mount)
 pnpm run verify:self-contained     # dependency specs resolve from the registry
 pnpm run verify:artifacts          # shipped files present + entry importable from the tarball
 pnpm run check:readmes             # five-language README consistency
@@ -80,7 +80,7 @@ after every harness release.
 
 ## Release
 
-Version is currently `0.1.0`. For a new version: bump `package.json#version`, stamp the
+Version is currently `0.1.1`. For a new version: bump `package.json#version`, stamp the
 CHANGELOG `[Unreleased]` section into `## [<x.y.z>] - <UTC date>`, re-run the full gate,
 commit `chore(release): <x.y.z>`, and `git tag -a v<x.y.z>`. `git push origin main
 --follow-tags` triggers `.github/workflows/release.yml`, which re-runs the gate, publishes to

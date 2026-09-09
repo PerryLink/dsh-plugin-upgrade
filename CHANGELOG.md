@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-09
+
+### Fixed
+
+- **SKILL.md frontmatter on a CRLF checkout.** The parser required the `---\n`
+  delimiter, so a Windows checkout (`core.autocrlf=true`) mounted the skill with the
+  frontmatter leaked into the body and no description/`whenToUse`. Line endings are now
+  normalized before parsing, `.gitattributes` pins every text file to LF, and the suite
+  covers both a CRLF string and a CRLF-converted bundle on disk. Caught by the Windows
+  CI leg of v0.1.0.
+
 ## [0.1.0] - 2026-09-09
 
 ### Added
