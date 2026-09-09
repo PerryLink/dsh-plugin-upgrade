@@ -3,7 +3,8 @@
 // dispose. Negative: a missing bundle must fail loud at mount.
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { existsSync } from 'node:fs'
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { Context } from '@deepseek-ai/cordis'
@@ -59,4 +60,28 @@ test('splitFrontmatter parses the packaged SKILL.md', () => {
   assert.equal(parsed.whenToUse, 'when it demos')
   assert.equal(parsed.body, 'body line\n')
   assert.equal(plugin.splitFrontmatter('no frontmatter').description, undefined)
+})
+
+test('splitFrontmatter survives a CRLF checkout (Windows core.autocrlf=true)', () => {
+  const parsed = plugin.splitFrontmatter('---\r\nname: demo\r\ndescription: a demo\r\nwhenToUse: when it demos\r\n---\r\nbody line\r\n')
+  assert.equal(parsed.description, 'a demo')
+  assert.equal(parsed.whenToUse, 'when it demos')
+  assert.equal(parsed.body, 'body line\n')
+})
+
+test('readSkillBundle mounts a CRLF-converted bundle', () => {
+  const tmp = mkdtempSync(path.join(tmpdir(), 'dshup-crlf-'))
+  try {
+    const dir = path.join(tmp, 'plugin-upgrade-015')
+    mkdirSync(dir, { recursive: true })
+    const crlf = readFileSync(path.join(root, 'skills', 'plugin-upgrade-015', 'SKILL.md'), 'utf8').replace(/\r?\n/g, '\r\n')
+    writeFileSync(path.join(dir, 'SKILL.md'), crlf)
+    const bundle = plugin.readSkillBundle(tmp, 'plugin-upgrade-015')
+    assert.equal(bundle.frontmatterName, 'plugin-upgrade-015')
+    assert.match(bundle.whenToUse, /0\.1\.5-alpha\.1/)
+    assert.match(bundle.body, /Plugin upgrade/)
+    assert.ok(!bundle.body.startsWith('---'), 'frontmatter must not leak into the body')
+  } finally {
+    rmSync(tmp, { recursive: true, force: true })
+  }
 })

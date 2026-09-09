@@ -37,16 +37,19 @@ export const Config = Schema.object({
 
 /**
  * Strip the YAML frontmatter block from SKILL.md and return its routing fields
- * and body. A missing block falls back to the full text as the body.
+ * and body. Line endings are normalized first: a Windows checkout with
+ * `core.autocrlf=true` hands us CRLF, and the frontmatter delimiters are `\n`.
+ * A missing block falls back to the full text as the body.
  * @param text - raw SKILL.md content.
  * @returns the parsed description/whenToUse (when present) and the instruction body.
  */
 export function splitFrontmatter(text) {
-  if (!text.startsWith('---\n')) return { description: undefined, whenToUse: undefined, body: text }
-  const end = text.indexOf('\n---', 4)
-  if (end < 0) return { description: undefined, whenToUse: undefined, body: text }
-  const meta = text.slice(4, end)
-  const body = text.slice(end + 4).replace(/^\n+/, '')
+  const source = text.replace(/\r\n/g, '\n')
+  if (!source.startsWith('---\n')) return { description: undefined, whenToUse: undefined, body: source }
+  const end = source.indexOf('\n---', 4)
+  if (end < 0) return { description: undefined, whenToUse: undefined, body: source }
+  const meta = source.slice(4, end)
+  const body = source.slice(end + 4).replace(/^\n+/, '')
   const scalar = (key) => new RegExp(`^${key}:\\s*(.+)$`, 'm').exec(meta)?.[1]?.trim()
   return { description: scalar('description'), whenToUse: scalar('whenToUse'), body }
 }
@@ -61,12 +64,13 @@ export function splitFrontmatter(text) {
  */
 export function readSkillBundle(skillsRoot, skillName) {
   const skillPath = join(skillsRoot, skillName, 'SKILL.md')
-  let text
+  let raw
   try {
-    text = readFileSync(skillPath, 'utf8')
+    raw = readFileSync(skillPath, 'utf8')
   } catch (error) {
     throw new Error(`dsh-plugin-upgrade: cannot read skill bundle at ${skillPath}: ${error instanceof Error ? error.message : String(error)}`)
   }
+  const text = raw.replace(/\r\n/g, '\n')
   const { description, whenToUse, body } = splitFrontmatter(text)
   if (body.trim() === '') throw new Error(`dsh-plugin-upgrade: skill body is empty at ${skillPath}`)
   const frontmatterName = /^name:\s*(\S+)\s*$/m.exec(text.slice(0, text.indexOf('\n---', 4) + 1))?.[1]
