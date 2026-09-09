@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-09-09
+
+### Fixed
+
+- **The shipped version card no longer describes itself as unpublished.** Its status line
+  now names the three published channels and points at the packaged CLI
+  (`dsh-plugin-upgrade-scan`) for reproduction instead of a workspace-private evidence
+  path that no reader of the tarball can follow.
+
+### Changed
+
+- Family-standard CI: the `plugin-doctor` static R/K gate and OpenSSF Scorecard now run in
+  this repository, and `dsh-plugin-upgrade` is enrolled in the
+  `dsh-plugin-doctor` verified registry (badge: passing).
+
 ## [0.1.1] - 2026-09-09
 
 ### Fixed
