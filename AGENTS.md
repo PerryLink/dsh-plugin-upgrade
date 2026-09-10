@@ -31,7 +31,7 @@ package.json          npm metadata; files whitelist = published content
 .github/workflows/    CI (3 OS × 2 Node), monthly compat probe, v* npm release,
                       plugin-doctor static R/K gate, OpenSSF Scorecard
 README.md             English primary (GitHub default page; source of truth)
-README.{zh,es,pt,hi}.md  translations, top switcher, updated in the same commit
+README-{zh,es,pt,hi}.md  translations, top switcher, updated in the same commit
 CHANGELOG.md          Keep a Changelog, [Unreleased] at the top
 SECURITY.md           private vulnerability reporting + scope
 THIRD_PARTY_NOTICES.md  install-time dependencies (none bundled)
