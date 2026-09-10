@@ -1,0 +1,279 @@
+# Evidence · `dsh-v0.1.5-alpha.1` → `dsh-v0.1.5-rc.1`
+
+Every upstream claim in the version card
+(`skills/plugin-upgrade-015rc1/references/v0.1.5-alpha.1-to-v0.1.5-rc.1.md`) and every
+`action` string in `lib/scan.mjs` traces to a command recorded here, re-run on
+**2026-09-10** against the read-only harness checkout at `D:\deepseek-harness` and the
+read-only family workspace at `D:\Projects\dsh\plugins`.
+
+Toolchain used: `node v22.22.3`, `npm 11.16.0`, `pnpm 11.21.0` (Windows).
+
+Nothing in this file is copied from another project's documentation; each block is the
+observed output of the command above it. Where a claim could not be verified it is marked
+**unverified** and is not used by the card.
+
+## 1. Anchors and range size
+
+```console
+$ git -C D:\deepseek-harness tag -l "dsh-v0.1.5*"
+dsh-v0.1.5-alpha.1
+dsh-v0.1.5-alpha.2
+dsh-v0.1.5-rc.1
+
+$ git -C D:\deepseek-harness rev-list -n1 dsh-v0.1.5-alpha.1
+5dda764ed3aa172535a7967b06ff95d9cbfe536a
+$ git -C D:\deepseek-harness rev-list -n1 dsh-v0.1.5-rc.1
+183f08e9c6dde7e36cd2318eaee70b0da08fb35e
+
+$ git -C D:\deepseek-harness log --oneline dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1 | wc -l
+279
+$ git -C D:\deepseek-harness log --oneline dsh-v0.1.5-alpha.2..dsh-v0.1.5-rc.1 | wc -l
+17
+
+$ git -C D:\deepseek-harness diff --shortstat dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1
+ 1506 files changed, 31725 insertions(+), 11448 deletions(-)
+
+$ git -C D:\deepseek-harness show dsh-v0.1.5-alpha.1:package.json   # .version
+0.1.5-alpha.1
+$ git -C D:\deepseek-harness show dsh-v0.1.5-rc.1:package.json      # .version
+0.1.5-rc.1
+```
+
+## 2. Client slot catalog: 57 → 61 keys, `conversation` deleted
+
+`packages/extensions/cordis-client-runner/src/client/slot-catalog.ts` is the public catalog a
+plugin author reads through Inspect `Slots.listSubTree`. Extracting every `key: '<name>'`
+and diffing the two tags:
+
+```console
+alpha1 count: 57  rc1 count: 61
+--- removed ---
+conversation
+--- added ---
+main, main.conversation, rightbar.session, sidebar.panellist, sidebar.right.tab.document
+```
+
+Implementation side, same file path at both tags
+(`packages/client/ui-conversation/src/client/apply.ts`):
+
+```console
+$ dsh-v0.1.5-alpha.1:.../apply.ts:217     name: 'conversation',
+$ dsh-v0.1.5-rc.1:.../apply.ts:220        name: 'main.conversation',
+$ dsh-v0.1.5-rc.1:.../apply.ts:388        slots.inject('main', function* () {
+$ dsh-v0.1.5-rc.1:.../apply.ts:390          name: 'main',
+$ dsh-v0.1.5-rc.1:.../apply.ts:391          key: 'conversation',
+$ dsh-v0.1.5-rc.1:.../apply.ts:392          children: { 'main.conversation': { kind: 'single', scope: 'session-maybe' } },
+```
+
+No alias survives:
+
+```console
+$ git -C D:\deepseek-harness grep -n "name: 'conversation'" dsh-v0.1.5-rc.1 -- packages
+dsh-v0.1.5-rc.1:packages/client/ui-agent-preset/tests/apply.client.spec.ts:135:    name: 'conversation',
+```
+
+That single hit is a test fixture, not an implementation. The public contract that makes the
+removal silent is quoted verbatim from the same tag's
+`packages/extensions/cordis-client-runner/src/client/api-catalog.ts` (`SERVICE_API`, key
+`slots`):
+
+> `inject(key: keyof SlotMap & string, callback: () => SlotInjectionEffect): () => void`
+> "Install an effect for each declaration lifetime of a slot. The callback runs synchronously
+> when the declaration already exists; otherwise it runs inside the declaring `register()`
+> call after the declaration is committed."
+
+Upstream ships **no** deprecation or migration note for the removal: the only
+`docs/capability-seams.md` change in the range is one added service row (§4 below), and no
+document names `conversation`.
+
+## 3. Package rename
+
+```console
+$ git show dsh-v0.1.5-alpha.1:packages/client/ui-sidebar-textpreview/package.json      # .name
+@deepseek-ai/dsh-client-ui-sidebar-textpreview
+$ git show dsh-v0.1.5-rc.1:packages/client/ui-sidebar-documentpreview/package.json     # .name
+@deepseek-ai/dsh-client-ui-sidebar-documentpreview
+
+$ git ls-tree -d --name-only dsh-v0.1.5-alpha.1 packages/client/ | Select-String sidebar
+packages/client/ui-sidebar-files
+packages/client/ui-sidebar-right
+packages/client/ui-sidebar-textpreview
+packages/client/ui-sidebar
+$ git ls-tree -d --name-only dsh-v0.1.5-rc.1 packages/client/ | Select-String sidebar
+packages/client/ui-sidebar-documentpreview
+packages/client/ui-sidebar-files
+packages/client/ui-sidebar-right
+packages/client/ui-sidebar
+```
+
+The old directory and package name are gone in rc.1 with no shim package.
+
+## 4. Host-side additions
+
+```console
+$ git diff dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1 -- packages/core/session/src
+ known-event-types.ts | +  'deliverables/presented',
+ known-event-types.ts | +  'subagent/catalog',
+ types.ts             | -  ... In v2 the ...   +  ... The ...
+
+$ git ls-tree -d --name-only dsh-v0.1.5-rc.1 packages/fs/
+...,packages/fs/tool-present,...        # absent from the alpha.1 listing
+$ git show dsh-v0.1.5-rc.1:packages/fs/tool-present/src/index.ts   # line 39
+    name: 'present',
+
+$ git show dsh-v0.1.5-rc.1:packages/client/ui-deliverables/src/client/index.ts   # line 62
+    { name: 'tool.call.toolview', key: 'present', locale: NS }, PresentRow,
+
+# conversation.chat.node's already-taken keyDomain, both tags
+alpha.1: ... already taken: ask_user_question, bash, ..., grep, read, read_image, ...
+rc.1:    ... already taken: ask_user_question, bash, ..., grep, present, read, read_image, ...
+
+$ git diff <range> -- docs/capability-seams.md
++  pkg_command_feedback["command-feedback"]
++  svc_sessionFeedback["ctx.sessionFeedback<br/>Session-level feedback recorder"]
++ | `ctx.sessionFeedback` | `core` | [`command-feedback`](...) | ... |
+
+$ git ls-tree --name-only dsh-v0.1.5-alpha.1 docs/session-format-status.md   # (no output)
+$ git show dsh-v0.1.5-rc.1:docs/session-format-status.md                     # new file
+latestReleasedVersion: 3
+evidenceTag: dsh-v0.1.5-alpha.1
+```
+
+`docs/session-format-status.md` is **new in rc.1** and its release record still points at
+`dsh-v0.1.5-alpha.1`; it states "An alpha, beta, or release-candidate product publication
+establishes released Session-format obligations."
+
+The `ctx.layout` / `ctx.workspaces` / `TYPE_API` additions are quoted in the card; their
+source is the `api-catalog.ts` diff of the same range, which adds
+`selectPanel(panelId: MainPanelId | null): void`, `beginNavigation(): AbortSignal`,
+`openSession(sessionId: SessionId): void`,
+`openWorkspace(workspaceId: WorkspaceId, beforeOpen?: (sessionId: SessionId) => void): Promise<void>`,
+`forkSession(sessionId: SessionId): Promise<void>` and
+`export type MainPanelId = Branded<'MainPanelId'>;`.
+
+## 5. Negative evidence (what did **not** change)
+
+```console
+$ git -C D:\deepseek-harness grep -l "usePanelInfo" dsh-v0.1.5-alpha.1 -- packages apps | wc -l
+0
+$ git -C D:\deepseek-harness grep -l "usePanelInfo" dsh-v0.1.5-rc.1 -- packages apps | wc -l
+47
+
+$ git diff --stat dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1 -- packages/client/ui-slots
+ packages/client/ui-slots/package.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+The session-format seams the sibling corridor owns (`assistant/message.stream`,
+`SessionHandleReadResult`, `EpochHeader.system`, `ctx.agent`, `Inbox`,
+`SystemPrompt.persona`, the V3 log generation) have **no** implementation change in this
+range: the whole `packages/core/session/src` diff is the two added event-type literals and
+one comment line shown above. `docs/web-styling.md` (theme tokens) has zero changes in the
+range. The scanner therefore does not cover them here, and the card says so explicitly.
+
+## 6. Peer-range semantics (semver 7.8.5, measured)
+
+```console
+$ node -e "const s=require('.../semver'); ..."
+semver version: 7.8.5
+">=0.1.2-rc.1 <0.2.0"                                    -> false
+">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0"         -> true
+">=0.1.5-alpha.1 <0.2.0"                                -> true
+">=0.1.5-rc.1 <0.2.0"                                   -> true
+">=0.1.5-alpha.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0"         -> true
+alpha.1 satisfies >=0.1.5-alpha.1 <0.2.0 -> true
+```
+
+This is npm semver's prerelease-tuple rule: a prerelease version only satisfies a set when
+some comparator on the same `[major, minor, patch]` tuple carries a prerelease. It is the
+same rule behind the workspace's recorded `>=0.1.0-rc.8 <0.2.0` incident.
+
+## 7. Real-world cross-check on the family workspace
+
+Slot usage was extracted from **tracked** sources only (`git ls-files`, production files,
+`node_modules`/`lib`/`dist`/docs snapshots excluded) across the 47 repositories under
+`D:\Projects\dsh\plugins`:
+
+```console
+== PRODUCTION: 8 distinct keys ==
+  conversation.input.left                 <- dsh-autotier, dsh-talk
+  conversation.session.header.actions     <- dsh-auto-review, dsh-session-pin, dsh-ticktick
+  settings.plugin.item                    <- dsh-github, dsh-ticktick
+  settings.plugins.tab                    <- dsh-autotier, dsh-budget, dsh-checkpoint-rewind,
+                                             dsh-draw, dsh-mcp-panel, dsh-reach, dsh-talk
+  settings.section                        <- dsh-background-agents, dsh-memento,
+                                             dsh-permission-rules, dsh-wechat
+  shell.overlay                           <- dsh-session-pin
+  sidebar.footer.action                   <- dsh-background-agents, dsh-session-pin
+  tool.call.toolview                      <- dsh-draw
+== TESTS: 1 distinct key ==
+  session-1                               <- dsh-auto-review:test/client-registration.spec.ts
+                                             (a Remote face's `options.inject(...)`, not the
+                                              slots service — false positive, excluded)
+
+$ # tracked sources across all 47 repos, same pattern
+inject('conversation'  |  name: 'conversation'  |  sidebar-textpreview
+(zero hits)
+```
+
+8 production keys across 15 repositories; the rc.1 deletion set is `{conversation}`, so all
+8 survive. This is why the family's rc.1 CHANGELOG entries are pin-only, e.g.
+`dsh-autotier/CHANGELOG.md:14`, `dsh-mcp-panel/CHANGELOG.md:16`,
+`dsh-plugin-guide/CHANGELOG.md:22`, `dsh-permission-rules/CHANGELOG.md:69` (identical
+wording). **The prior research pass recorded nine keys**; the ninth it listed,
+`conversation.chat.node`, occurs in this workspace only inside
+`dsh-plugin-guide/references/official-docs/` (a downloaded official-docs snapshot), never in
+family plugin code. The card states the measured eight.
+
+Related recorded behaviour, unchanged by this hop: `dsh-permission-rules/CHANGELOG.md:100`
+describes `isUnmarkedHostVersion` treating the `0.1.5-alpha` line as non-stamping, so an
+envelope-level `ignorable` write is silently dropped there. Since
+`packages/session` + `packages/core` carry no substantive `ignorable` change in this range,
+rc.1 inherits that behaviour.
+
+## 8. Model catalog default
+
+```console
+$ git log --oneline -1 bc5fd3b8dc
+bc5fd3b8dc feat(llm): default Chat Completions to DeepSeek V41 Flash
+
+$ git show dsh-v0.1.5-alpha.1:packages/llm/llm-deepseek/src/index.ts   # DEFAULT_MODELS ids
+id: 'deepseek-v4-flash' / 'deepseek-v4-pro' / 'deepseek-v4-flash-vision-exp'
+$ git show dsh-v0.1.5-rc.1:packages/llm/llm-deepseek/src/index.ts      # DEFAULT_MODELS ids
+id: 'deepseek-flash' (name: 'DeepSeek-V41-Flash') / 'deepseek-v4-flash' / 'deepseek-v4-pro' /
+'deepseek-v4-flash-vision-exp'
+```
+
+The rc.1 README's `models` default row reads "V41 Flash + V4 Flash + V4 Pro + V4 Flash
+Vision Exp". **Unverified:** that position 0 of the advisory catalog is *formally* the
+selection default — no `DEFAULT_MODELS[0]` read appears in the adapter source. The card
+therefore states what was measured (the catalog contents and the commit subject) and does
+not claim a selection rule.
+
+## 9. Package name availability
+
+```console
+$ npm view dsh-plugin-upgrade-rc1 version
+npm error code E404
+npm error 404 Not Found - GET https://registry.npmjs.org/dsh-plugin-upgrade-rc1 - Not found
+npm error 404  The requested resource 'dsh-plugin-upgrade-rc1@*' could not be found or you do not have permission to access it.
+(exit 1)
+
+$ npm view dsh-plugin-upgrade version dist-tags.latest      # control: the sibling package exists
+version = '0.1.3'
+dist-tags.latest = '0.1.3'
+$ npm view @deepseek-ai/dsh-skill@0.1.5-rc.1 version         # control: the dev pin is published
+0.1.5-rc.1
+```
+
+## 10. Not verified (kept out of the card's claims)
+
+- **L9 (real browser).** No browser assertion was executed in the environment that produced
+  this package; the card marks it as a hard requirement for the reader and records it as
+  unexecuted here.
+- **L11 (real model credentials).** Not reproducible without credentials.
+- Whether any family repository ever pinned `0.1.5-alpha.2` (not checked per repository).
+- Whether `packages/client/*` contains plugin-author-facing breakage outside the public slot
+  and service catalogs (no full export diff of the 432 changed client files).
+- Whether upstream intends to publish a migration note for the `conversation` removal; the
+  card records the absence of one as of 2026-09-10.
