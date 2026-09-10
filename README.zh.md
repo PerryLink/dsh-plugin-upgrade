@@ -1,0 +1,175 @@
+<div align="center">
+
+# ⬆️ dsh-plugin-upgrade-rc1
+- **1024 商店通道**：先 `npm i -g dsh1024`，再执行 `dsh1024 plugin --profile web add dsh-plugin-upgrade-rc1`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-rc1)
+
+**DeepSeek Harness 插件升级技能（版本锁定）——`0.1.5-alpha.1` → `0.1.5-rc.1`。**
+
+*一张走廊卡 + 一个零依赖接缝扫描器，让「静默不挂载的 client 半边」不再被误当成「typecheck 绿了」。*
+
+> **官方仓库。** 这是 dsh-plugin-upgrade-rc1 唯一的官方仓库，由 PerryLink 维护。其他账号下的同名仓库与本项目无关。
+
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-rc1.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-rc1/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-rc1/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-rc1?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-rc1/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-rc1)](https://www.npmjs.com/package/dsh-plugin-upgrade-rc1)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-rc1)](https://www.npmjs.com/package/dsh-plugin-upgrade-rc1)
+
+[English](README.md) · [简体中文](README.zh.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
+
+</div>
+
+---
+
+## 兼容性
+
+| 面 | 状态 |
+|---|---|
+| 宿主 | DeepSeek Harness `0.1.5-rc.1`（tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`；走廊起点 `dsh-v0.1.5-alpha.1` = `5dda764ed3aa`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`、`@deepseek-ai/cordis ^4.0.2`、`@deepseek-ai/schemastery ^3.18.2`。 |
+| Node | `^22.19.0 \|\| >=24.0.0` |
+| 平台 | 有 Node 即可；扫描器只读文件系统，与平台无关 |
+| 模型 | 纯文本模型完全支持；技能就是一段 Markdown，不要求工具或视觉能力 |
+| 范围 | **只覆盖一条走廊**：`0.1.5-alpha.1` → `0.1.5-rc.1`。它不是通用迁移框架。 |
+| 姊妹走廊 | `0.1.3-alpha.1` → `0.1.5-alpha.1` 是 [`dsh-plugin-upgrade`](https://github.com/PerryLink/dsh-plugin-upgrade)。若你的 peer 低于 `0.1.5-alpha.1`，先读那张卡；本包不重复覆盖那些接缝。 |
+
+## 你得到什么
+
+两半，一套接缝目录：
+
+- **一个随包发布的 agent 技能（`plugin-upgrade-015rc1`）** —— 走廊卡 + 「修-验」循环。只有任务真正需要时模型才会加载它；本包不贡献任何系统提示词段落，也不注册工具。
+- **一个零依赖 CLI（`dsh-plugin-upgrade-rc1-scan`）** —— 按 `file:line` 报告十类接缝（`C1`–`C5`、`H1`–`H4`、`P1`），事实全部于 2026-09-10 从 tag 区间与公开目录重新读取。命中 error 级即退出码 `1`，可直接接进 CI。
+
+它要消灭的失效模式是：**这一跳的破坏是静默的。** 裸 client slot `conversation` 被删除且**没有别名**，而 `ctx.slots.inject()` 只在 declaration 存在时才执行回调——继续指向它的 client 半边会**悄悄停止挂载**：没有报错、没有日志、构建也不会失败。有两类破坏能穿过 `typecheck` + `test`：
+
+1. 类型线是旧的，于是本地编译的是**旧 slot 目录**（接缝 `C3`）；
+2. 测试是对着旧形状 mock 的，于是它们通过，而宿主丢掉了你的注册。
+
+诚实的量级说明：本包对家族工作区的实测发现，家族 client 半边一共只用了 **8** 个 slot key，且这 8 个在 rc.1 全部存活——对它们而言这是**潜在破坏（latent），不是实际破坏**。真正会坏的是指向裸 `conversation` key 的第三方 client 插件，而且它们坏得悄无声息。
+
+## 快速开始
+
+```sh
+# 1. 把 bundle 装进你的 profile
+dsh plugin --profile web add dsh-plugin-upgrade-rc1
+
+# 2. 确认插件行已挂载
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-rc1'
+
+# 3. 扫描你要升级的插件
+npx dsh-plugin-upgrade-rc1-scan --repo ../my-plugin
+```
+
+然后让 agent 使用 `plugin-upgrade-015rc1` 技能，或自己按卡驱动循环：
+`skills/plugin-upgrade-015rc1/references/v0.1.5-alpha.1-to-v0.1.5-rc.1.md`。
+
+## 安装与卸载
+
+```sh
+dsh plugin --profile web add dsh-plugin-upgrade-rc1            # 从 npm
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-rc1#main"   # 从源码
+dsh plugin --profile web remove dsh-plugin-upgrade-rc1         # 卸载（可逆）
+```
+
+安装 bundle 只注册一个技能；移除插件行即移除技能。CLI 是普通 `npx` 目标，完全不需要 profile。
+
+## 配置
+
+每个键都可选，写在 profile patch 里：
+
+| 键 | 默认 | 含义 |
+|---|---|---|
+| `enabled` | `true` | 是否注册随包技能。设为 `false` 可保留依赖但保持沉默。 |
+| `skillName` | `plugin-upgrade-015rc1` | 要注册的 `skillsRoot` 子目录名，也是目录里显示的名字。 |
+| `skillsRoot` | 本包自己的 `./skills` | `<skillName>/SKILL.md` 所在处。指向你自己的卡即可复用这套管线。 |
+| `userInvocable` | `true` | 除了模型，人是否也能按名字调用该技能。 |
+
+```yaml
+- insert:
+    - id: dsh-plugin-upgrade-rc1
+      name: dsh-plugin-upgrade-rc1
+      config:
+        skillName: plugin-upgrade-015rc1
+```
+
+插件**挂载必须大声**：`SKILL.md` 缺失、正文为空、frontmatter 没有 `name`，都会直接让挂载失败，而不是注册一个空技能。
+
+## 暴露面
+
+**技能** —— `plugin-upgrade-015rc1`（默认模型与人都可调用）。正文：6 步循环。引用：走廊卡。脚本：检测器，放在技能目录内，保证相对路径可解析。
+
+**CLI** —— `dsh-plugin-upgrade-rc1-scan`：
+
+```sh
+dsh-plugin-upgrade-rc1-scan [--repo <path>] [--json <out.json>] [--seams C1,P1] [--quiet]
+```
+
+| 参数 | 含义 |
+|---|---|
+| `--repo <path>` | 要扫描的仓库（默认当前目录）。 |
+| `--json <out.json>` | 同时写出机器可读报告（`repo`、`scannedAt`、`files`、`hits[]`、`bySeam`）。 |
+| `--seams C1,P1` | 只跑指定接缝。 |
+| `--quiet` | 不打印人类可读渲染（与 `--json` 搭配）。 |
+
+退出码：`0` 无 error 级命中 · `1` 至少一个 error 级命中 · `2` 用法或扫描失败。扫描干净是**必要非充分**条件——本卡的出口标准是真实宿主冒烟**加上** client 半边的真实浏览器断言。
+
+## 十类接缝
+
+| Id | 级别 | `0.1.5-rc.1` 这一线变了什么 |
+|---|---|---|
+| `C1` | error | 裸 client slot `conversation` 被删除，替换为 `main` + `main.conversation`，**无别名**。`ctx.slots.inject()` 只在 declaration 存在时触发，所以指向它的插件会**静默**停止挂载。 |
+| `C2` | error | `@deepseek-ai/dsh-client-ui-sidebar-textpreview` 改名为 `…-sidebar-documentpreview`；旧名消失且没有 shim 包。 |
+| `C3` | error | client 侧假绿：dev/test 依赖钉在 `0.1.5-alpha.*`，或 `tsconfig` `paths` 指向不存在的 checkout 目录 → TypeScript 静默回退到旧目录。 |
+| `C4` | warn | rc.1 引入全局面板模型（`main`、`sidebar.panellist`、`ctx.layout.selectPanel(MainPanelId \| null)`），并给几乎每个 slot 追加 `usePanelInfo` 标准 prop。 |
+| `C5` | warn | 文档预览迁到 keyed slot `sidebar.right.tab.document`（`DocumentContent`）；`sidebar.right.pane.tab` 仍在，但父入口变成 `rightbar.session`。 |
+| `H1` | warn | `KNOWN_SESSION_EVENT_TYPES` 新增 `deliverables/presented` 与 `subagent/catalog`——fail-closed 词表变长。 |
+| `H2` | warn | 新工具 `present` 的行占用了 `tool.call.toolview` 的 key `'present'`，而该 key 在 alpha.1 是空闲的。 |
+| `H3` | info | 新增可选能力：`ctx.sessionFeedback`、`ctx.layout.beginNavigation()`、`ctx.workspaces.openSession()` / `openWorkspace()` / `forkSession()`。只在卡上列出，**刻意不做自动检测**。 |
+| `H4` | info | DeepSeek 适配器的默认咨询模型目录改以 `deepseek-flash`（DeepSeek-V41-Flash）打头。 |
+| `P1` | error | peer 区间必须保留第二段：`>=0.1.2-rc.1 <0.2.0` 单段在 npm semver 的 prerelease-tuple 规则下**拒绝** `0.1.5-rc.1`（semver 7.8.5 实测 `false`）。 |
+
+`C4`、`C5`、`H1`、`H2`、`H4` 刻意保持提示级：它们都有合法命中（已经用了新 API 的仓、官方文档快照、插件自己的模型 id 表），所以扫描器把它们作为人工复核线索，而不是失败。
+
+## 本包不覆盖什么
+
+- **更早的走廊。** `0.1.3-alpha.1` → `0.1.5-alpha.1` 属于 `dsh-plugin-upgrade`。peer 低于 `0.1.5-alpha.1` 的仓先读那张卡；本包不重复覆盖。
+- **会话格式接缝。** `assistant/message.stream`、`SessionHandleReadResult`、`EpochHeader.system`、`ctx.agent`、`Inbox`、`SystemPrompt.persona` 在这一跳**没有变化**（`packages/core/session/src` 的区间 diff 只有两个新增事件字面量与一句注释），在这里重述它们等于制造漂移。它们在姊妹卡上。
+- **未来的线。** `0.1.5-rc.1` → 正式版及其后都不在范围内；卡刻意锁版本——一张会漂移的卡比没有卡更糟。
+- **DSH 面向用户的升级路径。** 本包升级的是**插件源码**，不是用户的 harness 安装。
+- **主题 token。** `docs/web-styling.md` 在这个区间零变更。
+- **证明。** 扫描干净只是假设。出口标准是真实宿主冒烟（临时 `DSH_HOME`、rc.1 CLI、`plugin add <tarball>`、`--dump-config`）**加上**每个 client 侧命中项的真实浏览器断言。
+
+## 安全边界
+
+- **只读扫描。** CLI 绝不在被扫仓库内写入；`--json` 只写你指定的路径。
+- **无网络、无 shell。** 扫描器只 import Node 标准库，从不启动子进程。
+- **无凭据。** 本包不读取任何凭据、环境令牌或会话数据。
+- **沙箱化冒烟配方。** 卡里的真实宿主检查使用 `mkdtemp` 的 `DSH_HOME`，绝不碰你真实的 `~/.dsh`。
+
+## 开发
+
+```sh
+npm install                        # 或者：pnpm install（仓库带 pnpm-lock.yaml）
+npm test                           # node --test：扫描器、卡↔目录一致性、真实 Cordis + SkillRegistry
+npm run verify:self-contained      # 每个 import 都在包内解析
+npm run verify:artifacts           # 打出来的 tarball 带技能/CLI/patch，且不含测试
+npm run check:readmes              # 五语 README 一致性
+npm pack
+```
+
+扫描器自带合成夹具 `fixtures/bad-repo`（故意包含全部 error 级接缝）与 `fixtures/good-repo`（已适配），外加拿一个已钉 `0.1.5-rc.1` 的家族仓做 live negative，所以目录里的回归会在这个测试套件里失败，而不是在用户那里。`test/card.test.mjs` 断言卡与 `lib/scan.mjs` 的名字与级别**完全一致**——把「证据绑定」规则变成机器门禁。
+
+## 主题标签
+
+`dsh`、`dsh-plugin`、`deepseek-harness`、`deepseek`、`cordis`、`plugin-upgrade`、`migration`、`skill`、`version-card`、`scanner`、`client-slots`（与 `package.json` keywords 一致；`dsh-plugin` 是生态的可见性通道）。
+
+## PerryLink DSH 插件家族
+
+属于 PerryLink DSH 插件家族——40+ 个仓库，覆盖会话、记忆、权限、交付、可观测性与开发者工具。目录见 [perrylink-dsh-catalog.perrylink.workers.dev](https://perrylink-dsh-catalog.perrylink.workers.dev) 或 [`dsh-plugin` 主题](https://github.com/topics/dsh-plugin)。
+
+## 许可证
+
+Apache-2.0 —— 见 [LICENSE](LICENSE)。安装期依赖及其许可证列在 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)；本包不打包任何第三方代码。
