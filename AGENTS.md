@@ -93,8 +93,8 @@ card, the fixtures and `CHANGELOG.md` in the same commit.
 
 ## Docs
 
-- Five-language READMEs (`README.md` is the source; `README.zh.md`, `README.es.md`,
-  `README.pt.md`, `README.hi.md` follow). Every behavior change updates all five in the same
+- Five-language READMEs (`README.md` is the source; `README-zh.md`, `README-es.md`,
+  `README-pt.md`, `README-hi.md` follow). Every behavior change updates all five in the same
   commit; `check:readmes` enforces the shared surface in CI.
 - GitHub topics `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`,
   `plugin-upgrade`, `migration`, `skill`, `version-card`, `scanner` (mirror `package.json`
