@@ -29,7 +29,7 @@
 
 | Superfície | Status |
 |---|---|
-| Harness | DeepSeek Harness `0.1.5-alpha.1` (checkout `19d2e38480`, tag `dsh-v0.1.5-alpha.1` = `5dda764ed3`). Faixa de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
+| Harness | DeepSeek Harness `0.1.5-rc.1` (checkout `2efea31131`, tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`). Faixa de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | Plataformas | Onde o Node rodar; o scanner só lê o sistema de arquivos e é neutro de plataforma |
 | Modelo | Modelos somente texto são totalmente suportados; a skill é um corpo Markdown, sem exigência de ferramentas ou visão |
