@@ -129,6 +129,16 @@ commit `chore(release): <x.y.z>`, and `git tag -a v<x.y.z>`. `git push origin ma
 npm with provenance (skipped without the `NPM_TOKEN` secret) and creates the GitHub Release
 from the stamped CHANGELOG section behind an idempotent `gh release view` guard. Never push a
 tag for a version already on the registry.
+**Publish incident (2026-09-10, the first tag).** `v0.1.0`'s first run failed in
+`Publish to npm` with `*** is not a legal HTTP header value`, after the provenance statement
+had already been signed and published to the transparency log. The step read the token through
+setup-node's `${NODE_AUTH_TOKEN}` expansion at the time; it now normalises line breaks and
+writes `//registry.npmjs.org/:_authToken=…` into `NPM_CONFIG_USERCONFIG` itself. The rewritten
+step reports whether the secret carried line breaks, and it reported **no** — so the
+trailing-newline hypothesis is disproven and the mechanism of the env-expanded failure is NOT
+established. What is established: that path failed, the directly written userconfig publishes.
+`v0.1.0` was re-tagged onto the fix (allowed: the version was not on the registry yet). Do not
+reintroduce `${NODE_AUTH_TOKEN}` without re-testing it.
 
 The scanner catalog is evidence-bound: a version bump that changes a seam must update the
 card, `docs/EVIDENCE.md`, the fixtures and `CHANGELOG.md` in the same commit.

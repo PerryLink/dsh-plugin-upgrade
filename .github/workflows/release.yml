@@ -43,13 +43,15 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           version="$(node -p "require('./package.json').version")"
-          # A secret stored with a trailing CR/LF is invisible until it is used:
-          # `echo ... > ~/.npmrc` (what the sibling repositories do) survives it
-          # because the ini parser trims the value, but an ENV-EXPANDED npmrc
-          # (setup-node's `${NODE_AUTH_TOKEN}`) does not — the registry then
-          # rejects the Authorization header with "is not a legal HTTP header
-          # value". Strip line breaks, then write the token ourselves so the
-          # value never passes through env expansion.
+          # The first v0.1.0 tag died here with `*** is not a legal HTTP header
+          # value`, AFTER the provenance statement had been signed. The step then
+          # read the token through setup-node's `${NODE_AUTH_TOKEN}` expansion;
+          # it now normalises line breaks and writes the token into the
+          # userconfig itself. Measured after the fix: the secret carries NO
+          # CR/LF, so the trailing-newline hypothesis is DISPROVEN and the
+          # mechanism of the env-expanded failure is NOT established. What is
+          # established: that path failed, this one publishes. Do not go back to
+          # `${NODE_AUTH_TOKEN}` without re-testing it.
           raw_breaks="no"
           case "$NPM_TOKEN" in *$'\n'*|*$'\r'*) raw_breaks="yes" ;; esac
           token="$(printf '%s' "$NPM_TOKEN" | tr -d '\r\n')"
