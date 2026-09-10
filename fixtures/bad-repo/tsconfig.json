@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@deepseek-ai/dsh-llm": [
+        "../../../../deepseek-harness/packages/llm/llm/lib/types/index.d.ts"
+      ]
+    }
+  },
+  "include": ["src"]
+}
