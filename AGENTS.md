@@ -151,8 +151,8 @@ steps performed from the family workspace after the first tag.
 
 ## Docs
 
-- Five-language READMEs (`README.md` is the source; `README.zh.md`, `README.es.md`,
-  `README.pt.md`, `README.hi.md` follow). Every behavior change updates all five in the same
+- Five-language READMEs (`README.md` is the source; `README-zh.md`, `README-es.md`,
+  `README-pt.md`, `README-hi.md` follow). Every behavior change updates all five in the same
   commit; `check:readmes` enforces the shared section count and the install line in CI.
 - GitHub topics `dsh`, `dsh-plugin`, `deepseek-harness`, `deepseek`, `cordis`,
   `plugin-upgrade`, `migration`, `skill`, `version-card`, `scanner`, `client-slots` (mirror
