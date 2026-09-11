@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Report privately through GitHub's [private vulnerability reporting](https://github.com/PerryLink/dsh-plugin-upgrade-rc1/security/advisories/new)
+Report privately through GitHub's [private vulnerability reporting](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/security/advisories/new)
 (Security → Advisories → Report a vulnerability). Please do not open a public issue for a
 suspected vulnerability.
 
@@ -11,7 +11,7 @@ possible, a minimal reproduction. You can expect an acknowledgement within a few
 
 ## Scope
 
-`dsh-plugin-upgrade-rc1` is a **read-only developer tool**:
+`dsh-plugin-upgrade-0.1.3-0.1.5` is a **read-only developer tool**:
 
 - The scanner reads files under `--repo` and never writes inside the scanned repository.
   `--json` writes only to the path you pass.

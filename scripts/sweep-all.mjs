@@ -8,7 +8,7 @@ import path from 'node:path'
 import { scanRepo } from '../lib/scan.mjs'
 
 const ROOT = path.resolve(process.argv[2] || '.')
-const OUT = path.resolve(process.argv[3] || path.join(ROOT, 'scan-0.1.5-rc1-sweep.md'))
+const OUT = path.resolve(process.argv[3] || path.join(ROOT, 'scan-0.1.5-sweep.md'))
 // Third-party repositories that happen to live in the same workspace.
 const SKIP = new Set(['adp-list', 'audit-dsh-infinite-gen-2', 'pan17-dsh-wechat', 'dsh-personal-directive'])
 const dirs = fs.readdirSync(ROOT, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)
@@ -23,11 +23,11 @@ for (const n of dirs) {
   rows.push({ repo: n, files: r.files, errors: errors.length, warns: warns.length, errorSeams: [...new Set(errors.map(h => h.seam))].join(',') || '-' })
 }
 const L = []
-L.push('# scan-0.1.5-rc1 · workspace sweep evidence')
+L.push('# scan-0.1.5 · workspace sweep evidence')
 L.push('')
-L.push(`Generated ${new Date().toISOString()} · scanner \`scripts/scan-0.1.5-rc1.mjs\` · workspace \`${ROOT}\``)
+L.push(`Generated ${new Date().toISOString()} · scanner \`scripts/scan-0.1.5.mjs\` · workspace \`${ROOT}\``)
 L.push('')
-L.push('Error-severity hits mean the repo would silently break (or already fails to resolve) on `0.1.5-rc.1`. Warn/info hits are heuristic leads for manual review.')
+L.push('Error-severity hits mean the repo would silently break (or already fails to resolve) somewhere on the merged `0.1.3-alpha.1 → 0.1.5-rc.1` corridor. Warn/info hits are heuristic leads for manual review.')
 L.push('')
 L.push('| repo | files | errors | warns | error seams |')
 L.push('|---|---|---|---|---|')

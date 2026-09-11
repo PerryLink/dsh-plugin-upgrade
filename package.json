@@ -1,14 +1,14 @@
 {
-  "name": "dsh-plugin-upgrade-rc1",
+  "name": "dsh-plugin-upgrade-0.1.3-0.1.5",
   "version": "0.1.0",
-  "description": "Plugin-author upgrade skill for DeepSeek Harness: a version-locked 0.1.5-alpha.1 -> 0.1.5-rc.1 corridor card plus a zero-dependency seam scanner (the removed bare `conversation` client slot, the sidebar textpreview -> documentpreview package rename, the new global main-panel model and usePanelInfo standard prop, the new `present` tool key, two new session event types, and the peer-range trap where >=0.1.2-rc.1 <0.2.0 alone rejects 0.1.5-rc.1), packaged as a bundle skill and an npx CLI.",
+  "description": "Plugin-author upgrade skill for DeepSeek Harness: the merged version-locked 0.1.3-alpha.1 -> 0.1.5-rc.1 corridor card plus a zero-dependency seam scanner over one 20-seam catalog — leg A (V3 session format, assistant/message.stream, SessionHandleReadResult, ctx.agent, Inbox, SubprocessHandle.pid, SystemPrompt persona, PTC rename, EpochHeader.system, and the tsconfig stale-path false green) and leg B (the removed bare `conversation` client slot, the sidebar textpreview -> documentpreview package rename, the stale-type-line false green, the new global main-panel model and usePanelInfo standard prop, the new `present` tool key, two new session event types, and the peer-range trap where >=0.1.2-rc.1 <0.2.0 alone rejects 0.1.5-rc.1) — packaged as a bundle skill and an npx CLI.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PerryLink/dsh-plugin-upgrade-rc1.git"
+    "url": "git+https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5.git"
   },
-  "homepage": "https://github.com/PerryLink/dsh-plugin-upgrade-rc1#readme",
+  "homepage": "https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5#readme",
   "bugs": {
-    "url": "https://github.com/PerryLink/dsh-plugin-upgrade-rc1/issues"
+    "url": "https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/issues"
   },
   "author": "PerryLink",
   "private": false,
@@ -27,7 +27,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "dsh-plugin-upgrade-rc1-scan": "./scripts/scan-0.1.5-rc1.mjs"
+    "dsh-plugin-upgrade-015-scan": "./scripts/scan-0.1.5.mjs"
   },
   "files": [
     "index.mjs",
@@ -77,14 +77,14 @@
     "compatibility": {
       "dshVersions": [
         "0.1.2-rc.1",
-        "0.1.5-rc.1"
+        "0.1.5-rc.2"
       ]
     },
     "capability": {
-      "id": "plugin-upgrade-rc1",
+      "id": "plugin-upgrade-015",
       "kind": "service",
-      "invocation": "ctx.skills.get('plugin-upgrade-015rc1') resolves a complete SkillDefinition",
-      "expected": "the session skill catalog lists plugin-upgrade-015rc1 and the loaded body carries the 0.1.5-alpha.1 -> 0.1.5-rc.1 corridor card with a directory resourceBase"
+      "invocation": "ctx.skills.get('plugin-upgrade-015') resolves a complete SkillDefinition",
+      "expected": "the session skill catalog lists plugin-upgrade-015 and the loaded body carries the merged 0.1.3-alpha.1 -> 0.1.5-rc.1 corridor card with a directory resourceBase"
     },
     "evidence": {
       "install": null,
@@ -117,12 +117,12 @@
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.2",
-    "@deepseek-ai/dsh-skill": "0.1.5-rc.1",
+    "@deepseek-ai/dsh-skill": "0.1.5-rc.2",
     "@deepseek-ai/schemastery": "^3.18.2"
   },
   "scripts": {
     "test": "node --test \"test/*.test.mjs\"",
-    "scan": "node scripts/scan-0.1.5-rc1.mjs",
+    "scan": "node scripts/scan-0.1.5.mjs",
     "check:readmes": "node scripts/check-readme-sync.mjs",
     "verify:self-contained": "node scripts/verify-self-contained.mjs",
     "verify:artifacts": "node scripts/verify-artifacts.mjs",

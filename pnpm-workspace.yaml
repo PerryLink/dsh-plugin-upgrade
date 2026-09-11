@@ -1,13 +1,13 @@
 # Nearest-workspace root for this standalone plugin package. This file makes
-# dsh-plugin-upgrade-rc1 an independent workspace when the repository is checked
-# out inside another pnpm workspace, such as a deepseek-harness checkout (which
-# is where this repo lives during development).
+# dsh-plugin-upgrade-0.1.3-0.1.5 an independent workspace when the repository is
+# checked out inside another pnpm workspace, such as a deepseek-harness checkout
+# (which is where this repo lives during development).
 packages:
   - .
 minimumReleaseAgeExclude:
   - '@deepseek-ai/cordis@4.0.2'
   - '@deepseek-ai/schemastery@3.18.2'
-  - '@deepseek-ai/dsh-skill@0.1.5-rc.1'
+  - '@deepseek-ai/dsh-skill@0.1.5-rc.2'
 # pnpm 11 enables minimumReleaseAge (1440 minutes) by default. The exclusion
 # list above is only consulted while resolving: pnpm 11.7.0's frozen-install
 # lockfile supply-chain verification pass ignores minimumReleaseAgeExclude

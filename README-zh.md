@@ -1,23 +1,23 @@
 <div align="center">
 
-# ⬆️ dsh-plugin-upgrade-rc1
-- **1024 商店通道**：先 `npm i -g dsh1024`，再执行 `dsh1024 plugin --profile web add dsh-plugin-upgrade-rc1`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-rc1)
+# ⬆️ dsh-plugin-upgrade-0.1.3-0.1.5
+- **1024 商店通道**：先 `npm i -g dsh1024`，再执行 `dsh1024 plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-0.1.3-0.1.5)
 
-**DeepSeek Harness 插件升级技能（版本锁定）——`0.1.5-alpha.1` → `0.1.5-rc.1`。**
+**DeepSeek Harness 插件升级技能（已合并、版本锁定）——`0.1.3-alpha.1` → `0.1.5-rc.1`，由两条闭合的 leg 承载。**
 
-*一张走廊卡 + 一个零依赖接缝扫描器，让「静默不挂载的 client 半边」不再被误当成「typecheck 绿了」。*
+*leg A `0.1.3-alpha.1` → `0.1.5-alpha.1`，leg B `0.1.5-alpha.1` → `0.1.5-rc.1`：一张走廊卡加一个零依赖接缝扫描器，覆盖合并后的 20 条接缝目录，让「静默不挂载的 client 半边」不再被误当成「typecheck 绿了」。*
 
-> **官方仓库。** 这是 dsh-plugin-upgrade-rc1 唯一的官方仓库，由 PerryLink 维护。其他账号下的同名仓库与本项目无关。
+> **官方仓库。** 这是 dsh-plugin-upgrade-0.1.3-0.1.5 唯一的官方仓库，由 PerryLink 维护。它取代两个版本锁定的包 `dsh-plugin-upgrade`（leg A）与 `dsh-plugin-upgrade-rc1`（leg B）。其他账号下的同名仓库与本项目无关。
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-rc1.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-0.1.3-0.1.5.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-rc1/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-rc1/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-rc1?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-rc1/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-rc1)](https://www.npmjs.com/package/dsh-plugin-upgrade-rc1)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-rc1)](https://www.npmjs.com/package/dsh-plugin-upgrade-rc1)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-0.1.3-0.1.5)](https://www.npmjs.com/package/dsh-plugin-upgrade-0.1.3-0.1.5)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-0.1.3-0.1.5)](https://www.npmjs.com/package/dsh-plugin-upgrade-0.1.3-0.1.5)
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
@@ -29,49 +29,51 @@
 
 | 面 | 状态 |
 |---|---|
-| 宿主 | DeepSeek Harness `0.1.5-rc.1`（tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`；走廊起点 `dsh-v0.1.5-alpha.1` = `5dda764ed3aa`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`、`@deepseek-ai/cordis ^4.0.2`、`@deepseek-ai/schemastery ^3.18.2`。 |
+| 宿主 | DeepSeek Harness `0.1.5-rc.1`（tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`；leg A→B 交接点 `dsh-v0.1.5-alpha.1` = `5dda764ed3aa`；走廊起点 `0.1.3-alpha.1`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`、`@deepseek-ai/cordis ^4.0.2`、`@deepseek-ai/schemastery ^3.18.2`。 |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | 平台 | 有 Node 即可；扫描器只读文件系统，与平台无关 |
 | 模型 | 纯文本模型完全支持；技能就是一段 Markdown，不要求工具或视觉能力 |
-| 范围 | **只覆盖一条走廊**：`0.1.5-alpha.1` → `0.1.5-rc.1`。它不是通用迁移框架。 |
-| 姊妹走廊 | `0.1.3-alpha.1` → `0.1.5-alpha.1` 是 [`dsh-plugin-upgrade`](https://github.com/PerryLink/dsh-plugin-upgrade)。若你的 peer 低于 `0.1.5-alpha.1`，先读那张卡；本包不重复覆盖那些接缝。 |
+| 范围 | **两条闭合的 leg，一个跨度**：leg A `0.1.3-alpha.1` → `0.1.5-alpha.1`，加上 leg B `0.1.5-alpha.1` → `0.1.5-rc.1`。走廊永不加宽：`0.1.5-rc.1` 之后的一跳就是一个新包。 |
+| Legs | 两条 leg 都在本包内：leg A 保留 `S1`–`S10` + `M1` 接缝，leg B 保留 `C1`、`C2`、`C4`、`C5`、`H1`–`H4`、`P1`——各自带有自己的证据、卡片章节、夹具与回滚路径。没有需要另装的姊妹包。 |
+| `C3` | 已弃用：leg B 的卡把「类型线陈旧导致的假绿」写作 `C3`，而这与 leg A 的 `M1` 是同一个缺陷。合并一事记录在卡上；`--seams C3` 匹配不到任何东西。 |
 
 ## 你得到什么
 
 两半，一套接缝目录：
 
-- **一个随包发布的 agent 技能（`plugin-upgrade-015rc1`）** —— 走廊卡 + 「修-验」循环。只有任务真正需要时模型才会加载它；本包不贡献任何系统提示词段落，也不注册工具。
-- **一个零依赖 CLI（`dsh-plugin-upgrade-rc1-scan`）** —— 按 `file:line` 报告十类接缝（`C1`–`C5`、`H1`–`H4`、`P1`），事实全部于 2026-09-10 从 tag 区间与公开目录重新读取。命中 error 级即退出码 `1`，可直接接进 CI。
+- **一个随包发布的 agent 技能（`plugin-upgrade-015`）** —— 合并后的走廊卡，以及「修-验」循环。正文先把调用者路由到与它 peer 区间相符的那条 leg；只有任务真正需要时模型才会加载它，本包不贡献任何系统提示词段落，也不注册工具。
+- **一个零依赖 CLI（`dsh-plugin-upgrade-015-scan`）** —— 按 `file:line` 报告合并后二十条接缝（`S3`、`S8`、`S9`、`M1`、`S4`、`S5`、`S6`、`S7`、`S2`、`S1`、`S10`、`C1`、`C2`、`P1`、`C4`、`C5`、`H1`、`H2`、`H4`、`H3`）的事实，全部于 2026-09-09（leg A）与 2026-09-10（leg B）从 harness 的 tag 区间重新读取。命中 error 级即退出码 `1`，可直接接进 CI。
 
-它要消灭的失效模式是：**这一跳的破坏是静默的。** 裸 client slot `conversation` 被删除且**没有别名**，而 `ctx.slots.inject()` 只在 declaration 存在时才执行回调——继续指向它的 client 半边会**悄悄停止挂载**：没有报错、没有日志、构建也不会失败。有两类破坏能穿过 `typecheck` + `test`：
+它要消灭的失效模式是：**这一跨度的破坏大多是静默的，而且两端都静默。** 类型线可能陈旧，于是仓库是对着**旧目录**编译的（接缝 `M1`）；而裸 `conversation` client slot 被删除且没有别名，`ctx.slots.inject()` 又只在 declaration 存在时才执行回调——于是仍然指向它的 client 半边停止挂载，没有报错、没有日志、构建也不会失败（接缝 `C1`）。有三类破坏能穿过 `typecheck` + `test`：
 
-1. 类型线是旧的，于是本地编译的是**旧 slot 目录**（接缝 `C3`）；
-2. 测试是对着旧形状 mock 的，于是它们通过，而宿主丢掉了你的注册。
+1. 本地门禁编译了一条陈旧的类型线——旧的 `paths` 别名，或钉在 `0.1.5-alpha.*` 的 dev/test 类型（接缝 `M1`）；
+2. 日志写入器漏掉了 V3 必需的 `stream` 字段，于是会话能导入、却拒绝恢复（接缝 `S3`）；
+3. 测试是对着旧形状 mock 的，于是它们通过，而宿主丢掉了你的贡献（接缝 `C1`）。
 
-诚实的量级说明：本包对家族工作区的实测发现，家族 client 半边一共只用了 **8** 个 slot key，且这 8 个在 rc.1 全部存活——对它们而言这是**潜在破坏（latent），不是实际破坏**。真正会坏的是指向裸 `conversation` key 的第三方 client 插件，而且它们坏得悄无声息。
+诚实的量级说明：leg B 的工作区扫描发现，家族 client 半边一共只用了 **8** 个 slot key，且这 8 个在 rc.1 全部存活——对它们而言，rc.1 的破坏是**潜在破坏（latent），不是实际破坏**。真正会坏的是指向裸 `conversation` key 的第三方 client 插件，而且它们坏得悄无声息。leg A 的扫描发现的纹理正好相反：40 个仓，其中 11 个命中了 `M1`，而修好陈旧路径后，有 3 个此前「绿着」的仓暴露出真实的 TypeScript 错误。
 
 ## 快速开始
 
 ```sh
 # 1. 把 bundle 装进你的 profile
-dsh plugin --profile web add dsh-plugin-upgrade-rc1
+dsh plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5
 
 # 2. 确认插件行已挂载
-dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-rc1'
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-0.1.3-0.1.5'
 
 # 3. 扫描你要升级的插件
-npx dsh-plugin-upgrade-rc1-scan --repo ../my-plugin
+npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
 ```
 
-然后让 agent 使用 `plugin-upgrade-015rc1` 技能，或自己按卡驱动循环：
-`skills/plugin-upgrade-015rc1/references/v0.1.5-alpha.1-to-v0.1.5-rc.1.md`。
+然后让 agent 使用 `plugin-upgrade-015` 技能，或自己按卡驱动循环：
+`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`（leg A 是 §1，leg B 是 §2，合并后的接缝索引是 §3）。
 
 ## 安装与卸载
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade-rc1            # 从 npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-rc1#main"   # 从源码
-dsh plugin --profile web remove dsh-plugin-upgrade-rc1         # 卸载（可逆）
+dsh plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5            # 从 npm
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5#main"   # 从源码
+dsh plugin --profile web remove dsh-plugin-upgrade-0.1.3-0.1.5         # 卸载（可逆）
 ```
 
 安装 bundle 只注册一个技能；移除插件行即移除技能。CLI 是普通 `npx` 目标，完全不需要 profile。
@@ -83,64 +85,76 @@ dsh plugin --profile web remove dsh-plugin-upgrade-rc1         # 卸载（可逆
 | 键 | 默认 | 含义 |
 |---|---|---|
 | `enabled` | `true` | 是否注册随包技能。设为 `false` 可保留依赖但保持沉默。 |
-| `skillName` | `plugin-upgrade-015rc1` | 要注册的 `skillsRoot` 子目录名，也是目录里显示的名字。 |
+| `skillName` | `plugin-upgrade-015` | 要注册的 `skillsRoot` 子目录名，也是目录里显示的名字。 |
 | `skillsRoot` | 本包自己的 `./skills` | `<skillName>/SKILL.md` 所在处。指向你自己的卡即可复用这套管线。 |
 | `userInvocable` | `true` | 除了模型，人是否也能按名字调用该技能。 |
 
 ```yaml
 - insert:
-    - id: dsh-plugin-upgrade-rc1
-      name: dsh-plugin-upgrade-rc1
+    - id: dsh-plugin-upgrade-0.1.3-0.1.5
+      name: dsh-plugin-upgrade-0.1.3-0.1.5
       config:
-        skillName: plugin-upgrade-015rc1
+        skillName: plugin-upgrade-015
 ```
 
 插件**挂载必须大声**：`SKILL.md` 缺失、正文为空、frontmatter 没有 `name`，都会直接让挂载失败，而不是注册一个空技能。
 
 ## 暴露面
 
-**技能** —— `plugin-upgrade-015rc1`（默认模型与人都可调用）。正文：6 步循环。引用：走廊卡。脚本：检测器，放在技能目录内，保证相对路径可解析。
+**技能** —— `plugin-upgrade-015`（默认模型与人都可调用）。正文：leg 路由表、8 条硬规则与 6 步循环。引用：合并后的走廊卡。脚本：检测器，放在技能目录内，保证相对路径可解析。
 
-**CLI** —— `dsh-plugin-upgrade-rc1-scan`：
+**CLI** —— `dsh-plugin-upgrade-015-scan`：
 
 ```sh
-dsh-plugin-upgrade-rc1-scan [--repo <path>] [--json <out.json>] [--seams C1,P1] [--quiet]
+dsh-plugin-upgrade-015-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
 ```
 
 | 参数 | 含义 |
 |---|---|
 | `--repo <path>` | 要扫描的仓库（默认当前目录）。 |
 | `--json <out.json>` | 同时写出机器可读报告（`repo`、`scannedAt`、`files`、`hits[]`、`bySeam`）。 |
-| `--seams C1,P1` | 只跑指定接缝。 |
+| `--seams S3,C1,P1` | 只跑合并目录中的指定接缝。 |
 | `--quiet` | 不打印人类可读渲染（与 `--json` 搭配）。 |
 
-退出码：`0` 无 error 级命中 · `1` 至少一个 error 级命中 · `2` 用法或扫描失败。扫描干净是**必要非充分**条件——本卡的出口标准是真实宿主冒烟**加上** client 半边的真实浏览器断言。
+退出码：`0` 无 error 级命中 · `1` 至少一个 error 级命中 · `2` 用法或扫描失败。扫描干净是**必要非充分**条件——出口标准是真实宿主冒烟，**加上**日志写入器（leg A）的恢复往返，以及 client 半边（leg B）的真实浏览器断言。
 
-## 十类接缝
+## 二十条接缝
 
-| Id | 级别 | `0.1.5-rc.1` 这一线变了什么 |
+顺序遵循 `lib/scan.mjs` 中的目录（先 leg A，后 leg B），这也是 `test/card.test.mjs` 把卡钉住的顺序。
+
+| Id | 级别 | 通往 `0.1.5-rc.1` 的路上变了什么 |
 |---|---|---|
-| `C1` | error | 裸 client slot `conversation` 被删除，替换为 `main` + `main.conversation`，**无别名**。`ctx.slots.inject()` 只在 declaration 存在时触发，所以指向它的插件会**静默**停止挂载。 |
+| `S3` | error | `assistant/message` 新增了必需的 `stream` 字段（会话格式 V3）：漏写它的日志能成功导入，却拒绝恢复（`Session.fromRestore` 抛 `invalid settlement fields`）。 |
+| `S8` | error | `SessionHandle.read()` 返回 `SessionHandleReadResult`（`{ eventState, events }`）而不是事件数组；数组操作必须先解包 `.events`。 |
+| `S9` | error | `SystemPrompt` 的配置项由 `persona` 改名为 `personaPrefix` / `personaSuffix`。用 `includeHarnessIdentity: false` 顶替**并不等价**——那会删掉 harness 身份块。 |
+| `M1` | error | 本地门禁编译了一条陈旧的类型线：dev/test 类型钉在 `0.1.5-alpha.*`，或 `tsconfig` 的 `paths` 别名指向不存在的 checkout 目录，都会让 TypeScript 静默回退到已发布的类型。门禁是绿的，尺子是错的。 |
+| `S4` | error | `tool/code-dispatch` 改名为 `tool/ptc-dispatch`；旧标签在 V3 会话里不再被识别。 |
+| `S5` | error | `ctx.agent` 被移除：调用方必须显式传入 Agent（例如 `setup(agentCtx, agent)` 的第二个参数）。 |
+| `S6` | error | `Inbox` 是类型接口，不是可构造的类；夹具使用官方的不支持形状，运行时代码读 `agent.inbox`。 |
+| `S7` | warn | `SubprocessHandle.pid` 被移除（只剩 `SubprocessTerminalHandle.pid`）；把该字段从测试夹具里删掉。 |
+| `S2` | warn | `EpochHeader.system` 被移除：系统提示词现在是界面节点 0 的 `system/message`。 |
+| `S1` | warn | 会话格式 V3 与带 generation 后缀的日志名——当前 generation 是 `session.v3.jsonl.zstd`，所以硬编码 `session.jsonl.zstd` 的脚本会静默失败。 |
+| `S10` | warn | 插件自己写入的会话事件必须经过宿主的 fail-closed 适配闸门：`Session.append` 没有 `ignorable` 写入通道，所以一次无条件 append 就可能让会话变得不可读。 |
+| `C1` | error | 裸 client slot `conversation` 被删除，替换为 `main` + `main.conversation`，**无别名**。`ctx.slots.inject()` 只在 declaration 存在时才触发，所以指向它的插件会**静默**停止挂载。 |
 | `C2` | error | `@deepseek-ai/dsh-client-ui-sidebar-textpreview` 改名为 `…-sidebar-documentpreview`；旧名消失且没有 shim 包。 |
-| `C3` | error | client 侧假绿：dev/test 依赖钉在 `0.1.5-alpha.*`，或 `tsconfig` `paths` 指向不存在的 checkout 目录 → TypeScript 静默回退到旧目录。 |
-| `C4` | warn | rc.1 引入全局面板模型（`main`、`sidebar.panellist`、`ctx.layout.selectPanel(MainPanelId \| null)`），并给几乎每个 slot 追加 `usePanelInfo` 标准 prop。 |
+| `P1` | error | peer 区间必须保留第二段：`>=0.1.2-rc.1 <0.2.0` 单段在 npm semver 的 prerelease-tuple 规则下**拒绝** `0.1.5-rc.1`（semver 7.8.5 实测 `false`）。 |
+| `C4` | warn | rc.1 新增了全局主面板模型（`main`、`sidebar.panellist`、`ctx.layout.selectPanel(MainPanelId \| null)`），并给几乎每个 slot 追加了 `usePanelInfo` 标准 prop。 |
 | `C5` | warn | 文档预览迁到 keyed slot `sidebar.right.tab.document`（`DocumentContent`）；`sidebar.right.pane.tab` 仍在，但父入口变成 `rightbar.session`。 |
 | `H1` | warn | `KNOWN_SESSION_EVENT_TYPES` 新增 `deliverables/presented` 与 `subagent/catalog`——fail-closed 词表变长。 |
 | `H2` | warn | 新工具 `present` 的行占用了 `tool.call.toolview` 的 key `'present'`，而该 key 在 alpha.1 是空闲的。 |
-| `H3` | info | 新增可选能力：`ctx.sessionFeedback`、`ctx.layout.beginNavigation()`、`ctx.workspaces.openSession()` / `openWorkspace()` / `forkSession()`。只在卡上列出，**刻意不做自动检测**。 |
 | `H4` | info | DeepSeek 适配器的默认咨询模型目录改以 `deepseek-flash`（DeepSeek-V41-Flash）打头。 |
-| `P1` | error | peer 区间必须保留第二段：`>=0.1.2-rc.1 <0.2.0` 单段在 npm semver 的 prerelease-tuple 规则下**拒绝** `0.1.5-rc.1`（semver 7.8.5 实测 `false`）。 |
+| `H3` | info | 新增可选能力：`ctx.sessionFeedback`、`ctx.layout.beginNavigation()`、`ctx.workspaces.openSession()` / `openWorkspace()` / `forkSession()`。只在卡上列出，**刻意不做自动检测**。 |
 
-`C4`、`C5`、`H1`、`H2`、`H4` 刻意保持提示级：它们都有合法命中（已经用了新 API 的仓、官方文档快照、插件自己的模型 id 表），所以扫描器把它们作为人工复核线索，而不是失败。
+`S7`、`S2`、`S1`、`S10`、`C4`、`C5`、`H1`、`H2` 与 `H4` 刻意保持提示级：它们都有合法命中（已经用了新 API 的仓、一份文档快照、插件自己的模型 id 表、Node 的 `ChildProcess.pid`），所以扫描器把它们作为人工复核线索，而不是失败。`M1` 与 `P1` 是**结构化**检查——它们解析 `package.json` 与 `tsconfig*.json`，而不是匹配文本——而 `H3` 是**仅卡片（card-only）**：有文档、参与 id 一致性校验，且刻意没有检测器（`CARD_ONLY = ['H3']`）。
 
 ## 本包不覆盖什么
 
-- **更早的走廊。** `0.1.3-alpha.1` → `0.1.5-alpha.1` 属于 `dsh-plugin-upgrade`。peer 低于 `0.1.5-alpha.1` 的仓先读那张卡；本包不重复覆盖。
-- **会话格式接缝。** `assistant/message.stream`、`SessionHandleReadResult`、`EpochHeader.system`、`ctx.agent`、`Inbox`、`SystemPrompt.persona` 在这一跳**没有变化**（`packages/core/session/src` 的区间 diff 只有两个新增事件字面量与一句注释），在这里重述它们等于制造漂移。它们在姊妹卡上。
-- **未来的线。** `0.1.5-rc.1` → 正式版及其后都不在范围内；卡刻意锁版本——一张会漂移的卡比没有卡更糟。
+- **`0.1.5-rc.1` 之后的一跳。** 合并跨度按构造终止于 rc.1：harness 从 `0.1.5-rc.1` 到 `0.1.5-rc.2` 的一跳没有新增任何面向插件的接缝（本包自己的 dev/test 钉版与 CI 探针跑在 `0.1.5-rc.2` 线上，因此目录是对着最新已发布类型校验的）。之后任何新增接缝的东西都是**一个新包**——一张会漂移的卡比没有卡更糟。
+- **`0.1.1` → `0.1.2` 这一跳。** 请使用社区收敛技能。
+- **跨 leg 重述。** leg A 拥有会话格式接缝（`assistant/message.stream`、`SessionHandleReadResult`、`EpochHeader.system`、`ctx.agent`、`Inbox`、`SystemPrompt.persona`、V3 日志 generation），leg B 不重述它们——leg B 区间内 `packages/core/session/src` 的全部 diff 只有两个新增的事件类型字面量与一行注释。每条 leg 的卡片章节保留自己的范围声明。
 - **DSH 面向用户的升级路径。** 本包升级的是**插件源码**，不是用户的 harness 安装。
-- **主题 token。** `docs/web-styling.md` 在这个区间零变更。
-- **证明。** 扫描干净只是假设。出口标准是真实宿主冒烟（临时 `DSH_HOME`、rc.1 CLI、`plugin add <tarball>`、`--dump-config`）**加上**每个 client 侧命中项的真实浏览器断言。
+- **主题 token。** `docs/web-styling.md` 在 leg B 区间零变更。
+- **证明。** 扫描干净只是假设。出口标准是真实宿主冒烟（临时 `DSH_HOME`、目标 CLI、`plugin add <tarball>`、`--dump-config`），**加上**会话日志写入器（leg A）的恢复往返，以及每个 client 侧命中项（leg B）的真实浏览器断言。
 
 ## 安全边界
 
@@ -160,7 +174,7 @@ npm run check:readmes              # 五语 README 一致性
 npm pack
 ```
 
-扫描器自带合成夹具 `fixtures/bad-repo`（故意包含全部 error 级接缝）与 `fixtures/good-repo`（已适配），外加拿一个已钉 `0.1.5-rc.1` 的家族仓做 live negative，所以目录里的回归会在这个测试套件里失败，而不是在用户那里。`test/card.test.mjs` 断言卡与 `lib/scan.mjs` 的名字与级别**完全一致**——把「证据绑定」规则变成机器门禁。
+扫描器**每条 leg 各有一对**合成夹具：`fixtures/leg-a-bad-repo`（leg A 的会话/配置接缝，故意包含全部 error 级接缝）配 `fixtures/leg-a-good-repo`（已适配），以及 `fixtures/bad-repo`（leg B 的 client slot 接缝）配 `fixtures/good-repo`（已适配）——再外加拿一个已钉 `0.1.5-rc.1` 的家族仓做 live negative，所以目录里的回归会在这个测试套件里失败，而不是在下游用户那里。`test/card.test.mjs` 断言合并后的卡片索引与 `lib/scan.mjs` 命名的**正好**是同样二十个接缝 id、同样的级别，并且 `CARD_ONLY` 正好是 `['H3']`——把「证据绑定」规则变成机器门禁。
 
 ## 主题标签
 

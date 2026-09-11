@@ -1,10 +1,18 @@
-# Evidence · `dsh-v0.1.5-alpha.1` → `dsh-v0.1.5-rc.1`
+# Evidence · `dsh-plugin-upgrade-0.1.3-0.1.5` (merged `0.1.3-alpha.1` → `0.1.5-rc.1`)
 
-Every upstream claim in the version card
-(`skills/plugin-upgrade-015rc1/references/v0.1.5-alpha.1-to-v0.1.5-rc.1.md`) and every
+Every upstream claim in the merged version card
+(`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) and every
 `action` string in `lib/scan.mjs` traces to a command recorded here, re-run on
-**2026-09-10** against the read-only harness checkout at `D:\deepseek-harness` and the
+**2026-09-09** (leg A's wave) and **2026-09-10** (leg B's tag-range diff) against the read-only
+harness checkout at `D:\deepseek-harness`, the leg-A checkout at `19d2e38480`, and the
 read-only family workspace at `D:\Projects\dsh\plugins`.
+
+This file holds the records of both legs of the merged span:
+
+- **§1–§10 below are leg B's records** (`0.1.5-alpha.1 → 0.1.5-rc.1`), kept verbatim from the
+  retired `dsh-plugin-upgrade-rc1`, against the merged card's **§2 Leg B**;
+- **§A at the end is leg A's provenance pointer** (`0.1.3-alpha.1 → 0.1.5-alpha.1`), against
+  the merged card's **§1 Leg A**.
 
 Toolchain used: `node v22.22.3`, `npm 11.16.0`, `pnpm 11.21.0` (Windows).
 
@@ -164,12 +172,12 @@ $ git diff --stat dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1 -- packages/client/ui-slot
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
 
-The session-format seams the sibling corridor owns (`assistant/message.stream`,
-`SessionHandleReadResult`, `EpochHeader.system`, `ctx.agent`, `Inbox`,
-`SystemPrompt.persona`, the V3 log generation) have **no** implementation change in this
-range: the whole `packages/core/session/src` diff is the two added event-type literals and
-one comment line shown above. `docs/web-styling.md` (theme tokens) has zero changes in the
-range. The scanner therefore does not cover them here, and the card says so explicitly.
+The session-format seams **leg A** owns (`assistant/message.stream`, `SessionHandleReadResult`,
+`EpochHeader.system`, `ctx.agent`, `Inbox`, `SystemPrompt.persona`, the V3 log generation) have
+**no** implementation change in this range: the whole `packages/core/session/src` diff is the
+two added event-type literals and one comment line shown above. `docs/web-styling.md` (theme
+tokens) has zero changes in the range. The scanner therefore reports no leg-A hit here that is
+not also a leg-A fact, and the card says so explicitly in §2's scope statement.
 
 ## 6. Peer-range semantics (semver 7.8.5, measured)
 
@@ -252,18 +260,24 @@ not claim a selection rule.
 
 ## 9. Package name availability
 
+Re-measured for the merged package name on 2026-09-11 (the merged repository keeps this
+record; the two retired names are the controls that prove the registry answers):
+
 ```console
-$ npm view dsh-plugin-upgrade-rc1 version
+$ npm view dsh-plugin-upgrade-0.1.3-0.1.5 version
 npm error code E404
-npm error 404 Not Found - GET https://registry.npmjs.org/dsh-plugin-upgrade-rc1 - Not found
-npm error 404  The requested resource 'dsh-plugin-upgrade-rc1@*' could not be found or you do not have permission to access it.
+npm error 404 Not Found - GET https://registry.npmjs.org/dsh-plugin-upgrade-0.1.3-0.1.5 - Not found
+npm error 404  The requested resource 'dsh-plugin-upgrade-0.1.3-0.1.5@*' could not be found or you do not have permission to access it.
 (exit 1)
 
-$ npm view dsh-plugin-upgrade version dist-tags.latest      # control: the sibling package exists
+$ npm view dsh-plugin-upgrade version dist-tags.latest      # control: retired leg A still exists
 version = '0.1.3'
 dist-tags.latest = '0.1.3'
-$ npm view @deepseek-ai/dsh-skill@0.1.5-rc.1 version         # control: the dev pin is published
-0.1.5-rc.1
+$ npm view dsh-plugin-upgrade-rc1 version dist-tags.latest  # control: retired leg B still exists
+version = '0.1.0'
+dist-tags.latest = '0.1.0'
+$ npm view @deepseek-ai/dsh-skill@0.1.5-rc.2 version         # control: the merged dev pin is published
+0.1.5-rc.2
 ```
 
 ## 10. Not verified (kept out of the card's claims)
@@ -277,3 +291,35 @@ $ npm view @deepseek-ai/dsh-skill@0.1.5-rc.1 version         # control: the dev 
   and service catalogs (no full export diff of the 432 changed client files).
 - Whether upstream intends to publish a migration note for the `conversation` removal; the
   card records the absence of one as of 2026-09-10.
+
+## A. Leg A provenance (`0.1.3-alpha.1` → `0.1.5-alpha.1`)
+
+Leg A's provenance does **not** live in this file. It lives in the retired
+`dsh-plugin-upgrade` package's version card,
+`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-alpha.1.md`, which the merge
+brought in as the merged card's **§1 Leg A** — verbatim, including its `path:line` citations,
+its measured scale and its boundary notes.
+
+What that leg's provenance records, so a reader of this file can find it without the retired
+package:
+
+| Item | Leg A's recorded value |
+|---|---|
+| Card that holds the evidence | retired `dsh-plugin-upgrade` card, now merged card §1 Leg A |
+| Run | 2026-09-09 wave over **40 real plugin repositories** |
+| Leg-A host checkout | `0.1.5-alpha.1`, HEAD `19d2e38480`; official tag `dsh-v0.1.5-alpha.1` = `5dda764ed3` |
+| Seams measured | `S1`–`S10` + `M1` (the merged card's §1 sections 1–5, with the per-seam host path and commit) |
+| Reproduce | CLI `dsh-plugin-upgrade-015-scan --repo <repo>` (then `dsh-plugin-upgrade-scan`), `file:line` output |
+| `M1` scale | **11 of 40** repos hit the stale type line; fixing the paths exposed real TypeScript errors in **3** repos that had been "green" |
+| `S3` scale | one measured case (`dsh-claude-move`: import succeeded, `Session.fromRestore` refused to resume) |
+| `S8` scale | `dsh-background-agents` production code `src/tools.ts:713` (`TS2740`) plus two tests; `dsh-output-styles` `scripts/verify-session-log.mjs` threw a TypeError |
+| `S9` scale | four repos' test fixtures (`dsh-data-quality`, `dsh-industry-research`, `dsh-research-report`, `dsh-fast`; `TS2353`) |
+| Leg-A official precedent cited | `apps/cli/tests/profiles/headless/tests/harness.ts:59` |
+| Leg-A unverified | real-browser L9 and real-model L11 were not executed there either (recorded in that card's §7) |
+
+The merged repository re-measured leg A's seams against its own fixtures
+(`fixtures/leg-a-bad-repo` / `fixtures/leg-a-good-repo`) rather than re-running the 40-repo
+wave: the fixture pair pins the same error-severity seams the card names
+(`S3`, `S8`, `S9`, `S4`, `S5`, `S6`, `M1` in the bad fixture; zero error hits in the good one).
+Nothing in leg A's provenance was discarded by the merge, and nothing in it was re-derived
+here — where the two legs disagree, the leg that measured the seam wins.

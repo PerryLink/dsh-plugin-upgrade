@@ -1,67 +1,89 @@
 # AGENTS.md
 
-Standalone DeepSeek Harness plugin repository (`dsh-plugin-upgrade-rc1`). Development follows
-the dsh-plugin-guide skill and the official plugin contract; this file records repo-local
-decisions. Read `README.md` (external contract) and the packaged corridor card
-(`skills/plugin-upgrade-015rc1/references/v0.1.5-alpha.1-to-v0.1.5-rc.1.md`) before changing
+Standalone DeepSeek Harness plugin repository (`dsh-plugin-upgrade-0.1.3-0.1.5`). Development
+follows the dsh-plugin-guide skill and the official plugin contract; this file records
+repo-local decisions. Read `README.md` (external contract) and the packaged merged corridor
+card (`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) before changing
 behavior.
 
-## The corridor is locked
+## A corridor never widens (and one package may carry several closed corridors)
 
-- **The corridor is locked.** This package upgrades plugins across `0.1.5-alpha.1 →
+- **A corridor never widens.** This package upgrades plugins across `0.1.3-alpha.1 →
   0.1.5-rc.1` and nothing else. Do not widen the peer band or the card to "all versions":
-  a drifting card is worse than no card. A new corridor is a new package.
-
-That rule is inherited verbatim from the sibling corridor's `AGENTS.md:43-45`
-(`dsh-plugin-upgrade`, locked on `0.1.3-alpha.1 → 0.1.5-alpha.1`), with only the version pair
-replaced. It is a **family asset**, not one repository's private rule: the sibling's
-`README.md` states "**One corridor only** … It is not a general migration framework", and
-`0.1.5-rc.1`'s seams do not belong on that card any more than `0.1.3-alpha.1`'s belong here.
+  a drifting card is worse than no card. A hop that adds a seam is a new package.
+- **One package may carry several *closed* corridors.** That is what this repository is: one
+  npm package holding leg A (`0.1.3-alpha.1 → 0.1.5-alpha.1`) and leg B (`0.1.5-alpha.1 →
+  0.1.5-rc.1`) as **two closed corridors of one span**, each keeping its own evidence, card
+  section, fixtures and rollback path. Neither leg may absorb a third hop.
+- **This supersedes the family's earlier rule.** The retired `dsh-plugin-upgrade` and
+  `dsh-plugin-upgrade-rc1` each carried a "**The corridor is locked** … a new corridor is a
+  new package" section plus "**zero code dependency on the sibling corridor**: no `import`,
+  no vendoring, no shared `SEAMS`". The owner deliberately superseded the second half of that
+  pair: the merged package **does** share one `SEAMS` (one scanner, one catalog, one
+  id-parity gate) because the two legs are contiguous hops of one span. What survives
+  unchanged is the numbering discipline — a corridor is *closed*, not open-ended — and the
+  per-leg ownership below.
 
 Consequences accepted by this repository:
 
-- The seam catalog (`C1`–`C5`, `H1`–`H4`, `P1`) is evidence-bound to the tag range
-  `dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1`. A new hop (rc.2, the final release, anything later)
-  is a **new package**, not a wider card.
-- Session-format seams (`assistant/message.stream`, `SessionHandleReadResult`,
-  `EpochHeader.system`, `ctx.agent`, `Inbox`, `SystemPrompt.persona`, the V3 log generation)
-  are **not** restated here: they are unchanged in this range (measured: the whole
-  `packages/core/session/src` diff is two added event-type literals and one comment line) and
-  they belong to the sibling card. Restating them would be drift.
-- The peer band is **unchanged** by this adaptation. `>=0.1.2-rc.1 <0.2.0` alone rejects
+- The merged catalog (20 seams: `S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`,
+  `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) is evidence-bound to the two
+  tag ranges it was measured on — leg A `dsh-v0.1.5-alpha.1` (2026-09-09 wave over 40 plugin
+  repos) and leg B `dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1` (2026-09-10). A hop after
+  `0.1.5-rc.1` (rc.2, the final release, anything later) is a **new package**, not a wider
+  card. The harness hop `0.1.5-rc.1 → 0.1.5-rc.2` added no plugin-facing seam, which is why
+  the span ends at rc.1 while the dev/test pin and the CI probe run on `0.1.5-rc.2`.
+- **Leg A owns the session-format seams** (`assistant/message.stream`, `S3`;
+  `SessionHandleReadResult`, `S8`; `EpochHeader.system`, `S2`; `ctx.agent`, `S5`; `Inbox`,
+  `S6`; `SystemPrompt.persona`, `S9`; the V3 log generation, `S1`) and **leg B does not
+  restate them** — measured: the whole `packages/core/session/src` diff inside leg B's range
+  is two added event-type literals and one comment line. Each leg's card section keeps its own
+  scope statement; restating across legs is drift.
+- **`C3` is retired.** Leg B's card spelled the stale-type-line false green `C3`; it is the
+  same defect as leg A's `M1` and is folded into it, so `M1` carries both causes (an
+  unresolvable `tsconfig` `paths` alias and dev/test types pinned at `0.1.5-alpha.*`). The
+  card records the old spelling in the fold notes, but `C3` is not a seam id: `--seams C3`
+  matches nothing and `types.d.ts` does not accept it.
+- The peer band is **unchanged** by both legs. `>=0.1.2-rc.1 <0.2.0` alone rejects
   `0.1.5-rc.1` under npm semver's prerelease-tuple rule (measured `false` on semver 7.8.5);
-  the `|| >=0.1.5-alpha.1 <0.2.0` segment is what admits it.
-- Zero code dependency on the sibling corridor: no `import`, no vendoring, no shared
-  `SEAMS`. Each corridor keeps its own release flow and can roll back alone.
+  the `|| >=0.1.5-alpha.1 <0.2.0` segment is what admits it. `P1` forbids dropping it, and
+  this package's own `peerDependencies` keeps both segments.
 - The `C1` ruling (the bare `conversation` slot removal is a **public extension-point
   break**, kept at `error`, with a rewrite recipe and a real-browser exit criterion) is
-  recorded in the card §3.3. Do not downgrade it to an advisory without new upstream
+  recorded in card §2 §3.3. Do not downgrade it to an advisory without new upstream
   evidence (an alias, a shim, or an official migration note).
 
 ## Layout (JS form, pure host, no browser half)
 
 ```
 index.mjs             single host face: Config schema + skill bundle reader + apply()
-types.d.ts            Config, SeamHit, ScanReport and the public function surface
-lib/scan.mjs          zero-dependency seam catalog + scanner + CLI main()
-scripts/scan-0.1.5-rc1.mjs   thin bin wrapper (npx dsh-plugin-upgrade-rc1-scan)
-skills/plugin-upgrade-015rc1/scripts/scan-0.1.5-rc1.mjs  the same wrapper inside the skill
+types.d.ts            Config, SeamId, SeamHit, ScanReport and the public function surface
+lib/scan.mjs          zero-dependency merged seam catalog (both legs) + scanner + CLI main()
+scripts/scan-0.1.5.mjs   thin bin wrapper (npx dsh-plugin-upgrade-015-scan)
+skills/plugin-upgrade-015/scripts/scan-0.1.5.mjs  the same wrapper inside the skill
                       directory, so the skill body's `./scripts/...` resolves against its
                       resourceBase
 scripts/sweep-all.mjs    maintainer tool: sweep a workspace of plugin repos into a table
 scripts/changelog-section.mjs  print one CHANGELOG section for GitHub Release notes
 scripts/verify-self-contained.mjs  every import resolves inside the package
 scripts/verify-artifacts.mjs       pack + inspect the published tarball (also asserts that
-                                   test/, fixtures/ and .github/ do NOT ship)
+                                   test/, fixtures/ and .github/ do NOT ship, and that a
+                                   leg-A seam fails the packaged CLI)
 scripts/check-readme-sync.mjs      five-language README consistency
-skills/plugin-upgrade-015rc1/SKILL.md  the bundled skill body (frontmatter name is the skill id)
-skills/plugin-upgrade-015rc1/references/…  the corridor card
-test/scan.test.mjs    synthetic bad/good fixtures + a live negative on an adapted repo
+skills/plugin-upgrade-015/SKILL.md  the bundled skill body (frontmatter name is the skill id;
+                                    it routes the caller to the leg matching its peer band)
+skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md  the merged card:
+                                    §1 Leg A, §2 Leg B, §3 the 20-seam index
+test/scan.test.mjs    synthetic bad/good fixtures for BOTH legs + --seams + a live negative
 test/plugin.test.mjs  real Cordis Context + real SkillRegistry: register, dispose, negatives
 test/card.test.mjs    the card↔catalog id/severity parity gate
-fixtures/             scanner fixtures (bad-repo, good-repo) — never published
+fixtures/             scanner fixtures — never published:
+                        bad-repo / good-repo            leg B (client-slot oriented)
+                        leg-a-bad-repo / leg-a-good-repo  leg A (TypeScript/session oriented)
 docs/EVIDENCE.md      the command→output record every card claim traces to
-cordis.patch.yml      bundle declaration (insert dsh-plugin-upgrade-rc1); every Config key inline
+                      (§A = leg A's provenance, §1–§10 = leg B's records)
+cordis.patch.yml      bundle declaration (insert dsh-plugin-upgrade-0.1.3-0.1.5); every
+                      Config key inline
 pnpm-workspace.yaml   nearest-workspace root (isolates this repo from a surrounding harness checkout)
 package.json          npm metadata; files whitelist = published content
 .github/workflows/    CI (3 OS × 2 Node), monthly compat probe, v* npm release + GitHub
@@ -79,21 +101,30 @@ LICENSE               Apache-2.0
 - **`C1` is an error, never a warning.** The deletion has no alias and the injection callback
   never runs, so the only honest level is error. Only promote `C4`/`C5`/`H1`/`H2`/`H4` from
   advisory to error with evidence and a fixture that proves the false positive is gone.
-- **`C3` and `P1` are blockers, never warnings.** If the local type line is stale, or the peer
-  band lost its second segment, every other local signal is fake.
+- **`M1` and `P1` are blockers, never warnings.** If the local type line is stale (either
+  cause), or the peer band lost its second segment, every other local signal is fake. `M1`
+  and `P1` are **structured** checks, so their catalog `test` is `null` without being
+  card-only.
+- **The leg-A error seams stay errors.** `S3`, `S8`, `S9`, `S4`, `S5` and `S6` each make a
+  repo that looks green fail on the target host; only demote one with new upstream evidence.
+- **Advisory seams stay advisory.** `S7`/`S2`/`S1`/`S10` and `C4`/`C5`/`H1`/`H2`/`H4` have
+  legitimate matches; they are leads for manual review. Only promote one to `error` with
+  evidence and a fixture that proves the false positive is gone.
 - **`H3` is card-only.** It is documented, id-parity checked, and deliberately has no
-  detector; `CARD_ONLY` encodes that and the test suite asserts it stays that way.
+  detector; `CARD_ONLY` is exactly `['H3']` and the test suite asserts it stays that way.
 - **The scanner is read-only and dependency-free.** No network, no child process, no write
   inside `--repo`; `lib/scan.mjs` imports only `node:fs` and `node:path`. Keep it that way.
 - **A clean scan is necessary, not sufficient.** Never describe a scan as proof of
-  adaptation: this corridor's breakage is silent, so a client half needs a real browser
-  assertion, and the card's exit criterion is a real-host smoke on a temp `DSH_HOME`.
+  adaptation: this span's breakage is silent from both ends, so a session-log writer needs a
+  resume round-trip (`S3`), a client half needs a real browser assertion, and the card's exit
+  criterion is a real-host smoke on a temp `DSH_HOME`.
 - **The card and the catalog are one catalog.** `test/card.test.mjs` fails when their ids or
-  severities disagree. Change the card first, then the catalog, in the same commit.
+  severities disagree, and when the card mints an id outside the merged 20. Change the card
+  first, then the catalog, in the same commit.
 - **Mount loud.** A missing `SKILL.md`, an empty body, or a frontmatter without `name` must
   abort the mount. Never register a placeholder skill.
 - **The skill id is the frontmatter name.** `skillName` selects the directory; the registered
-  name comes from the file. Keep the three in sync (`plugin-upgrade-015rc1`: directory,
+  name comes from the file. Keep the four in sync (`plugin-upgrade-015`: directory,
   frontmatter `name`, `package.json` Config default, `cordis.patch.yml`).
 - **Registration is an effect.** `ctx.skills.register()` runs inside `ctx.effect()` so the
   disposer removes the contribution on unload; the test asserts that.
@@ -108,7 +139,7 @@ LICENSE               Apache-2.0
 
 ```sh
 npm install                        # or: pnpm install (pnpm-lock.yaml is committed)
-npm test                           # node --test: scanner + card parity + real-registry mount
+npm test                           # node --test: scanner (both legs) + card parity + real-registry mount
 npm run verify:self-contained      # every import resolves inside the package
 npm run verify:artifacts           # tarball contents + entry import + dev-only content excluded
 npm run check:readmes              # five-language README consistency
@@ -122,32 +153,38 @@ after every harness release.
 
 ## Release
 
-Version is currently `0.1.0`. For a new version: bump `package.json#version`, stamp the
-CHANGELOG `[Unreleased]` section into `## [<x.y.z>] - <UTC date>`, re-run the full gate,
-commit `chore(release): <x.y.z>`, and `git tag -a v<x.y.z>`. `git push origin main
---follow-tags` triggers `.github/workflows/release.yml`, which re-runs the gate, publishes to
-npm with provenance (skipped without the `NPM_TOKEN` secret) and creates the GitHub Release
-from the stamped CHANGELOG section behind an idempotent `gh release view` guard. Never push a
-tag for a version already on the registry.
-**Publish incident (2026-09-10, the first tag).** `v0.1.0`'s first run failed in
-`Publish to npm` with `*** is not a legal HTTP header value`, after the provenance statement
-had already been signed and published to the transparency log. The step read the token through
-setup-node's `${NODE_AUTH_TOKEN}` expansion at the time; it now normalises line breaks and
-writes `//registry.npmjs.org/:_authToken=…` into `NPM_CONFIG_USERCONFIG` itself. The rewritten
-step reports whether the secret carried line breaks, and it reported **no** — so the
-trailing-newline hypothesis is disproven and the mechanism of the env-expanded failure is NOT
-established. What is established: that path failed, the directly written userconfig publishes.
-`v0.1.0` was re-tagged onto the fix (allowed: the version was not on the registry yet). Do not
-reintroduce `${NODE_AUTH_TOKEN}` without re-testing it.
+Version is currently `0.1.0`. The npm name `dsh-plugin-upgrade-0.1.3-0.1.5` is brand new, so
+this package starts its own version line at `0.1.0`; the two retired packages' histories live
+in `CHANGELOG.md` under `[Unreleased]` and below. For a new version: bump
+`package.json#version`, stamp the CHANGELOG `[Unreleased]` section into `## [<x.y.z>] - <UTC
+date>`, re-run the full gate, commit `chore(release): <x.y.z>`, and `git tag -a v<x.y.z>`.
+`git push origin main --follow-tags` triggers `.github/workflows/release.yml`, which re-runs
+the gate, publishes to npm with provenance (skipped without the `NPM_TOKEN` secret) and
+creates the GitHub Release from the stamped CHANGELOG section behind an idempotent
+`gh release view` guard. Never push a tag for a version already on the registry.
+**Publish incident (2026-09-10, the first tag of the retired `dsh-plugin-upgrade-rc1`).**
+`v0.1.0`'s first run failed in `Publish to npm` with `*** is not a legal HTTP header value`,
+after the provenance statement had already been signed and published to the transparency log.
+The step read the token through setup-node's `${NODE_AUTH_TOKEN}` expansion at the time; it
+now normalises line breaks and writes `//registry.npmjs.org/:_authToken=…` into
+`NPM_CONFIG_USERCONFIG` itself. The rewritten step reports whether the secret carried line
+breaks, and it reported **no** — so the trailing-newline hypothesis is disproven and the
+mechanism of the env-expanded failure is NOT established. What is established: that path
+failed, the directly written userconfig publishes. `v0.1.0` was re-tagged onto the fix
+(allowed: the version was not on the registry yet). The rewritten step is inherited by this
+package unchanged; do not reintroduce `${NODE_AUTH_TOKEN}` without re-testing it.
 
 The scanner catalog is evidence-bound: a version bump that changes a seam must update the
-card, `docs/EVIDENCE.md`, the fixtures and `CHANGELOG.md` in the same commit.
+card, `docs/EVIDENCE.md`, the fixtures **of the leg it belongs to** and `CHANGELOG.md` in the
+same commit.
 
 **Post-publish integration (not done in this repository's history yet).** The README badge
 row expects `PerryLink/dsh-plugin-doctor` to carry a
-`PerryLink__dsh-plugin-upgrade-rc1.svg` badge, and the family also enrols each package in the
-Gitee mirror, the `dsh-catalog` directory and the omdsh workshop list. Those are release-side
-steps performed from the family workspace after the first tag.
+`PerryLink__dsh-plugin-upgrade-0.1.3-0.1.5.svg` badge, and the family also enrols each package
+in the Gitee mirror, the `dsh-catalog` directory and the omdsh workshop list. Those are
+release-side steps performed from the family workspace after the first tag. The two retired
+package names stay on the registry (unpublished content is not removed by publishing a new
+name); their README/card wording is now historical.
 
 ## Docs
 
@@ -160,5 +197,6 @@ steps performed from the family workspace after the first tag.
 - License is Apache-2.0 (`LICENSE` + the package.json `license` field).
   `THIRD_PARTY_NOTICES.md` documents install-time dependencies; nothing is bundled.
 - Every factual claim in the card or the scanner traces to a command recorded in
-  `docs/EVIDENCE.md`. Where a claim could not be verified it is marked **unverified** and
-  kept out of the card.
+  `docs/EVIDENCE.md` — §A for leg A's provenance (via the retired `dsh-plugin-upgrade` card,
+  now merged in as Leg A) and §1–§10 for leg B's records. Where a claim could not be verified
+  it is marked **unverified** and kept out of the card.
