@@ -11,7 +11,7 @@ import { tmpdir } from 'node:os'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const staging = mkdtempSync(join(tmpdir(), 'dsh-plugin-upgrade-0.1.3-0.1.5-pack-'))
+const staging = mkdtempSync(join(tmpdir(), 'dsh-plugin-upgrade-015-pack-'))
 const failures = []
 try {
   execFileSync('npm', ['pack', '--pack-destination', staging], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true, shell: true })
@@ -69,7 +69,7 @@ try {
   const body = patch.split(/\r?\n/).filter(l => l.trim() !== '' && !l.trim().startsWith('#'))
   if (!body[0]?.startsWith('- ')) failures.push(`cordis.patch.yml is not a top-level YAML array (starts with ${JSON.stringify(body[0]?.slice(0, 30))})`)
   if (!body.some(l => /^-\s+insert:/.test(l))) failures.push('cordis.patch.yml has no top-level `- insert:` entry')
-  if (!body.some(l => /name:\s*dsh-plugin-upgrade-0\.1\.3-0\.1\.5\s*$/.test(l))) failures.push('cordis.patch.yml does not insert the dsh-plugin-upgrade-0.1.3-0.1.5 row')
+  if (!body.some(l => /name:\s*dsh-plugin-upgrade-015\s*$/.test(l))) failures.push('cordis.patch.yml does not insert the dsh-plugin-upgrade-015 row')
 
   // The skill-relative scanner entry must work from inside the tarball, because
   // the skill body resolves `./scripts/...` against the skill directory.

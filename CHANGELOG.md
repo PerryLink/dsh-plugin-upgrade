@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The scanner CLI is now `dsh-plugin-upgrade-015-scan` (`scripts/scan-0.1.5.mjs`, plus the
   skill-local `skills/plugin-upgrade-015/scripts/scan-0.1.5.mjs`); the cordis row is
-  `dsh-plugin-upgrade-0.1.3-0.1.5`.
+  `dsh-plugin-upgrade-015`.
 - The dev/test pin and the monthly compat probe move to the published `0.1.5-rc.2` line (the
   newest published types verify the same seam catalog), while `dshWorkshop.compatibility.dshVersions`
   lists `0.1.2-rc.1` and `0.1.5-rc.2`. The peer band still keeps both segments

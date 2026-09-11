@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Standalone DeepSeek Harness plugin repository (`dsh-plugin-upgrade-0.1.3-0.1.5`). Development
+Standalone DeepSeek Harness plugin repository (`dsh-plugin-upgrade-015`). Development
 follows the dsh-plugin-guide skill and the official plugin contract; this file records
 repo-local decisions. Read `README.md` (external contract) and the packaged merged corridor
 card (`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) before changing
@@ -82,7 +82,7 @@ fixtures/             scanner fixtures — never published:
                         leg-a-bad-repo / leg-a-good-repo  leg A (TypeScript/session oriented)
 docs/EVIDENCE.md      the command→output record every card claim traces to
                       (§A = leg A's provenance, §1–§10 = leg B's records)
-cordis.patch.yml      bundle declaration (insert dsh-plugin-upgrade-0.1.3-0.1.5); every
+cordis.patch.yml      bundle declaration (insert dsh-plugin-upgrade-015); every
                       Config key inline
 pnpm-workspace.yaml   nearest-workspace root (isolates this repo from a surrounding harness checkout)
 package.json          npm metadata; files whitelist = published content
@@ -153,7 +153,7 @@ after every harness release.
 
 ## Release
 
-Version is currently `0.1.0`. The npm name `dsh-plugin-upgrade-0.1.3-0.1.5` is brand new, so
+Version is currently `0.1.0`. The npm name `dsh-plugin-upgrade-015` is brand new, so
 this package starts its own version line at `0.1.0`; the two retired packages' histories live
 in `CHANGELOG.md` under `[Unreleased]` and below. For a new version: bump
 `package.json#version`, stamp the CHANGELOG `[Unreleased]` section into `## [<x.y.z>] - <UTC
@@ -180,7 +180,7 @@ same commit.
 
 **Post-publish integration (not done in this repository's history yet).** The README badge
 row expects `PerryLink/dsh-plugin-doctor` to carry a
-`PerryLink__dsh-plugin-upgrade-0.1.3-0.1.5.svg` badge, and the family also enrols each package
+`PerryLink__dsh-plugin-upgrade-015.svg` badge, and the family also enrols each package
 in the Gitee mirror, the `dsh-catalog` directory and the omdsh workshop list. Those are
 release-side steps performed from the family workspace after the first tag. The two retired
 package names stay on the registry (unpublished content is not removed by publishing a new

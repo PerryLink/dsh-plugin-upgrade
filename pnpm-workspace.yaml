@@ -1,5 +1,5 @@
 # Nearest-workspace root for this standalone plugin package. This file makes
-# dsh-plugin-upgrade-0.1.3-0.1.5 an independent workspace when the repository is
+# dsh-plugin-upgrade-015 an independent workspace when the repository is
 # checked out inside another pnpm workspace, such as a deepseek-harness checkout
 # (which is where this repo lives during development).
 packages:

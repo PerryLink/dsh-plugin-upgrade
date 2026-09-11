@@ -19,7 +19,7 @@ const SKILL = 'plugin-upgrade-015'
 const CARD = 'references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md'
 
 test('the plugin identity names the merged package, not either retired one', () => {
-  assert.equal(plugin.name, 'dsh-plugin-upgrade-0.1.3-0.1.5')
+  assert.equal(plugin.name, 'dsh-plugin-upgrade-015')
   assert.deepEqual(plugin.inject, ['skills'])
 })
 
@@ -75,7 +75,7 @@ test('a missing skill bundle fails loud instead of mounting silently', async () 
   // when the fiber is awaited rather than on the synchronous ctx.plugin() call.
   await assert.rejects(
     async () => { await ctx.plugin(plugin, { skillsRoot: path.join(root, 'fixtures', 'does-not-exist') }) },
-    /dsh-plugin-upgrade-0\.1\.3-0\.1\.5: cannot read skill bundle/,
+    /dsh-plugin-upgrade-015: cannot read skill bundle/,
   )
 })
 

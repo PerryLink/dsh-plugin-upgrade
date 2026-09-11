@@ -1,23 +1,23 @@
 <div align="center">
 
-# ⬆️ dsh-plugin-upgrade-0.1.3-0.1.5
-- **1024 商店通道**：先 `npm i -g dsh1024`，再执行 `dsh1024 plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-0.1.3-0.1.5)
+# ⬆️ dsh-plugin-upgrade-015
+- **1024 商店通道**：先 `npm i -g dsh1024`，再执行 `dsh1024 plugin --profile web add dsh-plugin-upgrade-015`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-015)
 
 **DeepSeek Harness 插件升级技能（已合并、版本锁定）——`0.1.3-alpha.1` → `0.1.5-rc.1`，由两条闭合的 leg 承载。**
 
 *leg A `0.1.3-alpha.1` → `0.1.5-alpha.1`，leg B `0.1.5-alpha.1` → `0.1.5-rc.1`：一张走廊卡加一个零依赖接缝扫描器，覆盖合并后的 20 条接缝目录，让「静默不挂载的 client 半边」不再被误当成「typecheck 绿了」。*
 
-> **官方仓库。** 这是 dsh-plugin-upgrade-0.1.3-0.1.5 唯一的官方仓库，由 PerryLink 维护。它取代两个版本锁定的包 `dsh-plugin-upgrade`（leg A）与 `dsh-plugin-upgrade-rc1`（leg B）。其他账号下的同名仓库与本项目无关。
+> **官方仓库。** 这是 dsh-plugin-upgrade-015 唯一的官方仓库，由 PerryLink 维护。它取代两个版本锁定的包 `dsh-plugin-upgrade`（leg A）与 `dsh-plugin-upgrade-rc1`（leg B）。其他账号下的同名仓库与本项目无关。
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-0.1.3-0.1.5.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-015.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-0.1.3-0.1.5)](https://www.npmjs.com/package/dsh-plugin-upgrade-0.1.3-0.1.5)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-0.1.3-0.1.5)](https://www.npmjs.com/package/dsh-plugin-upgrade-0.1.3-0.1.5)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-015/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-015/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-015?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-015/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
@@ -56,10 +56,10 @@
 
 ```sh
 # 1. 把 bundle 装进你的 profile
-dsh plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5
+dsh plugin --profile web add dsh-plugin-upgrade-015
 
 # 2. 确认插件行已挂载
-dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-0.1.3-0.1.5'
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-015'
 
 # 3. 扫描你要升级的插件
 npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
@@ -71,9 +71,9 @@ npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
 ## 安装与卸载
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5            # 从 npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5#main"   # 从源码
-dsh plugin --profile web remove dsh-plugin-upgrade-0.1.3-0.1.5         # 卸载（可逆）
+dsh plugin --profile web add dsh-plugin-upgrade-015            # 从 npm
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-015#main"   # 从源码
+dsh plugin --profile web remove dsh-plugin-upgrade-015         # 卸载（可逆）
 ```
 
 安装 bundle 只注册一个技能；移除插件行即移除技能。CLI 是普通 `npx` 目标，完全不需要 profile。
@@ -91,8 +91,8 @@ dsh plugin --profile web remove dsh-plugin-upgrade-0.1.3-0.1.5         # 卸载�
 
 ```yaml
 - insert:
-    - id: dsh-plugin-upgrade-0.1.3-0.1.5
-      name: dsh-plugin-upgrade-0.1.3-0.1.5
+    - id: dsh-plugin-upgrade-015
+      name: dsh-plugin-upgrade-015
       config:
         skillName: plugin-upgrade-015
 ```

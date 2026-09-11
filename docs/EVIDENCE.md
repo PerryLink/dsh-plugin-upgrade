@@ -1,4 +1,4 @@
-# Evidence · `dsh-plugin-upgrade-0.1.3-0.1.5` (merged `0.1.3-alpha.1` → `0.1.5-rc.1`)
+# Evidence · `dsh-plugin-upgrade-015` (merged `0.1.3-alpha.1` → `0.1.5-rc.1`)
 
 Every upstream claim in the merged version card
 (`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) and every
@@ -264,10 +264,10 @@ Re-measured for the merged package name on 2026-09-11 (the merged repository kee
 record; the two retired names are the controls that prove the registry answers):
 
 ```console
-$ npm view dsh-plugin-upgrade-0.1.3-0.1.5 version
+$ npm view dsh-plugin-upgrade-015 version
 npm error code E404
-npm error 404 Not Found - GET https://registry.npmjs.org/dsh-plugin-upgrade-0.1.3-0.1.5 - Not found
-npm error 404  The requested resource 'dsh-plugin-upgrade-0.1.3-0.1.5@*' could not be found or you do not have permission to access it.
+npm error 404 Not Found - GET https://registry.npmjs.org/dsh-plugin-upgrade-015 - Not found
+npm error 404  The requested resource 'dsh-plugin-upgrade-015@*' could not be found or you do not have permission to access it.
 (exit 1)
 
 $ npm view dsh-plugin-upgrade version dist-tags.latest      # control: retired leg A still exists
@@ -279,6 +279,35 @@ dist-tags.latest = '0.1.0'
 $ npm view @deepseek-ai/dsh-skill@0.1.5-rc.2 version         # control: the merged dev pin is published
 0.1.5-rc.2
 ```
+
+### 9.1 The original name was rejected by npm (403 spam detection)
+
+The first release attempt under the name `dsh-plugin-upgrade-0.1.3-0.1.5` failed at the
+publish step of `release.yml` (run `34606797772`, 2026-09-11). The gate and the changelog
+check both passed; only the registry write was refused:
+
+```console
+$ npm publish   # inside .github/workflows/release.yml, NPM_CONFIG_USERCONFIG written from the repo secret
+npm notice name: dsh-plugin-upgrade-0.1.3-0.1.5
+npm notice version: 0.1.0
+npm notice package size: 88.5 kB
+npm notice total files: 25
+npm notice publish Signed provenance statement with source and build information from GitHub Actions
+npm notice publish Provenance statement published to transparency log: https://search.sigstore.dev/?logIndex=2794018273
+npm error code E403
+npm error 403 403 Forbidden - PUT https://registry.npmjs.org/dsh-plugin-upgrade-0.1.3-0.1.5 - Package name triggered spam detection; if you believe this is in error, please contact support at https://npmjs.com/support
+(exit 1)
+
+$ curl -s -o /dev/null -w '%{http_code}\n' https://registry.npmjs.org/dsh-plugin-upgrade-0.1.3-0.1.5
+404     # the 403 lands before any write, so the name was never created
+```
+
+The rejected name embedded **two dotted version numbers** (`0.1.3-0.1.5`), which npm's spam
+heuristics read as a version-shaped suffix. The package was therefore named
+`dsh-plugin-upgrade-015` — matching its own skill id (`plugin-upgrade-015`) and bin
+(`dsh-plugin-upgrade-015-scan`). The control is on the same account: the retired
+`dsh-plugin-upgrade-rc1` (a single non-dotted suffix) published cleanly, so the **suffix
+shape**, not the account or the plugin family, is what the detector reacted to.
 
 ## 10. Not verified (kept out of the card's claims)
 

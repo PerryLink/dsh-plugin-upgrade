@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 /**
- * Public type surface for dsh-plugin-upgrade-0.1.3-0.1.5.
- * @module dsh-plugin-upgrade-0.1.3-0.1.5
+ * Public type surface for dsh-plugin-upgrade-015.
+ * @module dsh-plugin-upgrade-015
  */
 
 /** Plugin configuration (Schemastery-backed; every field is a deployment choice). */

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// dsh-plugin-upgrade-0.1.3-0.1.5 bundle entry point.
+// dsh-plugin-upgrade-015 bundle entry point.
 //
 // Publishes the merged `0.1.3-alpha.1 -> 0.1.5-rc.1` corridor as an on-demand
 // agent skill named `plugin-upgrade-015`. The corridor is one span carried by
@@ -17,7 +17,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Schema from '@deepseek-ai/schemastery'
 
-export const name = 'dsh-plugin-upgrade-0.1.3-0.1.5'
+export const name = 'dsh-plugin-upgrade-015'
 export const inject = ['skills']
 
 /** Package root, used as the resourceBase for relative skill references. */
@@ -71,13 +71,13 @@ export function readSkillBundle(skillsRoot, skillName) {
   try {
     raw = readFileSync(skillPath, 'utf8')
   } catch (error) {
-    throw new Error(`dsh-plugin-upgrade-0.1.3-0.1.5: cannot read skill bundle at ${skillPath}: ${error instanceof Error ? error.message : String(error)}`)
+    throw new Error(`dsh-plugin-upgrade-015: cannot read skill bundle at ${skillPath}: ${error instanceof Error ? error.message : String(error)}`)
   }
   const text = raw.replace(/\r\n/g, '\n')
   const { description, whenToUse, body } = splitFrontmatter(text)
-  if (body.trim() === '') throw new Error(`dsh-plugin-upgrade-0.1.3-0.1.5: skill body is empty at ${skillPath}`)
+  if (body.trim() === '') throw new Error(`dsh-plugin-upgrade-015: skill body is empty at ${skillPath}`)
   const frontmatterName = /^name:\s*(\S+)\s*$/m.exec(text.slice(0, text.indexOf('\n---', 4) + 1))?.[1]
-  if (frontmatterName === undefined) throw new Error(`dsh-plugin-upgrade-0.1.3-0.1.5: skill frontmatter is missing a name at ${skillPath}`)
+  if (frontmatterName === undefined) throw new Error(`dsh-plugin-upgrade-015: skill frontmatter is missing a name at ${skillPath}`)
   return { frontmatterName, description, whenToUse, body, skillDir: join(skillsRoot, skillName) }
 }
 

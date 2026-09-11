@@ -1,23 +1,23 @@
 <div align="center">
 
-# ⬆️ dsh-plugin-upgrade-0.1.3-0.1.5
-- **Canal da loja 1024**: rode `npm i -g dsh1024` uma vez e depois `dsh1024 plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5` (conta para o ranking de instalações do [deepseek1024.com](https://deepseek1024.com)).
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-0.1.3-0.1.5)
+# ⬆️ dsh-plugin-upgrade-015
+- **Canal da loja 1024**: rode `npm i -g dsh1024` uma vez e depois `dsh1024 plugin --profile web add dsh-plugin-upgrade-015` (conta para o ranking de instalações do [deepseek1024.com](https://deepseek1024.com)).
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-015)
 
 **Habilidade de atualização de plugins para o DeepSeek Harness, com versão travada e fundida — `0.1.3-alpha.1` → `0.1.5-rc.1`, carregada em duas pernas fechadas.**
 
 *Perna A `0.1.3-alpha.1` → `0.1.5-alpha.1`, perna B `0.1.5-alpha.1` → `0.1.5-rc.1`: um cartão de corredor mais um scanner de costuras sem dependências sobre o catálogo fundido de 20 costuras, para que uma metade de cliente que parou de montar em silêncio nunca seja confundida com «typecheck verde».*
 
-> **Repositório oficial.** Este é o único repositório oficial de dsh-plugin-upgrade-0.1.3-0.1.5, mantido pela PerryLink. Ele substitui os dois pacotes com versão travada `dsh-plugin-upgrade` (perna A) e `dsh-plugin-upgrade-rc1` (perna B). Repositórios com o mesmo nome em outras contas não são afiliados.
+> **Repositório oficial.** Este é o único repositório oficial de dsh-plugin-upgrade-015, mantido pela PerryLink. Ele substitui os dois pacotes com versão travada `dsh-plugin-upgrade` (perna A) e `dsh-plugin-upgrade-rc1` (perna B). Repositórios com o mesmo nome em outras contas não são afiliados.
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-0.1.3-0.1.5.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-015.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-0.1.3-0.1.5)](https://www.npmjs.com/package/dsh-plugin-upgrade-0.1.3-0.1.5)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-0.1.3-0.1.5)](https://www.npmjs.com/package/dsh-plugin-upgrade-0.1.3-0.1.5)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-015/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-015/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-015?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-015/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
@@ -56,10 +56,10 @@ Medição honesta: a varredura do workspace da perna B encontrou que as metades 
 
 ```sh
 # 1. instale o bundle no seu perfil
-dsh plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5
+dsh plugin --profile web add dsh-plugin-upgrade-015
 
 # 2. confirme que a linha montou
-dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-0.1.3-0.1.5'
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-015'
 
 # 3. escaneie o plugin que você vai atualizar
 npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
@@ -71,9 +71,9 @@ Depois peça ao agente para usar a habilidade `plugin-upgrade-015`, ou conduza o
 ## Instalação e desinstalação
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5            # do npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5#main"   # do código-fonte
-dsh plugin --profile web remove dsh-plugin-upgrade-0.1.3-0.1.5         # desinstalar (reversível)
+dsh plugin --profile web add dsh-plugin-upgrade-015            # do npm
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-015#main"   # do código-fonte
+dsh plugin --profile web remove dsh-plugin-upgrade-015         # desinstalar (reversível)
 ```
 
 Instalar o bundle apenas registra uma habilidade; remover a linha remove a habilidade. A CLI é um alvo `npx` normal e não precisa de perfil algum.
@@ -91,8 +91,8 @@ Toda chave é opcional e fica no patch do perfil:
 
 ```yaml
 - insert:
-    - id: dsh-plugin-upgrade-0.1.3-0.1.5
-      name: dsh-plugin-upgrade-0.1.3-0.1.5
+    - id: dsh-plugin-upgrade-015
+      name: dsh-plugin-upgrade-015
       config:
         skillName: plugin-upgrade-015
 ```

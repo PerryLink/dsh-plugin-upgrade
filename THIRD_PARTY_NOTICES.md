@@ -1,6 +1,6 @@
 # Third-party notices
 
-`dsh-plugin-upgrade-0.1.3-0.1.5` ships **no bundled third-party code**. The published tarball
+`dsh-plugin-upgrade-015` ships **no bundled third-party code**. The published tarball
 contains only this repository's source, the packaged skill and its merged version card.
 
 The dependencies below are declared as `peerDependencies` (the host provides them at

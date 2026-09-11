@@ -1,23 +1,23 @@
 <div align="center">
 
-# ⬆️ dsh-plugin-upgrade-0.1.3-0.1.5
-- **1024 स्टोर चैनल**: एक बार `npm i -g dsh1024` चलाएँ, फिर `dsh1024 plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5` (यह [deepseek1024.com](https://deepseek1024.com) की इंस्टॉल रैंकिंग में गिना जाता है)।
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-0.1.3-0.1.5)
+# ⬆️ dsh-plugin-upgrade-015
+- **1024 स्टोर चैनल**: एक बार `npm i -g dsh1024` चलाएँ, फिर `dsh1024 plugin --profile web add dsh-plugin-upgrade-015` (यह [deepseek1024.com](https://deepseek1024.com) की इंस्टॉल रैंकिंग में गिना जाता है)।
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-015)
 
 **DeepSeek Harness के लिए संस्करण-लॉक्ड और विलयित प्लगइन अपग्रेड स्किल — `0.1.3-alpha.1` → `0.1.5-rc.1`, दो बंद पैरों (legs) में वहन किया गया।**
 
 *पैर A `0.1.3-alpha.1` → `0.1.5-alpha.1`, पैर B `0.1.5-alpha.1` → `0.1.5-rc.1`: विलयित 20-सीम कैटलॉग पर एक कॉरिडोर कार्ड और एक शून्य-निर्भरता सीम स्कैनर, ताकि चुपचाप माउंट होना बंद कर चुका क्लाइंट आधा हिस्सा कभी «typecheck हरा है» न समझा जाए।*
 
-> **आधिकारिक रिपॉज़िटरी।** यह dsh-plugin-upgrade-0.1.3-0.1.5 की एकमात्र आधिकारिक रिपॉज़िटरी है, जिसे PerryLink संभालता है। यह दोनों संस्करण-लॉक्ड पैकेजों `dsh-plugin-upgrade` (पैर A) और `dsh-plugin-upgrade-rc1` (पैर B) का स्थान लेती है। अन्य खातों की समान-नाम वाली रिपॉज़िटरियाँ इससे संबद्ध नहीं हैं।
+> **आधिकारिक रिपॉज़िटरी।** यह dsh-plugin-upgrade-015 की एकमात्र आधिकारिक रिपॉज़िटरी है, जिसे PerryLink संभालता है। यह दोनों संस्करण-लॉक्ड पैकेजों `dsh-plugin-upgrade` (पैर A) और `dsh-plugin-upgrade-rc1` (पैर B) का स्थान लेती है। अन्य खातों की समान-नाम वाली रिपॉज़िटरियाँ इससे संबद्ध नहीं हैं।
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-0.1.3-0.1.5.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-015.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-0.1.3-0.1.5)](https://www.npmjs.com/package/dsh-plugin-upgrade-0.1.3-0.1.5)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-0.1.3-0.1.5)](https://www.npmjs.com/package/dsh-plugin-upgrade-0.1.3-0.1.5)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-015/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-015/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-015?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-015/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
@@ -56,10 +56,10 @@
 
 ```sh
 # 1. बंडल को अपने प्रोफ़ाइल में इंस्टॉल करें
-dsh plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5
+dsh plugin --profile web add dsh-plugin-upgrade-015
 
 # 2. पुष्टि करें कि पंक्ति माउंट हुई
-dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-0.1.3-0.1.5'
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-015'
 
 # 3. जिस प्लगइन को अपग्रेड करना है उसे स्कैन करें
 npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
@@ -71,9 +71,9 @@ npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
 ## इंस्टॉल और अनइंस्टॉल
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade-0.1.3-0.1.5            # npm से
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-0.1.3-0.1.5#main"   # स्रोत से
-dsh plugin --profile web remove dsh-plugin-upgrade-0.1.3-0.1.5         # अनइंस्टॉल (प्रतिवर्ती)
+dsh plugin --profile web add dsh-plugin-upgrade-015            # npm से
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-015#main"   # स्रोत से
+dsh plugin --profile web remove dsh-plugin-upgrade-015         # अनइंस्टॉल (प्रतिवर्ती)
 ```
 
 बंडल इंस्टॉल करने से केवल एक स्किल पंजीकृत होती है; पंक्ति हटाने से स्किल हट जाती है। CLI एक सामान्य `npx` लक्ष्य है और उसे किसी प्रोफ़ाइल की आवश्यकता नहीं।
@@ -91,8 +91,8 @@ dsh plugin --profile web remove dsh-plugin-upgrade-0.1.3-0.1.5         # अन�
 
 ```yaml
 - insert:
-    - id: dsh-plugin-upgrade-0.1.3-0.1.5
-      name: dsh-plugin-upgrade-0.1.3-0.1.5
+    - id: dsh-plugin-upgrade-015
+      name: dsh-plugin-upgrade-015
       config:
         skillName: plugin-upgrade-015
 ```
