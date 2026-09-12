@@ -29,7 +29,7 @@
 
 | Superficie | Estado |
 |---|---|
-| Harness | DeepSeek Harness `0.1.5-rc.1` (checkout `2efea31131`, tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`). Banda de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
+| Harness | DeepSeek Harness `0.1.5-rc.2` (checkout `c291e7961a`, tag `dsh-v0.1.5-rc.2` = `fb2c4b9e69`). Banda de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | Plataformas | Donde corra Node; el escáner solo lee el sistema de archivos y es neutral respecto a la plataforma |
 | Modelo | Modelos solo de texto totalmente soportados; la habilidad es un cuerpo Markdown, sin requisitos de herramientas ni visión |

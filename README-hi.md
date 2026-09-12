@@ -29,7 +29,7 @@
 
 | सतह | स्थिति |
 |---|---|
-| हार्नेस | DeepSeek Harness `0.1.5-rc.1` (checkout `2efea31131`, tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`)। पीयर बैंड `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`। |
+| हार्नेस | DeepSeek Harness `0.1.5-rc.2` (checkout `c291e7961a`, tag `dsh-v0.1.5-rc.2` = `fb2c4b9e69`)। पीयर बैंड `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`। |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | प्लेटफ़ॉर्म | जहाँ Node चले; स्कैनर केवल फ़ाइल सिस्टम पढ़ता है और प्लेटफ़ॉर्म-निरपेक्ष है |
 | मॉडल | केवल-पाठ मॉडल पूरी तरह समर्थित; स्किल एक Markdown बॉडी है, किसी टूल या विज़न की आवश्यकता नहीं |
