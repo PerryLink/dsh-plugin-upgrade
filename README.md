@@ -36,6 +36,7 @@
 | Scope | **Two closed legs, one span**: leg A `0.1.3-alpha.1` → `0.1.5-alpha.1` plus leg B `0.1.5-alpha.1` → `0.1.5-rc.1`. A corridor never widens: a hop after `0.1.5-rc.1` is a new package. |
 | Legs | Both legs live in this package: leg A keeps the `S1`–`S10` + `M1` seams, leg B keeps `C1`, `C2`, `C4`, `C5`, `H1`–`H4`, `P1` — each with its own evidence, card section, fixtures and rollback path. There is no sibling package to install. |
 | `C3` | Retired: leg B's card spelled the stale-type-line false green `C3`, which is the same defect as leg A's `M1`. The fold is recorded on the card; `--seams C3` matches nothing. |
+| Sibling | Do not mount the retired `dsh-plugin-upgrade` in the same profile: both register the agent skill `plugin-upgrade-015`, so the second mount collides on the skill name. That package is deprecated on npm and its repository is retired; this package replaces both of its legs. |
 
 ## What you get
 
