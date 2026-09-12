@@ -183,6 +183,8 @@ El escáner tiene un par de fixtures sintéticos **por tramo**: `fixtures/leg-a-
 
 ## Familia de plugins DSH de PerryLink
 
+Este proyecto es uno de los [40 complementos de DeepSeek Harness](https://github.com/PerryLink) mantenidos por [PerryLink](https://github.com/PerryLink). Si este te ayuda, probablemente los demás también:
+
 | Plugin | One-liner |
 |---|---|
 | **[dsh-auto-review](https://github.com/PerryLink/dsh-auto-review)** | Second-model auto-review on the approval chain, fail-closed by default | |

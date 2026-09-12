@@ -183,6 +183,8 @@ The scanner has a synthetic fixture pair **per leg**: `fixtures/leg-a-bad-repo` 
 
 ## PerryLink DSH Plugin Family
 
+This project is one of the [40 DeepSeek Harness plugins](https://github.com/PerryLink) maintained by [PerryLink](https://github.com/PerryLink). If this one helps you, the others likely will too:
+
 | Plugin | One-liner |
 |---|---|
 | **[dsh-auto-review](https://github.com/PerryLink/dsh-auto-review)** | Second-model auto-review on the approval chain, fail-closed by default | |
