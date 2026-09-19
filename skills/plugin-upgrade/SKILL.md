@@ -24,7 +24,11 @@ You are migrating **one plugin repository** across the merged DSH span `0.1.3-al
 | Target host is `0.1.5-rc.1`, or the repo has a client/browser half, or its peer band already sits on `>=0.1.2-rc.1 <0.2.0` | **Leg B** — card §2, seams `C1`, `C2`, `C4`, `C5`, `H1`–`H4`, `P1` |
 | A full `0.1.3-alpha.1 → 0.1.5-rc.1` upgrade | both legs, **A first then B**; card §1 then §2 |
 | Your peer band is below `0.1.5-alpha.1` and you only need `0.1.5-alpha.1` | leg A only — do **not** apply leg B's rc.1 slot-catalog work |
-| Target is a hop after `0.1.5-rc.1` | nothing on this card: a new corridor is a new package |
+| Target is a hop after `0.1.5-rc.1` | **Leg C** — `./references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md`, seams `E1`–`E5` |
+
+**One package, one corridor index (owner decision, 2026-09-19).** The earlier rule "a hop after 0.1.5-rc.1 is a new package" is superseded: this package carries a corridor index (`lib/route.mjs`) and the CLI routes to the matching corridor automatically. It reads the target repository's declared dsh band (`engines.dsh`, the `@deepseek-ai/dsh*` ranges) and `--span legAB|legC` overrides the guess; an undeclared band falls back to the older corridor. Each corridor keeps its **own** catalog and evidence — the seam arrays are never merged, so every card claim stays traceable to its measurement.
+
+**Before you pick a corridor, establish which line is newest.** That lookup is yours, not the scanner's: it is read-only, dependency-free and offline by contract. Read the harness's published line (npm `@deepseek-ai/dsh` dist-tags, or the repository's releases/tags), compare it with the target band, and state the target line in your plan. If the newest line is past every corridor here, say so plainly rather than stretching a card.
 
 The card is `./references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`. It is one document: a preamble with the corridor and how to read it, **§1 = Leg A's full card**, **§2 = Leg B's full card**, **§3 = the merged 20-seam index**. Each leg keeps its own evidence, `path:line` citations, fixtures and rollback path, so one leg can be rolled back without touching the other.
 

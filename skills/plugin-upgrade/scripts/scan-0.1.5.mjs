@@ -1,16 +1,29 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: Apache-2.0
 /**
- * Skill-relative scanner entry.
+ * CLI wrapper for the corridor-index router (one package, several closed corridors).
  *
- * The skill body resolves its relative paths against this skill's own directory
- * (the `resourceBase`), so `./scripts/scan-0.1.5.mjs` must exist here as well as
- * at the package root. Both are thin wrappers over the single implementation in
- * `<package>/lib/scan.mjs`, so the skill, the CLI and the tests share one
- * catalog.
+ * Usage:
+ *   node scripts/scan-0.1.5.mjs [--repo <path>] [--span legC|legAB|<span>] [--json <out.json>] [--seams E1,E3] [--quiet]
+ *   npx --package dsh-plugin-upgrade dsh-plugin-upgrade-scan --repo <path>
  *
- * Usage: node ./scripts/scan-0.1.5.mjs --repo <path>
+ * The wrapper only routes: it reads the target repository's declared dsh band (or
+ * an explicit --span) and hands the SAME argv to that corridor's own catalog
+ * module, so every corridor keeps its own evidence-bound seam array and its own
+ * main(). An unknown band routes to the older corridor (legAB), which is what a
+ * repository predating 0.1.6 needs. Nothing here reaches the network.
+ *
+ * Exit codes: 0 = no error-severity hit, 1 = at least one error-severity hit,
+ *             2 = usage or scan failure.
  */
-import { main } from '../../../lib/scan.mjs'
+import { resolveCorridor, spanFromArgv, repoFromArgv, loadCatalog } from '../../../lib/route.mjs'
 
-process.exit(main(process.argv.slice(2)))
+const argv = process.argv.slice(2)
+const corridor = resolveCorridor({ repoDir: repoFromArgv(argv), span: spanFromArgv(argv) })
+const catalog = await loadCatalog(corridor)
+
+if (!argv.includes('--quiet')) {
+  process.stderr.write(`corridor: ${corridor.id} (${corridor.span}) -> ${corridor.catalog}\n`)
+}
+
+process.exit(catalog.main(argv))
