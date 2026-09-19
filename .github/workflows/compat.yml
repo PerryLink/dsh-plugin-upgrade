@@ -120,6 +120,7 @@ jobs:
       matrix:
         dsh: ['0.1.2-rc.1', '0.1.5-rc.2']
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
 
