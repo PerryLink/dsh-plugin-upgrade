@@ -1,5 +1,15 @@
 {
   "name": "fixture-good-plugin",
-  "version": "0.0.1",
-  "type": "module"
+  "version": "0.0.0",
+  "private": true,
+  "description": "Synthetic LEG-B fixture for the dsh-plugin-upgrade scanner self-test: a client half already adapted to 0.1.5-rc.1, with zero error-severity hits. Never shipped (the files whitelist excludes fixtures/).",
+  "type": "module",
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-llm": "0.1.5-rc.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-session": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0",
+    "@deepseek-ai/dsh-client-ui-slots": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0"
+  }
 }

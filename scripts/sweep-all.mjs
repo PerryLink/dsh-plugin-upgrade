@@ -1,4 +1,7 @@
+// SPDX-License-Identifier: Apache-2.0
 // Sweep every plugin repo under a workspace root and write the evidence table.
+// Maintainer tool: it ships in the tarball because `scripts/` does, but neither
+// the plugin entry nor the skill body calls it.
 // Usage: node sweep-all.mjs [<workspaceRoot>] [<out.md>]
 import fs from 'node:fs'
 import path from 'node:path'
@@ -6,7 +9,8 @@ import { scanRepo } from '../lib/scan.mjs'
 
 const ROOT = path.resolve(process.argv[2] || '.')
 const OUT = path.resolve(process.argv[3] || path.join(ROOT, 'scan-0.1.5-sweep.md'))
-const SKIP = new Set(['adp-list', 'audit-dsh-infinite-gen-2', 'pan17-dsh-wechat', 'dsh-autotier', 'dsh-personal-directive'])
+// Third-party repositories that happen to live in the same workspace.
+const SKIP = new Set(['adp-list', 'audit-dsh-infinite-gen-2', 'pan17-dsh-wechat', 'dsh-personal-directive'])
 const dirs = fs.readdirSync(ROOT, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)
   .filter(n => !n.startsWith('_') && !n.startsWith('.') && !SKIP.has(n))
   .filter(n => fs.existsSync(path.join(ROOT, n, 'package.json'))).sort()
@@ -23,7 +27,7 @@ L.push('# scan-0.1.5 · workspace sweep evidence')
 L.push('')
 L.push(`Generated ${new Date().toISOString()} · scanner \`scripts/scan-0.1.5.mjs\` · workspace \`${ROOT}\``)
 L.push('')
-L.push('All repos below were adapted to `0.1.5-alpha.1` by the 2026-09-09 wave. Error-severity hits are expected to be **zero**; warn-severity hits are heuristic leads for manual review (S1/S2/S10).')
+L.push('Error-severity hits mean the repo would silently break (or already fails to resolve) somewhere on the merged `0.1.3-alpha.1 → 0.1.5-rc.1` corridor. Warn/info hits are heuristic leads for manual review.')
 L.push('')
 L.push('| repo | files | errors | warns | error seams |')
 L.push('|---|---|---|---|---|')

@@ -1,6 +1,8 @@
 # Normalize every text file to LF in the repository and in checkouts. The
 # packaged skill body and its frontmatter delimiters are parsed as `\n`, so a
-# CRLF checkout (Windows default core.autocrlf=true) must not change them.
+# CRLF checkout (Windows default core.autocrlf=true) must not change them. The
+# corridor card and the seam catalog are cross-checked line by line, so a mixed
+# line-ending checkout would break the parity gate rather than the content.
 * text=auto eol=lf
 *.png binary
 *.jpg binary

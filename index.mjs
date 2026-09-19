@@ -1,11 +1,14 @@
+// SPDX-License-Identifier: Apache-2.0
 // dsh-plugin-upgrade bundle entry point.
 //
-// Publishes the packaged 0.1.3-alpha.1 -> 0.1.5-alpha.1 plugin-upgrade skill as an
-// on-demand agent skill named `plugin-upgrade-015`. The skill body is this
-// package's `skills/plugin-upgrade-015/SKILL.md`; its relative references
-// (`./references/...`) and scripts (`./scripts/...`) resolve against the packaged
-// skills directory through the directory resourceBase, so the agent loads the
-// version card and the scanner only when a task needs them.
+// Publishes the merged `0.1.3-alpha.1 -> 0.1.5-rc.1` corridor as an on-demand
+// agent skill named `plugin-upgrade`. The corridor is one span carried by
+// two closed legs (leg A `0.1.3-alpha.1 -> 0.1.5-alpha.1`, leg B
+// `0.1.5-alpha.1 -> 0.1.5-rc.1`); the skill body is this package's
+// `skills/plugin-upgrade/SKILL.md`, and its relative references
+// (`./references/...`) and scripts (`./scripts/...`) resolve against the
+// packaged skills directory through the directory resourceBase, so the agent
+// loads the merged version card and the scanner only when a task needs them.
 //
 // The package imports nothing from the harness beyond the injected `skills`
 // service, so the cordis peer stays metadata-only.
@@ -28,7 +31,7 @@ export const Config = Schema.object({
   /** Register the packaged skill (default true). */
   enabled: Schema.boolean().default(true),
   /** Skill name published to the model catalog. Defaults to the packaged corridor name. */
-  skillName: Schema.string().default('plugin-upgrade-015'),
+  skillName: Schema.string().default('plugin-upgrade'),
   /** Skill root inside the package; must contain `<skillName>/SKILL.md`. */
   skillsRoot: Schema.string().default(join(packageRoot, 'skills')),
   /** Mark the skill user-invocable in addition to model-invocable (default true). */
@@ -40,8 +43,8 @@ export const Config = Schema.object({
  * and body. Line endings are normalized first: a Windows checkout with
  * `core.autocrlf=true` hands us CRLF, and the frontmatter delimiters are `\n`.
  * A missing block falls back to the full text as the body.
- * @param text - raw SKILL.md content.
- * @returns the parsed description/whenToUse (when present) and the instruction body.
+ * @param {string} text - raw SKILL.md content.
+ * @returns {{ description: string | undefined, whenToUse: string | undefined, body: string }} the parsed description/whenToUse (when present) and the instruction body.
  */
 export function splitFrontmatter(text) {
   const source = text.replace(/\r\n/g, '\n')
@@ -50,7 +53,8 @@ export function splitFrontmatter(text) {
   if (end < 0) return { description: undefined, whenToUse: undefined, body: source }
   const meta = source.slice(4, end)
   const body = source.slice(end + 4).replace(/^\n+/, '')
-  const scalar = (key) => new RegExp(`^${key}:\\s*(.+)$`, 'm').exec(meta)?.[1]?.trim()
+  /** @param {string} key @returns {string | undefined} */
+  const scalar = (key) => new RegExp(`^${key}:\\s*(.+)$`, 'm').exec(meta)?.[1]?.trim().replace(/^["']|["']$/g, '')
   return { description: scalar('description'), whenToUse: scalar('whenToUse'), body }
 }
 
@@ -58,9 +62,9 @@ export function splitFrontmatter(text) {
  * Read and validate the packaged skill bundle. Fails loud: a missing SKILL.md,
  * an empty body, or a missing frontmatter `name` aborts the mount instead of
  * registering an empty skill.
- * @param skillsRoot - root directory holding `<skillName>/SKILL.md`.
- * @param skillName - expected skill directory name.
- * @returns the frontmatter name, routing fields, body, and the skill directory.
+ * @param {string} skillsRoot - root directory holding `<skillName>/SKILL.md`.
+ * @param {string} skillName - expected skill directory name.
+ * @returns {{ frontmatterName: string, description: string | undefined, whenToUse: string | undefined, body: string, skillDir: string }} the frontmatter name, routing fields, body, and the skill directory.
  */
 export function readSkillBundle(skillsRoot, skillName) {
   const skillPath = join(skillsRoot, skillName, 'SKILL.md')
@@ -81,13 +85,13 @@ export function readSkillBundle(skillsRoot, skillName) {
 /**
  * Register the packaged skill. Registration is an effect: the disposer returned
  * by `ctx.skills.register()` removes the contribution on unload.
- * @param ctx - Cordis context with the injected `skills` service.
- * @param config - validated plugin configuration.
+ * @param {{ effect: (factory: () => unknown) => unknown, skills: { register: (registration: Record<string, unknown>) => unknown } }} ctx - Cordis context with the injected `skills` service.
+ * @param {{ enabled?: boolean, skillName?: string, skillsRoot?: string, userInvocable?: boolean }} [config] - validated plugin configuration.
  */
 export function apply(ctx, config = {}) {
   const resolved = {
     enabled: config.enabled ?? true,
-    skillName: config.skillName ?? 'plugin-upgrade-015',
+    skillName: config.skillName ?? 'plugin-upgrade',
     skillsRoot: config.skillsRoot ?? join(packageRoot, 'skills'),
     userInvocable: config.userInvocable ?? true,
   }
@@ -97,7 +101,7 @@ export function apply(ctx, config = {}) {
     ctx.skills.register({
       name: frontmatterName,
       source: 'bundled',
-      description: description ?? 'DSH plugin upgrade · 0.1.3-alpha.1 -> 0.1.5-alpha.1: seam scanner and version card.',
+      description: description ?? 'DSH plugin upgrade · 0.1.3-alpha.1 -> 0.1.5-rc.1 (merged corridor): seam scanner and corridor card.',
       ...whenToUse !== undefined ? { whenToUse } : {},
       content: body,
       // The base is the skill's own directory, so `./references/...` and

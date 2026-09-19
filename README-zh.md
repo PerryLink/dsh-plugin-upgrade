@@ -4,11 +4,11 @@
 - **1024 商店通道**：先 `npm i -g dsh1024`，再执行 `dsh1024 plugin --profile web add dsh-plugin-upgrade`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
 [![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade)
 
-**DeepSeek Harness 插件升级技能（版本锁定）——`0.1.3-alpha.1` → `0.1.5-alpha.1`。**
+**DeepSeek Harness 插件升级技能（已合并、版本锁定）——`0.1.3-alpha.1` → `0.1.5-rc.1`，由两条闭合的 leg 承载。**
 
-*一张版本卡 + 一个零依赖接缝扫描器，让「typecheck 绿了」不再被误当成「插件还能跑」。*
+*leg A `0.1.3-alpha.1` → `0.1.5-alpha.1`，leg B `0.1.5-alpha.1` → `0.1.5-rc.1`：一张走廊卡加一个零依赖接缝扫描器，覆盖合并后的 20 条接缝目录，让「静默不挂载的 client 半边」不再被误当成「typecheck 绿了」。*
 
-> **官方仓库。** 这是 dsh-plugin-upgrade 唯一的官方仓库，由 PerryLink 维护。其他账号下的同名仓库与本项目无关。
+> **官方仓库。** 这是 dsh-plugin-upgrade 唯一的官方仓库，由 PerryLink 维护。它取代两个版本锁定的包 `dsh-plugin-upgrade`（leg A）与 `dsh-plugin-upgrade-rc1`（leg B）。其他账号下的同名仓库与本项目无关。
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
@@ -29,143 +29,212 @@
 
 | 面 | 状态 |
 |---|---|
-| 宿主 | DeepSeek Harness `0.1.5-rc.2`（checkout `c291e7961a`，tag `dsh-v0.1.5-rc.2` = `fb2c4b9e69`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`、`@deepseek-ai/cordis ^4.0.2`、`@deepseek-ai/schemastery ^3.18.2`。 |
+| 宿主 | DeepSeek Harness `0.1.5-rc.1`（tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`；leg A→B 交接点 `dsh-v0.1.5-alpha.1` = `5dda764ed3aa`；走廊起点 `0.1.3-alpha.1`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`、`@deepseek-ai/cordis ^4.0.2`、`@deepseek-ai/schemastery ^3.18.2`。 |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | 平台 | 有 Node 即可；扫描器只读文件系统，与平台无关 |
 | 模型 | 纯文本模型完全支持；技能就是一段 Markdown，不要求工具或视觉能力 |
-| 范围 | **只覆盖一条走廊**：`0.1.3-alpha.1` → `0.1.5-alpha.1`。它不是通用迁移框架。 |
+| 范围 | **两条闭合的 leg，一个跨度**：leg A `0.1.3-alpha.1` → `0.1.5-alpha.1`，加上 leg B `0.1.5-alpha.1` → `0.1.5-rc.1`。走廊永不加宽：`0.1.5-rc.1` 之后的一跳就是一个新包。 |
+| Legs | 两条 leg 都在本包内：leg A 保留 `S1`–`S10` + `M1` 接缝，leg B 保留 `C1`、`C2`、`C4`、`C5`、`H1`–`H4`、`P1`——各自带有自己的证据、卡片章节、夹具与回滚路径。没有需要另装的姊妹包。 |
+| `C3` | 已弃用：leg B 的卡把「类型线陈旧导致的假绿」写作 `C3`，而这与 leg A 的 `M1` 是同一个缺陷。合并一事记录在卡上；`--seams C3` 匹配不到任何东西。 |
+| 前身包 | 请勿在同一个 profile 中同时挂载已退役的 `dsh-plugin-upgrade`：两者都会注册 agent skill `plugin-upgrade`，第二次挂载会因 skill 名冲突而失败。该包在 npm 上已标记 deprecated、其仓库已退役；本包已取代它的两条腿。 |
 
 ## 你得到什么
 
 两半，一套接缝目录：
 
-- **一个随包发布的 agent 技能（`plugin-upgrade-015`）** —— 版本卡 + 「修-验」循环。只有任务真正需要时模型才会加载它；本包不贡献任何系统提示词段落，也不注册工具。
-- **一个零依赖 CLI（`dsh-plugin-upgrade-scan`）** —— 按 `file:line` 报告十类接缝；这些接缝来自 2026-09-09 那轮对 40 个真实插件仓的实测。命中 error 级即退出码 `1`，可直接接进 CI。
+- **一个随包发布的 agent 技能（`plugin-upgrade`）** —— 合并后的走廊卡，以及「修-验」循环。正文先把调用者路由到与它 peer 区间相符的那条 leg；只有任务真正需要时模型才会加载它，本包不贡献任何系统提示词段落，也不注册工具。
+- **一个零依赖 CLI（`dsh-plugin-upgrade-scan`）** —— 按 `file:line` 报告合并后二十条接缝（`S3`、`S8`、`S9`、`M1`、`S4`、`S5`、`S6`、`S7`、`S2`、`S1`、`S10`、`C1`、`C2`、`P1`、`C4`、`C5`、`H1`、`H2`、`H4`、`H3`）的事实，全部于 2026-09-09（leg A）与 2026-09-10（leg B）从 harness 的 tag 区间重新读取。命中 error 级即退出码 `1`，可直接接进 CI。
 
-它要消灭的失效模式是：**本地门禁绿了，不等于适配完成。** 有两类破坏能穿过 `typecheck` + `test`：
+它要消灭的失效模式是：**这一跨度的破坏大多是静默的，而且两端都静默。** 类型线可能陈旧，于是仓库是对着**旧目录**编译的（接缝 `M1`）；而裸 `conversation` client slot 被删除且没有别名，`ctx.slots.inject()` 又只在 declaration 存在时才执行回调——于是仍然指向它的 client 半边停止挂载，没有报错、没有日志、构建也不会失败（接缝 `C1`）。有三类破坏能穿过 `typecheck` + `test`：
 
-1. 已发布的类型线把接缝藏住，仓库对着旧类型编译（接缝 `M1`）；
-2. 测试是按旧形状 mock 的，于是测试通过而宿主拒收。
+1. 本地门禁编译了一条陈旧的类型线——旧的 `paths` 别名，或钉在 `0.1.5-alpha.*` 的 dev/test 类型（接缝 `M1`）；
+2. 日志写入器漏掉了 V3 必需的 `stream` 字段，于是会话能导入、却拒绝恢复（接缝 `S3`）；
+3. 测试是对着旧形状 mock 的，于是它们通过，而宿主丢掉了你的贡献（接缝 `C1`）。
 
-十类接缝中的 `S3`、`S8`、`S9`、`M1` 在本包成文时仍未被任何社区升级 PR 覆盖；其余六类已与该轮证据交叉核对。
+诚实的量级说明：leg B 的工作区扫描发现，家族 client 半边一共只用了 **8** 个 slot key，且这 8 个在 rc.1 全部存活——对它们而言，rc.1 的破坏是**潜在破坏（latent），不是实际破坏**。真正会坏的是指向裸 `conversation` key 的第三方 client 插件，而且它们坏得悄无声息。leg A 的扫描发现的纹理正好相反：40 个仓，其中 11 个命中了 `M1`，而修好陈旧路径后，有 3 个此前「绿着」的仓暴露出真实的 TypeScript 错误。
 
 ## 快速开始
 
 ```sh
-# 1. 把 bundle 装进 profile
+# 1. 把 bundle 装进你的 profile
 dsh plugin --profile web add dsh-plugin-upgrade
 
-# 2. 确认这一行挂上了
+# 2. 确认插件行已挂载
 dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade'
 
-# 3. 扫描你正在升级的插件
+# 3. 扫描你要升级的插件
 npx dsh-plugin-upgrade-scan --repo ../my-plugin
 ```
 
-然后让 agent 使用 `plugin-upgrade-015` 技能，或者自己照着版本卡走：
-`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-alpha.1.md`。
+然后让 agent 使用 `plugin-upgrade` 技能，或自己按卡驱动循环：
+`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`（leg A 是 §1，leg B 是 §2，合并后的接缝索引是 §3）。
 
 ## 安装与卸载
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade            # 从 npm 安装
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # 从源码安装
+dsh plugin --profile web add dsh-plugin-upgrade            # 从 npm
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # 从源码
 dsh plugin --profile web remove dsh-plugin-upgrade         # 卸载（可逆）
 ```
 
-装 bundle 只是注册一个技能；删掉那一行就删掉技能。CLI 是普通的 `npx` 目标，完全不需要 profile。
+安装 bundle 只注册一个技能；移除插件行即移除技能。CLI 是普通 `npx` 目标，完全不需要 profile。
 
 ## 配置
 
-所有键都可选，写在 profile patch 里：
+每个键都可选，写在 profile patch 里：
 
 | 键 | 默认 | 含义 |
 |---|---|---|
-| `enabled` | `true` | 是否注册随包技能。设为 `false` 可保留依赖但不生效。 |
-| `skillName` | `plugin-upgrade-015` | `skillsRoot` 下要注册的目录名，也是目录里显示的名字。 |
-| `skillsRoot` | 包自带的 `./skills` | `<skillName>/SKILL.md` 所在目录。指向你自己的卡即可复用整套管线。 |
-| `userInvocable` | `true` | 除模型外，是否允许人按名字调用该技能。 |
+| `enabled` | `true` | 是否注册随包技能。设为 `false` 可保留依赖但保持沉默。 |
+| `skillName` | `plugin-upgrade` | 要注册的 `skillsRoot` 子目录名，也是目录里显示的名字。 |
+| `skillsRoot` | 本包自己的 `./skills` | `<skillName>/SKILL.md` 所在处。指向你自己的卡即可复用这套管线。 |
+| `userInvocable` | `true` | 除了模型，人是否也能按名字调用该技能。 |
 
 ```yaml
 - insert:
     - id: dsh-plugin-upgrade
       name: dsh-plugin-upgrade
       config:
-        skillName: plugin-upgrade-015
+        skillName: plugin-upgrade
 ```
 
-挂载是「大声失败」的：`SKILL.md` 缺失、正文为空、或 frontmatter 没有 `name`，都会让挂载失败，而不是注册一个空技能。
+插件**挂载必须大声**：`SKILL.md` 缺失、正文为空、frontmatter 没有 `name`，都会直接让挂载失败，而不是注册一个空技能。
 
 ## 暴露面
 
-**技能** —— `plugin-upgrade-015`（默认模型可调用、人也可调用）。正文：6 步循环。引用：版本卡。脚本：扫描器，随技能目录一起发布，因此相对路径可解析。
+**技能** —— `plugin-upgrade`（默认模型与人都可调用）。正文：leg 路由表、8 条硬规则与 6 步循环。引用：合并后的走廊卡。脚本：检测器，放在技能目录内，保证相对路径可解析。
 
 **CLI** —— `dsh-plugin-upgrade-scan`：
 
 ```sh
-dsh-plugin-upgrade-scan [--repo <path>] [--json <out.json>] [--seams S3,S8,M1] [--quiet]
+dsh-plugin-upgrade-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
 ```
 
 | 参数 | 含义 |
 |---|---|
-| `--repo <path>` | 要扫描的仓库（默认：当前目录）。 |
+| `--repo <path>` | 要扫描的仓库（默认当前目录）。 |
 | `--json <out.json>` | 同时写出机器可读报告（`repo`、`scannedAt`、`files`、`hits[]`、`bySeam`）。 |
-| `--seams S3,S8,M1` | 只扫指定接缝。 |
+| `--seams S3,C1,P1` | 只跑合并目录中的指定接缝。 |
 | `--quiet` | 不打印人类可读渲染（与 `--json` 搭配）。 |
 
-退出码：`0` 无 error 级命中 · `1` 至少一个 error 级命中 · `2` 用法或扫描失败。扫描干净是必要条件而非充分条件 —— 卡上的出口标准是在临时 `DSH_HOME` 上做一次真机冒烟。
+退出码：`0` 无 error 级命中 · `1` 至少一个 error 级命中 · `2` 用法或扫描失败。扫描干净是**必要非充分**条件——出口标准是真实宿主冒烟，**加上**日志写入器（leg A）的恢复往返，以及 client 半边（leg B）的真实浏览器断言。
 
-## 十类接缝
+## 二十条接缝
 
-| Id | 级别 | `0.1.5-alpha.1` 线里变了什么 |
+顺序遵循 `lib/scan.mjs` 中的目录（先 leg A，后 leg B），这也是 `test/card.test.mjs` 把卡钉住的顺序。
+
+| Id | 级别 | 通往 `0.1.5-rc.1` 的路上变了什么 |
 |---|---|---|
-| `S1` | warn | 会话格式为 V3，日志文件名带世代（`session.v3.jsonl.zstd`）。硬编码 `session.jsonl.zstd` 会静默失效。 |
-| `S2` | warn | `EpochHeader.system` 已移除；系统提示词是 surface 节点 0 的 `system/message`。读取方需要结构式回退。 |
-| `S3` | error | `assistant/message` 必须带 `stream`；缺了会话能导入但无法续聊（`Session.fromRestore` 拒绝非法 settlement 字段）。 |
-| `S4` | error | `tool/code-dispatch` 改名为 `tool/ptc-dispatch`。 |
-| `S5` | error | `ctx.agent` 已移除；调用方改为显式接收 `Agent`。 |
-| `S6` | error | `Inbox` 变成类型接口，不再可构造；请用 `agent.inbox` 与官方夹具形状。 |
-| `S7` | warn | `SubprocessHandle.pid` 已移除（只有 `SubprocessTerminalHandle` 保留 `pid`）。 |
-| `S8` | error | `SessionHandle.read()` 现在返回 `SessionHandleReadResult` —— 要解包 `.events`。 |
-| `S9` | error | `SystemPrompt` 配置的 `persona` 改为 `personaPrefix` / `personaSuffix`。 |
-| `M1` | error | `tsconfig` 的 `paths` 指向不存在的 checkout 目录时，TypeScript 会静默回退到已发布类型 —— 本地门禁变成**假绿**。 |
+| `S3` | error | `assistant/message` 新增了必需的 `stream` 字段（会话格式 V3）：漏写它的日志能成功导入，却拒绝恢复（`Session.fromRestore` 抛 `invalid settlement fields`）。 |
+| `S8` | error | `SessionHandle.read()` 返回 `SessionHandleReadResult`（`{ eventState, events }`）而不是事件数组；数组操作必须先解包 `.events`。 |
+| `S9` | error | `SystemPrompt` 的配置项由 `persona` 改名为 `personaPrefix` / `personaSuffix`。用 `includeHarnessIdentity: false` 顶替**并不等价**——那会删掉 harness 身份块。 |
+| `M1` | error | 本地门禁编译了一条陈旧的类型线：dev/test 类型钉在 `0.1.5-alpha.*`，或 `tsconfig` 的 `paths` 别名指向不存在的 checkout 目录，都会让 TypeScript 静默回退到已发布的类型。门禁是绿的，尺子是错的。 |
+| `S4` | error | `tool/code-dispatch` 改名为 `tool/ptc-dispatch`；旧标签在 V3 会话里不再被识别。 |
+| `S5` | error | `ctx.agent` 被移除：调用方必须显式传入 Agent（例如 `setup(agentCtx, agent)` 的第二个参数）。 |
+| `S6` | error | `Inbox` 是类型接口，不是可构造的类；夹具使用官方的不支持形状，运行时代码读 `agent.inbox`。 |
+| `S7` | warn | `SubprocessHandle.pid` 被移除（只剩 `SubprocessTerminalHandle.pid`）；把该字段从测试夹具里删掉。 |
+| `S2` | warn | `EpochHeader.system` 被移除：系统提示词现在是界面节点 0 的 `system/message`。 |
+| `S1` | warn | 会话格式 V3 与带 generation 后缀的日志名——当前 generation 是 `session.v3.jsonl.zstd`，所以硬编码 `session.jsonl.zstd` 的脚本会静默失败。 |
+| `S10` | warn | 插件自己写入的会话事件必须经过宿主的 fail-closed 适配闸门：`Session.append` 没有 `ignorable` 写入通道，所以一次无条件 append 就可能让会话变得不可读。 |
+| `C1` | error | 裸 client slot `conversation` 被删除，替换为 `main` + `main.conversation`，**无别名**。`ctx.slots.inject()` 只在 declaration 存在时才触发，所以指向它的插件会**静默**停止挂载。 |
+| `C2` | error | `@deepseek-ai/dsh-client-ui-sidebar-textpreview` 改名为 `…-sidebar-documentpreview`；旧名消失且没有 shim 包。 |
+| `P1` | error | peer 区间必须保留第二段：`>=0.1.2-rc.1 <0.2.0` 单段在 npm semver 的 prerelease-tuple 规则下**拒绝** `0.1.5-rc.1`（semver 7.8.5 实测 `false`）。 |
+| `C4` | warn | rc.1 新增了全局主面板模型（`main`、`sidebar.panellist`、`ctx.layout.selectPanel(MainPanelId \| null)`），并给几乎每个 slot 追加了 `usePanelInfo` 标准 prop。 |
+| `C5` | warn | 文档预览迁到 keyed slot `sidebar.right.tab.document`（`DocumentContent`）；`sidebar.right.pane.tab` 仍在，但父入口变成 `rightbar.session`。 |
+| `H1` | warn | `KNOWN_SESSION_EVENT_TYPES` 新增 `deliverables/presented` 与 `subagent/catalog`——fail-closed 词表变长。 |
+| `H2` | warn | 新工具 `present` 的行占用了 `tool.call.toolview` 的 key `'present'`，而该 key 在 alpha.1 是空闲的。 |
+| `H4` | info | DeepSeek 适配器的默认咨询模型目录改以 `deepseek-flash`（DeepSeek-V41-Flash）打头。 |
+| `H3` | info | 新增可选能力：`ctx.sessionFeedback`、`ctx.layout.beginNavigation()`、`ctx.workspaces.openSession()` / `openWorkspace()` / `forkSession()`。只在卡上列出，**刻意不做自动检测**。 |
 
-`S7`、`S1`、`S2`、`S10` 刻意保持「提示」级别：它们有合法命中（Node 自带的 `pid`、旧世代读取器、插件自建的自适应事件门），所以扫描器把它们报成待人工复核的线索，而不是失败。
+`S7`、`S2`、`S1`、`S10`、`C4`、`C5`、`H1`、`H2` 与 `H4` 刻意保持提示级：它们都有合法命中（已经用了新 API 的仓、一份文档快照、插件自己的模型 id 表、Node 的 `ChildProcess.pid`），所以扫描器把它们作为人工复核线索，而不是失败。`M1` 与 `P1` 是**结构化**检查——它们解析 `package.json` 与 `tsconfig*.json`，而不是匹配文本——而 `H3` 是**仅卡片（card-only）**：有文档、参与 id 一致性校验，且刻意没有检测器（`CARD_ONLY = ['H3']`）。
 
 ## 本包不覆盖什么
 
-- **其他走廊。** `0.1.1` → `0.1.2` 以及未来版本线不在范围内；版本卡刻意锁死版本 —— 会漂移的卡比没有卡更糟。
+- **`0.1.5-rc.1` 之后的一跳。** 合并跨度按构造终止于 rc.1：harness 从 `0.1.5-rc.1` 到 `0.1.5-rc.2` 的一跳没有新增任何面向插件的接缝（本包自己的 dev/test 钉版与 CI 探针跑在 `0.1.5-rc.2` 线上，因此目录是对着最新已发布类型校验的）。之后任何新增接缝的东西都是**一个新包**——一张会漂移的卡比没有卡更糟。
+- **`0.1.1` → `0.1.2` 这一跳。** 请使用社区收敛技能。
+- **跨 leg 重述。** leg A 拥有会话格式接缝（`assistant/message.stream`、`SessionHandleReadResult`、`EpochHeader.system`、`ctx.agent`、`Inbox`、`SystemPrompt.persona`、V3 日志 generation），leg B 不重述它们——leg B 区间内 `packages/core/session/src` 的全部 diff 只有两个新增的事件类型字面量与一行注释。每条 leg 的卡片章节保留自己的范围声明。
 - **DSH 面向用户的升级路径。** 本包升级的是**插件源码**，不是用户的 harness 安装。
-- **客户端/浏览器行为。** 扫描器是静态的；client 半边仍需真实浏览器断言。
-- **证明。** 扫描干净只是假设。出口标准是真机冒烟（临时 `DSH_HOME`、目标 CLI、`plugin add <tarball>`、`--dump-config`，会话日志写入方还要加一次 resume 往返）。
+- **主题 token。** `docs/web-styling.md` 在 leg B 区间零变更。
+- **证明。** 扫描干净只是假设。出口标准是真实宿主冒烟（临时 `DSH_HOME`、目标 CLI、`plugin add <tarball>`、`--dump-config`），**加上**会话日志写入器（leg A）的恢复往返，以及每个 client 侧命中项（leg B）的真实浏览器断言。
 
 ## 安全边界
 
-- **只读扫描。** CLI 绝不往被扫仓库里写文件；`--json` 只写你指定的路径。
-- **无网络、无 shell。** 扫描器除 Node 标准库外不引入任何依赖，也从不创建进程。
-- **不碰密钥。** 本包不读取凭据、环境令牌或会话数据。
-- **沙箱化冒烟配方。** 卡上的真机检查使用 `mkdtemp` 出来的 `DSH_HOME`，绝不碰你真实的 `~/.dsh`。
+- **只读扫描。** CLI 绝不在被扫仓库内写入；`--json` 只写你指定的路径。
+- **无网络、无 shell。** 扫描器只 import Node 标准库，从不启动子进程。
+- **无凭据。** 本包不读取任何凭据、环境令牌或会话数据。
+- **沙箱化冒烟配方。** 卡里的真实宿主检查使用 `mkdtemp` 的 `DSH_HOME`，绝不碰你真实的 `~/.dsh`。
 
 ## 开发
 
 ```sh
-pnpm install
-pnpm test                          # node --test（真实 Cordis + 真实 SkillRegistry）
-pnpm run verify:self-contained     # 所有 import 都在包内解析
-pnpm run verify:artifacts          # 打包产物带齐技能、CLI 与 patch
-pnpm run check:readmes             # 五语 README 一致性
-pnpm pack
+npm install                        # 或者：pnpm install（仓库带 pnpm-lock.yaml）
+npm test                           # node --test：扫描器、卡↔目录一致性、真实 Cordis + SkillRegistry
+npm run verify:self-contained      # 每个 import 都在包内解析
+npm run verify:artifacts           # 打出来的 tarball 带技能/CLI/patch，且不含测试
+npm run check:readmes              # 五语 README 一致性
+npm pack
 ```
 
-扫描器自带合成的 `fixtures/bad-repo` 与 `fixtures/good-repo`，外加一个针对已适配仓库的 live negative —— 目录回归会让测试套件失败，而不是让下游用户踩坑。
+扫描器**每条 leg 各有一对**合成夹具：`fixtures/leg-a-bad-repo`（leg A 的会话/配置接缝，故意包含全部 error 级接缝）配 `fixtures/leg-a-good-repo`（已适配），以及 `fixtures/bad-repo`（leg B 的 client slot 接缝）配 `fixtures/good-repo`（已适配）——再外加拿一个已钉 `0.1.5-rc.1` 的家族仓做 live negative，所以目录里的回归会在这个测试套件里失败，而不是在下游用户那里。`test/card.test.mjs` 断言合并后的卡片索引与 `lib/scan.mjs` 命名的**正好**是同样二十个接缝 id、同样的级别，并且 `CARD_ONLY` 正好是 `['H3']`——把「证据绑定」规则变成机器门禁。
 
 ## 主题标签
 
-`dsh`、`dsh-plugin`、`deepseek-harness`、`deepseek`、`cordis`、`plugin-upgrade`、`migration`、`skill`、`version-card`、`scanner`（与 `package.json` 的 keywords 一致；`dsh-plugin` 是生态的曝光通道）。
+`dsh`、`dsh-plugin`、`deepseek-harness`、`deepseek`、`cordis`、`plugin-upgrade`、`migration`、`skill`、`version-card`、`scanner`、`client-slots`（与 `package.json` keywords 一致；`dsh-plugin` 是生态的可见性通道）。
 
 ## PerryLink DSH 插件家族
 
-属于 PerryLink DSH 插件家族 —— 40 个仓库，覆盖会话、记忆、权限、交付、可观测性与开发者工具。目录见 [perrylink-dsh-catalog.perrylink.workers.dev](https://perrylink-dsh-catalog.perrylink.workers.dev) 或 [`dsh-plugin` 主题](https://github.com/topics/dsh-plugin)。
+这是 [PerryLink](https://github.com/PerryLink) 维护的 [40 个 DeepSeek Harness 插件](https://github.com/PerryLink) 之一。如果它能帮到你，其他的也会：
+
+| Plugin | One-liner |
+|---|---|
+| **[dsh-auto-review](https://github.com/PerryLink/dsh-auto-review)** | Second-model auto-review on the approval chain, fail-closed by default | |
+| **[dsh-autotier](https://github.com/PerryLink/dsh-autotier)** | Automatic strong/cheap model-tier routing with deterministic risk guards and a `/tier` command | |
+| **[dsh-background-agents](https://github.com/PerryLink/dsh-background-agents)** | Durable background child agents with a Web UI sidebar, messaging and interrupt | |
+| **[dsh-budget](https://github.com/PerryLink/dsh-budget)** | Cost governance for DeepSeek Harness: budgets, carbon, and latency in one panel. | |
+| **[dsh-catalog](https://github.com/PerryLink/dsh-catalog)** | DSH Desktop Market standard catalog source for the PerryLink family | |
+| **[dsh-cert-mcp](https://github.com/PerryLink/dsh-cert-mcp)** | Read-only MCP server exposing the certification registry: grades, snapshots and five-dimension evidence | |
+| **[dsh-checkpoint-rewind](https://github.com/PerryLink/dsh-checkpoint-rewind)** | Unified session + workspace + config checkpoints with one-shot `/rewind` | |
+| **[dsh-claude-move](https://github.com/PerryLink/dsh-claude-move)** | Migrate Claude Code, Codex, OpenCode and Hermes sessions, memories and skills into DSH | |
+| **[dsh-click](https://github.com/PerryLink/dsh-click)** | Cross-platform native desktop control for DeepSeek Harness — Windows first. | |
+| **[dsh-composer-history](https://github.com/PerryLink/dsh-composer-history)** | Terminal-style input history for the web composer: arrows, Ctrl+R search | |
+| **[dsh-data-quality](https://github.com/PerryLink/dsh-data-quality)** | Deterministic dataset profiling, cleaning and citation verification | |
+| **[dsh-defend](https://github.com/PerryLink/dsh-defend)** | Prompt-injection, jailbreak, and secret-leak defense for DeepSeek Harness. | |
+| **[dsh-doublecheck](https://github.com/PerryLink/dsh-doublecheck)** | Engineering-discipline guard: requirements grill, test gates, adversary review | |
+| **[dsh-draw](https://github.com/PerryLink/dsh-draw)** | Unified static-image generation routing for DeepSeek Harness. | |
+| **[dsh-fast](https://github.com/PerryLink/dsh-fast)** | Read-only performance diagnostics: load, spill, compaction and cache hit rate | |
+| **[dsh-fund-research](https://github.com/PerryLink/dsh-fund-research)** | Chinese mutual-fund research with sealed, traceable source snapshots | |
+| **[dsh-github](https://github.com/PerryLink/dsh-github)** | GitHub PR/issue/CI integration with every write approval-gated | |
+| **[dsh-industry-research](https://github.com/PerryLink/dsh-industry-research)** | Industry and company research pack: chain map, policy timeline, company cards | |
+| **[dsh-kit](https://github.com/PerryLink/dsh-kit)** | One-command starter pack that installs the core family | |
+| **[dsh-library](https://github.com/PerryLink/dsh-library)** | Local document knowledge base with hybrid search and citation-aware injection | |
+| **[dsh-local-ai](https://github.com/PerryLink/dsh-local-ai)** | Local Ollama model discovery and task-based routing with cloud fallback | |
+| **[dsh-lsp-actions](https://github.com/PerryLink/dsh-lsp-actions)** | LSP diagnostics, formatting, completion, code actions, symbols and rename | |
+| **[dsh-mask](https://github.com/PerryLink/dsh-mask)** | PII masking at the model boundary with a host-side restore table | |
+| **[dsh-mcp-panel](https://github.com/PerryLink/dsh-mcp-panel)** | MCP management console: `/mcp` command, Settings tab and trial calls | |
+| **[dsh-memento](https://github.com/PerryLink/dsh-memento)** | Approval-gated cross-session memory protocol (`ctx.memory` + SQLite) | |
+| **[dsh-observe](https://github.com/PerryLink/dsh-observe)** | OpenTelemetry and Langfuse telemetry export from the session event stream | |
+| **[dsh-output-styles](https://github.com/PerryLink/dsh-output-styles)** | Runtime-switchable model output styles | |
+| **[dsh-permission-rules](https://github.com/PerryLink/dsh-permission-rules)** | Declarative allow/deny/ask rules plus a process-level network policy | |
+| **[dsh-plugin-certification](https://github.com/PerryLink/dsh-plugin-certification)** | Community certification registry with repro-checkable grades and badges | |
+| **[dsh-plugin-doctor](https://github.com/PerryLink/dsh-plugin-doctor)** | Zero-dependency static + sandbox smoke detector for DSH plugins | |
+| **[dsh-plugin-guide](https://github.com/PerryLink/dsh-plugin-guide)** | Plugin-dev knowledge base, agent skill and the `dsh-plugin-dev` CLI toolchain | |
+| **[dsh-plugin-kit](https://github.com/PerryLink/dsh-plugin-kit)** | Shared zero-runtime-dependency toolkit for the PerryLink DSH plugins | |
+| **[dsh-plugin-portal](https://github.com/PerryLink/dsh-plugin-portal)** | Zero-dependency static portal rendering the whole plugin family as one page | |
+| **[dsh-reach](https://github.com/PerryLink/dsh-reach)** | Multi-channel approval/question bridge: WeChat, Telegram, Feishu + a session console | |
+| **[dsh-research-report](https://github.com/PerryLink/dsh-research-report)** | Verifiable research reports: evidence ledger, manifest seal, per-claim verdicts | |
+| **[dsh-score](https://github.com/PerryLink/dsh-score)** | Multi-dimensional plugin quality scoring with an evidence-backed leaderboard | |
+| **[dsh-session-pin](https://github.com/PerryLink/dsh-session-pin)** | Pin sessions and workspaces in the Web sidebar with per-pin colors | |
+| **[dsh-session-sync](https://github.com/PerryLink/dsh-session-sync)** | Git-backed cross-device session synchronization with keep-both merges | |
+| **[dsh-skill-pack-security](https://github.com/PerryLink/dsh-skill-pack-security)** | Security-audit skill pack plus the `plugin_vet` supply-chain gate | |
+| **[dsh-talk](https://github.com/PerryLink/dsh-talk)** | Voice-first session loop: speech-to-text input and text-to-speech replies | |
+| **[dsh-team-rooms](https://github.com/PerryLink/dsh-team-rooms)** | Cross-session team rooms: shared message bus, task board and timeline | |
+| **[dsh-test-drive](https://github.com/PerryLink/dsh-test-drive)** | Isolated install-and-smoke test drives with a pass/fail matrix | |
+| **[dsh-ticktick](https://github.com/PerryLink/dsh-ticktick)** | TickTick/Dida365 task bridge: session-header panel plus eleven agent tools | |
+| **[dsh-translate](https://github.com/PerryLink/dsh-translate)** | Vendor parameter translation and deterministic JSON repair | |
+| **[dsh-wechat](https://github.com/pan17/dsh-wechat)** | WeChat ↔ DSH bridge (Tencent iLink bot) developed with [pan17](https://github.com/pan17/dsh-wechat), who hosts the repo | |
+| **[dsh-personal-directive](https://github.com/PerryLink/dsh-personal-directive)** | Personal directive injector with a top-bar toggle (fork of liucai2026/dsh-personal-directive) | |
+
+属于 PerryLink DSH 插件家族——40+ 个仓库，覆盖会话、记忆、权限、交付、可观测性与开发者工具。目录见 [perrylink-dsh-catalog.perrylink.workers.dev](https://perrylink-dsh-catalog.perrylink.workers.dev) 或 [`dsh-plugin` 主题](https://github.com/topics/dsh-plugin)。
 
 ## 许可证
 

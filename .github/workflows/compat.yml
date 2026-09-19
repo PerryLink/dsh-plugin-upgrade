@@ -1,22 +1,24 @@
 name: Compat
 
-# Compatibility verification against the published 0.1.5-rc.2 line (monthly + on demand):
+# Compatibility verification against the published harness lines (weekly + per PR + on demand):
 #   1. bare-import: install the packed tarball plus the published peers into an empty
 #      project, import the entry, mount the REAL published SkillRegistry and assert the
 #      packaged skill registers with its body - catches devDependencies mistaken for
 #      dependencies and a skill bundle that only works in this repo's checkout.
-#   2. cli: run the shipped bin against a synthetic bad file and assert exit 1, so the
-#      published detector still fails a real seam.
+#   2. cli: run the shipped bin against synthetic bad files and assert exit 1 on BOTH legs of
+#      the merged corridor, so the published detector still fails a real seam of each leg.
 #   3. profile: install the tarball into a scratch DSH_HOME profile next to dsh-base +
 #      dsh-headless, assert the bundle row mounts (dump-config), and run one keyless
 #      headless task. MISSING_CREDENTIAL proves the plugin tree loaded; a hang (pending
 #      service) hits the 120s timeout and fails, which is how a missing injected service
-#      surfaces.
+#      surfaces. The matrix keeps BOTH published lines the peer band admits, so a change
+#      that silently drops the older supported line fails here.
 #   4. uninstall: the profile install must be fully reversible.
 # Platform guard: every assertion here is platform-neutral.
 on:
+  pull_request:
   schedule:
-    - cron: '0 4 1 * *'
+    - cron: '0 4 * * 1'
   workflow_dispatch:
 
 jobs:
@@ -34,6 +36,9 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
       - name: Pack
         run: pnpm pack --pack-destination "$RUNNER_TEMP"
 
@@ -43,7 +48,7 @@ jobs:
           TARBALL="$(ls "$RUNNER_TEMP"/dsh-plugin-upgrade-*.tgz | head -n1)"
           mkdir -p "$RUNNER_TEMP/bare" && cd "$RUNNER_TEMP/bare"
           pnpm init >/dev/null
-          pnpm add "$TARBALL" '@deepseek-ai/cordis@4.0.2' '@deepseek-ai/dsh-skill@0.1.5-rc.2' >/dev/null
+          pnpm add "$TARBALL" '@deepseek-ai/cordis@4.0.2' '@deepseek-ai/dsh-skill@0.1.6-alpha.2' >/dev/null
           cat > mount.mjs <<'JS'
           import { Context } from '@deepseek-ai/cordis'
           import SkillRegistry from '@deepseek-ai/dsh-skill'
@@ -52,17 +57,21 @@ jobs:
           await ctx.plugin(SkillRegistry)
           const fiber = await ctx.plugin(plugin)
           const list = await ctx.skills.list()
-          if (!list.some(s => s.name === 'plugin-upgrade-015')) {
-            console.error('FAIL: plugin-upgrade-015 not registered from the tarball')
+          if (!list.some(s => s.name === 'plugin-upgrade')) {
+            console.error('FAIL: plugin-upgrade not registered from the tarball')
             process.exit(1)
           }
-          const def = await ctx.skills.get('plugin-upgrade-015')
-          if (!def.content.includes('Plugin upgrade')) {
-            console.error('FAIL: skill body is not the packaged card loop')
+          const def = await ctx.skills.get('plugin-upgrade')
+          if (!def.content.includes('Plugin upgrade') || !def.content.includes('Locate your leg first')) {
+            console.error('FAIL: skill body is not the packaged merged-corridor loop')
+            process.exit(1)
+          }
+          if (!def.resourceBase.path.endsWith('plugin-upgrade')) {
+            console.error('FAIL: skill resourceBase does not point at the packaged skill directory')
             process.exit(1)
           }
           await fiber.dispose()
-          if ((await ctx.skills.list()).some(s => s.name === 'plugin-upgrade-015')) {
+          if ((await ctx.skills.list()).some(s => s.name === 'plugin-upgrade')) {
             console.error('FAIL: skill survived dispose')
             process.exit(1)
           }
@@ -70,25 +79,49 @@ jobs:
           JS
           node mount.mjs
 
-      - name: Published CLI still fails a real seam
+      - name: Published CLI still fails a real seam of each leg
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP/bare"
-          mkdir -p bad && cat > bad/index.ts <<'TS'
-          ctx.on('tool/code-dispatch', () => {})
+          mkdir -p bad-b && cat > bad-b/index.ts <<'TS'
+          ctx.slots.inject('conversation', () => {})
+          TS
+          mkdir -p bad-a && cat > bad-a/index.ts <<'TS'
+          import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
+          export const mount = (ctx: any) => ctx.plugin(SystemPrompt, { persona: '' })
           TS
           set +e
-          npx --no-install dsh-plugin-upgrade-scan --repo bad --quiet
-          code="$?"
+          pnpm exec dsh-plugin-upgrade-scan --repo bad-b --seams C1 --quiet
+          code_b="$?"
+          pnpm exec dsh-plugin-upgrade-scan --repo bad-a --seams S9 --quiet
+          code_a="$?"
+          pnpm exec dsh-plugin-upgrade-scan --repo bad-b --seams C3 --quiet
+          code_retired="$?"
           set -e
-          if [ "$code" -ne 1 ]; then
-            echo "FAIL: expected exit 1 for a tool/code-dispatch hit, got $code"
+          if [ "$code_b" -ne 1 ]; then
+            echo "FAIL: expected exit 1 for a C1 (removed slot) hit, got $code_b"
             exit 1
           fi
-          echo "CLI seam detection OK"
+          if [ "$code_a" -ne 1 ]; then
+            echo "FAIL: expected exit 1 for a leg-A S9 (renamed persona) hit, got $code_a"
+            exit 1
+          fi
+          if [ "$code_retired" -ne 0 ]; then
+            echo "FAIL: the retired C3 id must match nothing, got $code_retired"
+            exit 1
+          fi
+          echo "CLI seam detection OK (leg A + leg B, retired C3 inert)"
 
   profile:
+    strategy:
+      fail-fast: false
+      # Both published harness lines this plugin's dshWorkshop compatibility list admits:
+      # the rc line npm installs by default and the older rc.1-line release the peer band
+      # must keep working.
+      matrix:
+        dsh: ['0.1.2-rc.1', '0.1.5-rc.2', '0.1.6-alpha.2']
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
 
@@ -101,11 +134,14 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
       - name: Pack
         run: pnpm pack --pack-destination "$RUNNER_TEMP"
 
       - name: Install dsh CLI
-        run: npm install -g @deepseek-ai/dsh@0.1.5-rc.2
+        run: npm install -g @deepseek-ai/dsh@${{ matrix.dsh }}
 
       - name: Install into a scratch profile (builds allowlisted)
         run: |
@@ -117,6 +153,7 @@ jobs:
           packages:
             - .
           nodeLinker: hoisted
+          minimumReleaseAge: 0
           autoInstallPeers: false
           allowBuilds:
             '@deepseek-ai/dsh-subprocess-local': true
@@ -125,7 +162,7 @@ jobs:
             protobufjs: true
             '@google/genai': true
           YAML
-          dsh plugin --profile compat add '@deepseek-ai/dsh-base@0.1.5-rc.2' '@deepseek-ai/dsh-headless@0.1.5-rc.2' "$TARBALL"
+          dsh plugin --profile compat add "@deepseek-ai/dsh-base@${{ matrix.dsh }}" "@deepseek-ai/dsh-headless@${{ matrix.dsh }}" "$TARBALL"
 
       - name: Row-mount assertion
         run: |

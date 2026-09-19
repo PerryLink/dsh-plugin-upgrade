@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: Apache-2.0
 // verify-self-contained: every bare import in this package must resolve from the
 // declared dependency set, and no import may point outside the package root.
 // Usage: node scripts/verify-self-contained.mjs
-import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { dirname, join, resolve, relative, isAbsolute } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -16,6 +17,11 @@ const declared = new Set([
 const BUILTIN = /^(node:|[a-z]+$)/
 const SKIP = new Set(['node_modules', '.git', 'fixtures'])
 
+/**
+ * Yield every source file under `dir`, skipping the package's own exclusions.
+ * @param {string} dir
+ * @returns {Generator<string, void, void>}
+ */
 function* walk(dir) {
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     if (e.isDirectory()) { if (!SKIP.has(e.name)) yield* walk(join(dir, e.name)) }
@@ -46,8 +52,12 @@ for (const file of walk(root)) {
   }
 }
 
-// The packaged skill and its references must exist for the plugin to mount.
-for (const required of ['skills/plugin-upgrade-015/SKILL.md', 'skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-alpha.1.md', 'cordis.patch.yml']) {
+// The packaged skill bundle and its assets must exist for the plugin to mount.
+for (const required of [
+  'skills/plugin-upgrade/SKILL.md',
+  'skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md',
+  'cordis.patch.yml',
+]) {
   if (!existsSync(join(root, required))) problems.push(`missing packaged asset: ${required}`)
 }
 

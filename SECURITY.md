@@ -32,7 +32,7 @@ In scope:
 Out of scope:
 
 - findings in the DeepSeek Harness itself (report those upstream);
-- the *content* of the upgrade card being incomplete for a repository the maintainer has
+- the *content* of the corridor card being incomplete for a repository the maintainer has
   never seen — that is a bug report, not a vulnerability;
 - anything that requires the attacker to already control the machine or the repository
   being scanned.

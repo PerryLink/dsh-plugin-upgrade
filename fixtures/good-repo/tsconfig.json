@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2022",
+    "module": "ESNext",
     "moduleResolution": "bundler",
+    "noEmit": true,
+    "baseUrl": ".",
     "paths": {
-      "@deepseek-ai/cordis": ["./vendor/cordis/lib/types/index.d.ts"]
+      "@deepseek-ai/dsh-llm": [
+        "./vendor/dsh-llm/lib/types/index.d.ts"
+      ]
     }
   },
   "include": ["src"]

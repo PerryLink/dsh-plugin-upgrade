@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Print the CHANGELOG.md section for one version, for GitHub Release notes.
 // Usage: node scripts/changelog-section.mjs <x.y.z>
 import { readFileSync } from 'node:fs'
