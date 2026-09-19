@@ -1,23 +1,23 @@
 <div align="center">
 
-# ⬆️ dsh-plugin-upgrade-015
-- **1024 store channel**: `npm i -g dsh1024` once, then `dsh1024 plugin --profile web add dsh-plugin-upgrade-015` (counts toward the [deepseek1024.com](https://deepseek1024.com) install ranking).
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-015)
+# ⬆️ dsh-plugin-upgrade
+- **1024 store channel**: `npm i -g dsh1024` once, then `dsh1024 plugin --profile web add dsh-plugin-upgrade` (counts toward the [deepseek1024.com](https://deepseek1024.com) install ranking).
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade)
 
 **Merged, version-locked plugin upgrade skill for DeepSeek Harness — `0.1.3-alpha.1` → `0.1.5-rc.1`, carried as two closed legs.**
 
 *Leg A `0.1.3-alpha.1` → `0.1.5-alpha.1`, leg B `0.1.5-alpha.1` → `0.1.5-rc.1`: one corridor card plus one zero-dependency seam scanner over the merged 20-seam catalog, so a client half that stopped mounting silently is never mistaken for "typecheck is green".*
 
-> **Official repository.** This is the only official repository of dsh-plugin-upgrade-015, maintained by PerryLink. It supersedes the two version-locked packages `dsh-plugin-upgrade` (leg A) and `dsh-plugin-upgrade-rc1` (leg B). Same-name repositories under other accounts are not affiliated.
+> **Official repository.** This is the only official repository of dsh-plugin-upgrade, maintained by PerryLink. It supersedes the two version-locked packages `dsh-plugin-upgrade` (leg A) and `dsh-plugin-upgrade-rc1` (leg B). Same-name repositories under other accounts are not affiliated.
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-015.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-015/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-015/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-015?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-015/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade)](https://www.npmjs.com/package/dsh-plugin-upgrade)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade)](https://www.npmjs.com/package/dsh-plugin-upgrade)
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
@@ -36,14 +36,14 @@
 | Scope | **Two closed legs, one span**: leg A `0.1.3-alpha.1` → `0.1.5-alpha.1` plus leg B `0.1.5-alpha.1` → `0.1.5-rc.1`. A corridor never widens: a hop after `0.1.5-rc.1` is a new package. |
 | Legs | Both legs live in this package: leg A keeps the `S1`–`S10` + `M1` seams, leg B keeps `C1`, `C2`, `C4`, `C5`, `H1`–`H4`, `P1` — each with its own evidence, card section, fixtures and rollback path. There is no sibling package to install. |
 | `C3` | Retired: leg B's card spelled the stale-type-line false green `C3`, which is the same defect as leg A's `M1`. The fold is recorded on the card; `--seams C3` matches nothing. |
-| Sibling | Do not mount the retired `dsh-plugin-upgrade` in the same profile: both register the agent skill `plugin-upgrade-015`, so the second mount collides on the skill name. That package is deprecated on npm and its repository is retired; this package replaces both of its legs. |
+| Sibling | Do not mount the retired `dsh-plugin-upgrade` in the same profile: both register the agent skill `plugin-upgrade`, so the second mount collides on the skill name. That package is deprecated on npm and its repository is retired; this package replaces both of its legs. |
 
 ## What you get
 
 Two halves, one seam catalog:
 
-- **A bundled agent skill (`plugin-upgrade-015`)** — the merged corridor card and a fix-and-verify loop. The body first routes the caller to the leg that matches its peer band; the model loads it only when a task actually needs it, and the package contributes no system-prompt paragraph and no tool.
-- **A zero-dependency CLI (`dsh-plugin-upgrade-015-scan`)** — reports `file:line` facts for the merged twenty seams (`S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`, `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) re-read from the harness tag ranges on 2026-09-09 (leg A) and 2026-09-10 (leg B). Exit `1` on any error-severity hit, so it drops straight into CI.
+- **A bundled agent skill (`plugin-upgrade`)** — the merged corridor card and a fix-and-verify loop. The body first routes the caller to the leg that matches its peer band; the model loads it only when a task actually needs it, and the package contributes no system-prompt paragraph and no tool.
+- **A zero-dependency CLI (`dsh-plugin-upgrade-scan`)** — reports `file:line` facts for the merged twenty seams (`S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`, `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) re-read from the harness tag ranges on 2026-09-09 (leg A) and 2026-09-10 (leg B). Exit `1` on any error-severity hit, so it drops straight into CI.
 
 The point is the failure mode this corridor exists to kill: **this span's breakage is mostly silent, from both ends.** The type line can be stale, so the repo compiles against the **old** catalog (seam `M1`), and the bare `conversation` client slot was deleted with no alias while `ctx.slots.inject()` only runs its callback when the declaration exists — so a client half that still targets it stops mounting with no error, no log line and no failed build (seam `C1`). Three classes of breakage survive `typecheck` + `test`:
 
@@ -57,24 +57,24 @@ Honest sizing: leg B's workspace sweep found that the family's client halves use
 
 ```sh
 # 1. install the bundle into your profile
-dsh plugin --profile web add dsh-plugin-upgrade-015
+dsh plugin --profile web add dsh-plugin-upgrade
 
 # 2. verify the row mounted
-dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-015'
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade'
 
 # 3. scan the plugin you are upgrading
-npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
+npx dsh-plugin-upgrade-scan --repo ../my-plugin
 ```
 
-Then ask the agent to use the `plugin-upgrade-015` skill, or drive the loop yourself with the card at
-`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (leg A is §1, leg B is §2, the merged seam index is §3).
+Then ask the agent to use the `plugin-upgrade` skill, or drive the loop yourself with the card at
+`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (leg A is §1, leg B is §2, the merged seam index is §3).
 
 ## Install & uninstall
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade-015            # from npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-015#main"   # from source
-dsh plugin --profile web remove dsh-plugin-upgrade-015         # uninstall (reversible)
+dsh plugin --profile web add dsh-plugin-upgrade            # from npm
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # from source
+dsh plugin --profile web remove dsh-plugin-upgrade         # uninstall (reversible)
 ```
 
 Installing the bundle only registers a skill; removing the row removes the skill. The CLI is a normal `npx` target and needs no profile at all.
@@ -86,28 +86,28 @@ Every key is optional and lives in the profile patch:
 | Key | Default | Meaning |
 |---|---|---|
 | `enabled` | `true` | Register the packaged skill. Set `false` to keep the dependency mounted but silent. |
-| `skillName` | `plugin-upgrade-015` | Directory under `skillsRoot` to register, and the name shown in the catalog. |
+| `skillName` | `plugin-upgrade` | Directory under `skillsRoot` to register, and the name shown in the catalog. |
 | `skillsRoot` | the package's own `./skills` | Where `<skillName>/SKILL.md` lives. Point it at your own card to reuse the plumbing. |
 | `userInvocable` | `true` | Whether a human can invoke the skill by name in addition to the model. |
 
 ```yaml
 - insert:
-    - id: dsh-plugin-upgrade-015
-      name: dsh-plugin-upgrade-015
+    - id: dsh-plugin-upgrade
+      name: dsh-plugin-upgrade
       config:
-        skillName: plugin-upgrade-015
+        skillName: plugin-upgrade
 ```
 
 The plugin mounts loud: a missing `SKILL.md`, an empty body, or a frontmatter without `name` fails the mount instead of registering an empty skill.
 
 ## Surfaces
 
-**Skill** — `plugin-upgrade-015` (model- and user-invocable by default). Body: leg routing table, the 8 hard rules and the 6-step loop. References: the merged corridor card. Scripts: the detector, shipped inside the skill directory so relative paths resolve.
+**Skill** — `plugin-upgrade` (model- and user-invocable by default). Body: leg routing table, the 8 hard rules and the 6-step loop. References: the merged corridor card. Scripts: the detector, shipped inside the skill directory so relative paths resolve.
 
-**CLI** — `dsh-plugin-upgrade-015-scan`:
+**CLI** — `dsh-plugin-upgrade-scan`:
 
 ```sh
-dsh-plugin-upgrade-015-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
+dsh-plugin-upgrade-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
 ```
 
 | Flag | Meaning |

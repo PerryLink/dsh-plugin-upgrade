@@ -17,7 +17,7 @@ import { SEAMS, SEAM_IDS, CARD_ONLY } from '../lib/scan.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(here, '..')
-const cardPath = path.join(root, 'skills', 'plugin-upgrade-015', 'references', 'v0.1.3-alpha.1-to-v0.1.5-rc.1.md')
+const cardPath = path.join(root, 'skills', 'plugin-upgrade', 'references', 'v0.1.3-alpha.1-to-v0.1.5-rc.1.md')
 const card = readFileSync(cardPath, 'utf8')
 
 /** The merged index section, delimited by HTML comment markers. */
@@ -104,17 +104,17 @@ test('the card is honest about the family-side blast radius being latent', () =>
 })
 
 test('the skill directory, the frontmatter name and the bundle default agree', () => {
-  const skill = readFileSync(path.join(root, 'skills', 'plugin-upgrade-015', 'SKILL.md'), 'utf8')
-  assert.match(skill, /^name: plugin-upgrade-015$/m)
+  const skill = readFileSync(path.join(root, 'skills', 'plugin-upgrade', 'SKILL.md'), 'utf8')
+  assert.match(skill, /^name: plugin-upgrade$/m)
   assert.match(skill, /^  corridor: "0\.1\.3-alpha\.1 -> 0\.1\.5-rc\.1"$/m)
   // Both legs' frontmatter routing hints survive in the body.
   assert.match(skill, /Routing hints carried over from the two legs' frontmatter/)
   assert.match(skill, /must support @deepseek-ai\/dsh 0\.1\.5-alpha\.1/)
   assert.match(skill, /must support the 0\.1\.5-rc\.1 host line/)
   const patch = readFileSync(path.join(root, 'cordis.patch.yml'), 'utf8')
-  assert.match(patch, /^\s+- id: dsh-plugin-upgrade-015$/m)
-  assert.match(patch, /skillName: plugin-upgrade-015/)
+  assert.match(patch, /^\s+- id: dsh-plugin-upgrade$/m)
+  assert.match(patch, /skillName: plugin-upgrade/)
   const entry = readFileSync(path.join(root, 'index.mjs'), 'utf8')
-  assert.match(entry, /default\('plugin-upgrade-015'\)/, 'the Config default must name the packaged skill')
-  assert.match(entry, /export const name = 'dsh-plugin-upgrade-015'/)
+  assert.match(entry, /default\('plugin-upgrade'\)/, 'the Config default must name the packaged skill')
+  assert.match(entry, /export const name = 'dsh-plugin-upgrade'/)
 })

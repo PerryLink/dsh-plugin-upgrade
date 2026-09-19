@@ -1,23 +1,23 @@
 <div align="center">
 
-# ⬆️ dsh-plugin-upgrade-015
-- **1024 商店通道**：先 `npm i -g dsh1024`，再执行 `dsh1024 plugin --profile web add dsh-plugin-upgrade-015`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-015)
+# ⬆️ dsh-plugin-upgrade
+- **1024 商店通道**：先 `npm i -g dsh1024`，再执行 `dsh1024 plugin --profile web add dsh-plugin-upgrade`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade)
 
 **DeepSeek Harness 插件升级技能（已合并、版本锁定）——`0.1.3-alpha.1` → `0.1.5-rc.1`，由两条闭合的 leg 承载。**
 
 *leg A `0.1.3-alpha.1` → `0.1.5-alpha.1`，leg B `0.1.5-alpha.1` → `0.1.5-rc.1`：一张走廊卡加一个零依赖接缝扫描器，覆盖合并后的 20 条接缝目录，让「静默不挂载的 client 半边」不再被误当成「typecheck 绿了」。*
 
-> **官方仓库。** 这是 dsh-plugin-upgrade-015 唯一的官方仓库，由 PerryLink 维护。它取代两个版本锁定的包 `dsh-plugin-upgrade`（leg A）与 `dsh-plugin-upgrade-rc1`（leg B）。其他账号下的同名仓库与本项目无关。
+> **官方仓库。** 这是 dsh-plugin-upgrade 唯一的官方仓库，由 PerryLink 维护。它取代两个版本锁定的包 `dsh-plugin-upgrade`（leg A）与 `dsh-plugin-upgrade-rc1`（leg B）。其他账号下的同名仓库与本项目无关。
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-015.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-015/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-015/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-015?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-015/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade)](https://www.npmjs.com/package/dsh-plugin-upgrade)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade)](https://www.npmjs.com/package/dsh-plugin-upgrade)
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
@@ -36,14 +36,14 @@
 | 范围 | **两条闭合的 leg，一个跨度**：leg A `0.1.3-alpha.1` → `0.1.5-alpha.1`，加上 leg B `0.1.5-alpha.1` → `0.1.5-rc.1`。走廊永不加宽：`0.1.5-rc.1` 之后的一跳就是一个新包。 |
 | Legs | 两条 leg 都在本包内：leg A 保留 `S1`–`S10` + `M1` 接缝，leg B 保留 `C1`、`C2`、`C4`、`C5`、`H1`–`H4`、`P1`——各自带有自己的证据、卡片章节、夹具与回滚路径。没有需要另装的姊妹包。 |
 | `C3` | 已弃用：leg B 的卡把「类型线陈旧导致的假绿」写作 `C3`，而这与 leg A 的 `M1` 是同一个缺陷。合并一事记录在卡上；`--seams C3` 匹配不到任何东西。 |
-| 前身包 | 请勿在同一个 profile 中同时挂载已退役的 `dsh-plugin-upgrade`：两者都会注册 agent skill `plugin-upgrade-015`，第二次挂载会因 skill 名冲突而失败。该包在 npm 上已标记 deprecated、其仓库已退役；本包已取代它的两条腿。 |
+| 前身包 | 请勿在同一个 profile 中同时挂载已退役的 `dsh-plugin-upgrade`：两者都会注册 agent skill `plugin-upgrade`，第二次挂载会因 skill 名冲突而失败。该包在 npm 上已标记 deprecated、其仓库已退役；本包已取代它的两条腿。 |
 
 ## 你得到什么
 
 两半，一套接缝目录：
 
-- **一个随包发布的 agent 技能（`plugin-upgrade-015`）** —— 合并后的走廊卡，以及「修-验」循环。正文先把调用者路由到与它 peer 区间相符的那条 leg；只有任务真正需要时模型才会加载它，本包不贡献任何系统提示词段落，也不注册工具。
-- **一个零依赖 CLI（`dsh-plugin-upgrade-015-scan`）** —— 按 `file:line` 报告合并后二十条接缝（`S3`、`S8`、`S9`、`M1`、`S4`、`S5`、`S6`、`S7`、`S2`、`S1`、`S10`、`C1`、`C2`、`P1`、`C4`、`C5`、`H1`、`H2`、`H4`、`H3`）的事实，全部于 2026-09-09（leg A）与 2026-09-10（leg B）从 harness 的 tag 区间重新读取。命中 error 级即退出码 `1`，可直接接进 CI。
+- **一个随包发布的 agent 技能（`plugin-upgrade`）** —— 合并后的走廊卡，以及「修-验」循环。正文先把调用者路由到与它 peer 区间相符的那条 leg；只有任务真正需要时模型才会加载它，本包不贡献任何系统提示词段落，也不注册工具。
+- **一个零依赖 CLI（`dsh-plugin-upgrade-scan`）** —— 按 `file:line` 报告合并后二十条接缝（`S3`、`S8`、`S9`、`M1`、`S4`、`S5`、`S6`、`S7`、`S2`、`S1`、`S10`、`C1`、`C2`、`P1`、`C4`、`C5`、`H1`、`H2`、`H4`、`H3`）的事实，全部于 2026-09-09（leg A）与 2026-09-10（leg B）从 harness 的 tag 区间重新读取。命中 error 级即退出码 `1`，可直接接进 CI。
 
 它要消灭的失效模式是：**这一跨度的破坏大多是静默的，而且两端都静默。** 类型线可能陈旧，于是仓库是对着**旧目录**编译的（接缝 `M1`）；而裸 `conversation` client slot 被删除且没有别名，`ctx.slots.inject()` 又只在 declaration 存在时才执行回调——于是仍然指向它的 client 半边停止挂载，没有报错、没有日志、构建也不会失败（接缝 `C1`）。有三类破坏能穿过 `typecheck` + `test`：
 
@@ -57,24 +57,24 @@
 
 ```sh
 # 1. 把 bundle 装进你的 profile
-dsh plugin --profile web add dsh-plugin-upgrade-015
+dsh plugin --profile web add dsh-plugin-upgrade
 
 # 2. 确认插件行已挂载
-dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-015'
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade'
 
 # 3. 扫描你要升级的插件
-npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
+npx dsh-plugin-upgrade-scan --repo ../my-plugin
 ```
 
-然后让 agent 使用 `plugin-upgrade-015` 技能，或自己按卡驱动循环：
-`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`（leg A 是 §1，leg B 是 §2，合并后的接缝索引是 §3）。
+然后让 agent 使用 `plugin-upgrade` 技能，或自己按卡驱动循环：
+`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`（leg A 是 §1，leg B 是 §2，合并后的接缝索引是 §3）。
 
 ## 安装与卸载
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade-015            # 从 npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-015#main"   # 从源码
-dsh plugin --profile web remove dsh-plugin-upgrade-015         # 卸载（可逆）
+dsh plugin --profile web add dsh-plugin-upgrade            # 从 npm
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # 从源码
+dsh plugin --profile web remove dsh-plugin-upgrade         # 卸载（可逆）
 ```
 
 安装 bundle 只注册一个技能；移除插件行即移除技能。CLI 是普通 `npx` 目标，完全不需要 profile。
@@ -86,28 +86,28 @@ dsh plugin --profile web remove dsh-plugin-upgrade-015         # 卸载（可逆
 | 键 | 默认 | 含义 |
 |---|---|---|
 | `enabled` | `true` | 是否注册随包技能。设为 `false` 可保留依赖但保持沉默。 |
-| `skillName` | `plugin-upgrade-015` | 要注册的 `skillsRoot` 子目录名，也是目录里显示的名字。 |
+| `skillName` | `plugin-upgrade` | 要注册的 `skillsRoot` 子目录名，也是目录里显示的名字。 |
 | `skillsRoot` | 本包自己的 `./skills` | `<skillName>/SKILL.md` 所在处。指向你自己的卡即可复用这套管线。 |
 | `userInvocable` | `true` | 除了模型，人是否也能按名字调用该技能。 |
 
 ```yaml
 - insert:
-    - id: dsh-plugin-upgrade-015
-      name: dsh-plugin-upgrade-015
+    - id: dsh-plugin-upgrade
+      name: dsh-plugin-upgrade
       config:
-        skillName: plugin-upgrade-015
+        skillName: plugin-upgrade
 ```
 
 插件**挂载必须大声**：`SKILL.md` 缺失、正文为空、frontmatter 没有 `name`，都会直接让挂载失败，而不是注册一个空技能。
 
 ## 暴露面
 
-**技能** —— `plugin-upgrade-015`（默认模型与人都可调用）。正文：leg 路由表、8 条硬规则与 6 步循环。引用：合并后的走廊卡。脚本：检测器，放在技能目录内，保证相对路径可解析。
+**技能** —— `plugin-upgrade`（默认模型与人都可调用）。正文：leg 路由表、8 条硬规则与 6 步循环。引用：合并后的走廊卡。脚本：检测器，放在技能目录内，保证相对路径可解析。
 
-**CLI** —— `dsh-plugin-upgrade-015-scan`：
+**CLI** —— `dsh-plugin-upgrade-scan`：
 
 ```sh
-dsh-plugin-upgrade-015-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
+dsh-plugin-upgrade-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
 ```
 
 | 参数 | 含义 |

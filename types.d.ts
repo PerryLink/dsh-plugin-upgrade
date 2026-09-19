@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 /**
- * Public type surface for dsh-plugin-upgrade-015.
- * @module dsh-plugin-upgrade-015
+ * Public type surface for dsh-plugin-upgrade.
+ * @module dsh-plugin-upgrade
  */
 
 /** Plugin configuration (Schemastery-backed; every field is a deployment choice). */
 export interface Config {
   /** Register the packaged skill (default true). */
   enabled?: boolean
-  /** Skill name published to the model catalog (default 'plugin-upgrade-015'). */
+  /** Skill name published to the model catalog (default 'plugin-upgrade'). */
   skillName?: string
   /** Skill root inside the package; must contain `<skillName>/SKILL.md`. */
   skillsRoot?: string

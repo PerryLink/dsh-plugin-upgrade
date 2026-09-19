@@ -5,7 +5,7 @@
  *
  * Usage:
  *   node scripts/scan-0.1.5.mjs [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
- *   npx --package dsh-plugin-upgrade-015 dsh-plugin-upgrade-015-scan --repo <path>
+ *   npx --package dsh-plugin-upgrade dsh-plugin-upgrade-scan --repo <path>
  *
  * Exit codes: 0 = no error-severity hit, 1 = at least one error-severity hit,
  *             2 = usage or scan failure. The implementation lives in

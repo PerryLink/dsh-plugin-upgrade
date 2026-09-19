@@ -1,23 +1,23 @@
 <div align="center">
 
-# ⬆️ dsh-plugin-upgrade-015
-- **1024 स्टोर चैनल**: एक बार `npm i -g dsh1024` चलाएँ, फिर `dsh1024 plugin --profile web add dsh-plugin-upgrade-015` (यह [deepseek1024.com](https://deepseek1024.com) की इंस्टॉल रैंकिंग में गिना जाता है)।
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-015)
+# ⬆️ dsh-plugin-upgrade
+- **1024 स्टोर चैनल**: एक बार `npm i -g dsh1024` चलाएँ, फिर `dsh1024 plugin --profile web add dsh-plugin-upgrade` (यह [deepseek1024.com](https://deepseek1024.com) की इंस्टॉल रैंकिंग में गिना जाता है)।
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade)
 
 **DeepSeek Harness के लिए संस्करण-लॉक्ड और विलयित प्लगइन अपग्रेड स्किल — `0.1.3-alpha.1` → `0.1.5-rc.1`, दो बंद पैरों (legs) में वहन किया गया।**
 
 *पैर A `0.1.3-alpha.1` → `0.1.5-alpha.1`, पैर B `0.1.5-alpha.1` → `0.1.5-rc.1`: विलयित 20-सीम कैटलॉग पर एक कॉरिडोर कार्ड और एक शून्य-निर्भरता सीम स्कैनर, ताकि चुपचाप माउंट होना बंद कर चुका क्लाइंट आधा हिस्सा कभी «typecheck हरा है» न समझा जाए।*
 
-> **आधिकारिक रिपॉज़िटरी।** यह dsh-plugin-upgrade-015 की एकमात्र आधिकारिक रिपॉज़िटरी है, जिसे PerryLink संभालता है। यह दोनों संस्करण-लॉक्ड पैकेजों `dsh-plugin-upgrade` (पैर A) और `dsh-plugin-upgrade-rc1` (पैर B) का स्थान लेती है। अन्य खातों की समान-नाम वाली रिपॉज़िटरियाँ इससे संबद्ध नहीं हैं।
+> **आधिकारिक रिपॉज़िटरी।** यह dsh-plugin-upgrade की एकमात्र आधिकारिक रिपॉज़िटरी है, जिसे PerryLink संभालता है। यह दोनों संस्करण-लॉक्ड पैकेजों `dsh-plugin-upgrade` (पैर A) और `dsh-plugin-upgrade-rc1` (पैर B) का स्थान लेती है। अन्य खातों की समान-नाम वाली रिपॉज़िटरियाँ इससे संबद्ध नहीं हैं।
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-015.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-015/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-015/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-015?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-015/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade)](https://www.npmjs.com/package/dsh-plugin-upgrade)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade)](https://www.npmjs.com/package/dsh-plugin-upgrade)
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
@@ -36,14 +36,14 @@
 | दायरा | **दो बंद पैर, एक ही विस्तार**: पैर A `0.1.3-alpha.1` → `0.1.5-alpha.1` और पैर B `0.1.5-alpha.1` → `0.1.5-rc.1`। कॉरिडोर कभी चौड़ा नहीं होता: `0.1.5-rc.1` के बाद की कोई छलांग एक नया पैकेज है। |
 | पैर | दोनों पैर इसी पैकेज में रहते हैं: पैर A `S1`–`S10` + `M1` सीमें रखता है, पैर B `C1`, `C2`, `C4`, `C5`, `H1`–`H4`, `P1` — हर एक के अपने साक्ष्य, कार्ड अनुभाग, fixtures और रोलबैक पथ के साथ। इंस्टॉल करने के लिए कोई सहोदर पैकेज नहीं है। |
 | `C3` | सेवानिवृत्त: पैर B का कार्ड पुरानी टाइप-लाइन वाले झूठे हरे को `C3` लिखता था, जो पैर A की `M1` जैसा ही दोष है। यह विलय कार्ड पर दर्ज है; `--seams C3` किसी से मेल नहीं खाता। |
-| पूर्ववर्ती पैकेज | एक ही प्रोफ़ाइल में सेवानिवृत्त `dsh-plugin-upgrade` को साथ में माउंट न करें: दोनों agent skill `plugin-upgrade-015` पंजीकृत करते हैं, इसलिए दूसरा माउंट skill नाम पर टकराएगा। वह पैकेज npm पर deprecated है और उसका रिपॉज़िटरी सेवानिवृत्त हो चुका है; यह पैकेज उसके दोनों चरणों का स्थान लेता है। |
+| पूर्ववर्ती पैकेज | एक ही प्रोफ़ाइल में सेवानिवृत्त `dsh-plugin-upgrade` को साथ में माउंट न करें: दोनों agent skill `plugin-upgrade` पंजीकृत करते हैं, इसलिए दूसरा माउंट skill नाम पर टकराएगा। वह पैकेज npm पर deprecated है और उसका रिपॉज़िटरी सेवानिवृत्त हो चुका है; यह पैकेज उसके दोनों चरणों का स्थान लेता है। |
 
 ## आपको क्या मिलता है
 
 दो हिस्से, एक ही सीम कैटलॉग:
 
-- **पैकेज में शामिल एजेंट स्किल (`plugin-upgrade-015`)** — विलयित कॉरिडोर कार्ड और ठीक-करो-और-सत्यापित-करो चक्र। बॉडी पहले बुलाने वाले को उसी पैर तक पहुँचाती है जो उसके पीयर बैंड से मेल खाता है; मॉडल इसे केवल तब लोड करता है जब किसी कार्य को वास्तव में आवश्यकता हो, और यह पैकेज सिस्टम प्रॉम्प्ट का कोई अनुच्छेद नहीं जोड़ता और कोई टूल भी नहीं।
-- **शून्य-निर्भरता CLI (`dsh-plugin-upgrade-015-scan`)** — विलयित बीस सीमों (`S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`, `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) के `file:line` तथ्य बताता है, जो 2026-09-09 (पैर A) और 2026-09-10 (पैर B) को हार्नेस tag रेंज से दोबारा पढ़े गए। किसी भी error-स्तर की हिट पर `1` लौटाता है, इसलिए सीधे CI में लगता है।
+- **पैकेज में शामिल एजेंट स्किल (`plugin-upgrade`)** — विलयित कॉरिडोर कार्ड और ठीक-करो-और-सत्यापित-करो चक्र। बॉडी पहले बुलाने वाले को उसी पैर तक पहुँचाती है जो उसके पीयर बैंड से मेल खाता है; मॉडल इसे केवल तब लोड करता है जब किसी कार्य को वास्तव में आवश्यकता हो, और यह पैकेज सिस्टम प्रॉम्प्ट का कोई अनुच्छेद नहीं जोड़ता और कोई टूल भी नहीं।
+- **शून्य-निर्भरता CLI (`dsh-plugin-upgrade-scan`)** — विलयित बीस सीमों (`S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`, `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) के `file:line` तथ्य बताता है, जो 2026-09-09 (पैर A) और 2026-09-10 (पैर B) को हार्नेस tag रेंज से दोबारा पढ़े गए। किसी भी error-स्तर की हिट पर `1` लौटाता है, इसलिए सीधे CI में लगता है।
 
 यह उस विफलता-विधा के लिए है जिसे खत्म करने के लिए यह कॉरिडोर बना है: **इस विस्तार की टूटन ज़्यादातर चुपचाप होती है, दोनों सिरों से।** टाइप लाइन पुरानी हो सकती है, इसलिए रेपो **पुराने** कैटलॉग के विरुद्ध कंपाइल होता है (सीम `M1`), और नंगा `conversation` क्लाइंट स्लॉट बिना किसी alias के हटा दिया गया, जबकि `ctx.slots.inject()` कॉलबैक केवल तब चलाता है जब declaration मौजूद हो — इसलिए उसे अब भी लक्षित करता क्लाइंट आधा हिस्सा माउंट होना बंद कर देता है: कोई त्रुटि नहीं, कोई लॉग पंक्ति नहीं, कोई बिल्ड विफलता नहीं (सीम `C1`)। `typecheck` + `test` को तीन वर्ग की टूटन पार कर जाती हैं:
 
@@ -57,24 +57,24 @@
 
 ```sh
 # 1. बंडल को अपने प्रोफ़ाइल में इंस्टॉल करें
-dsh plugin --profile web add dsh-plugin-upgrade-015
+dsh plugin --profile web add dsh-plugin-upgrade
 
 # 2. पुष्टि करें कि पंक्ति माउंट हुई
-dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-015'
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade'
 
 # 3. जिस प्लगइन को अपग्रेड करना है उसे स्कैन करें
-npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
+npx dsh-plugin-upgrade-scan --repo ../my-plugin
 ```
 
-फिर एजेंट से `plugin-upgrade-015` स्किल इस्तेमाल करने को कहें, या कार्ड के साथ स्वयं चक्र चलाएँ:
-`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (पैर A §1 है, पैर B §2 है, विलयित सीम सूचकांक §3 है)।
+फिर एजेंट से `plugin-upgrade` स्किल इस्तेमाल करने को कहें, या कार्ड के साथ स्वयं चक्र चलाएँ:
+`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (पैर A §1 है, पैर B §2 है, विलयित सीम सूचकांक §3 है)।
 
 ## इंस्टॉल और अनइंस्टॉल
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade-015            # npm से
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-015#main"   # स्रोत से
-dsh plugin --profile web remove dsh-plugin-upgrade-015         # अनइंस्टॉल (प्रतिवर्ती)
+dsh plugin --profile web add dsh-plugin-upgrade            # npm से
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # स्रोत से
+dsh plugin --profile web remove dsh-plugin-upgrade         # अनइंस्टॉल (प्रतिवर्ती)
 ```
 
 बंडल इंस्टॉल करने से केवल एक स्किल पंजीकृत होती है; पंक्ति हटाने से स्किल हट जाती है। CLI एक सामान्य `npx` लक्ष्य है और उसे किसी प्रोफ़ाइल की आवश्यकता नहीं।
@@ -86,28 +86,28 @@ dsh plugin --profile web remove dsh-plugin-upgrade-015         # अनइंस
 | कुंजी | डिफ़ॉल्ट | अर्थ |
 |---|---|---|
 | `enabled` | `true` | पैकेज में शामिल स्किल पंजीकृत करें। निर्भरता माउंट रखते हुए चुप रहने के लिए `false`। |
-| `skillName` | `plugin-upgrade-015` | `skillsRoot` के अंतर्गत पंजीकृत होने वाली डायरेक्टरी, और कैटलॉग में दिखने वाला नाम। |
+| `skillName` | `plugin-upgrade` | `skillsRoot` के अंतर्गत पंजीकृत होने वाली डायरेक्टरी, और कैटलॉग में दिखने वाला नाम। |
 | `skillsRoot` | पैकेज का अपना `./skills` | जहाँ `<skillName>/SKILL.md` है। इसी ढाँचे का पुनरुपयोग करने के लिए इसे अपने कार्ड पर इंगित करें। |
 | `userInvocable` | `true` | मॉडल के अतिरिक्त कोई व्यक्ति भी नाम से स्किल बुला सके या नहीं। |
 
 ```yaml
 - insert:
-    - id: dsh-plugin-upgrade-015
-      name: dsh-plugin-upgrade-015
+    - id: dsh-plugin-upgrade
+      name: dsh-plugin-upgrade
       config:
-        skillName: plugin-upgrade-015
+        skillName: plugin-upgrade
 ```
 
 प्लगइन ज़ोर से माउंट होता है: `SKILL.md` गायब होना, खाली बॉडी, या `name` रहित frontmatter — तीनों खाली स्किल पंजीकृत करने के बजाय माउंट विफल कर देते हैं।
 
 ## सतहें
 
-**स्किल** — `plugin-upgrade-015` (डिफ़ॉल्ट रूप से मॉडल और व्यक्ति दोनों द्वारा आमंत्रित). बॉडी: पैर-रूटिंग तालिका, 8 कठोर नियम और 6-चरणीय चक्र। संदर्भ: विलयित कॉरिडोर कार्ड। स्क्रिप्ट: डिटेक्टर, स्किल डायरेक्टरी के भीतर भेजा गया, ताकि सापेक्ष पथ हल हों।
+**स्किल** — `plugin-upgrade` (डिफ़ॉल्ट रूप से मॉडल और व्यक्ति दोनों द्वारा आमंत्रित). बॉडी: पैर-रूटिंग तालिका, 8 कठोर नियम और 6-चरणीय चक्र। संदर्भ: विलयित कॉरिडोर कार्ड। स्क्रिप्ट: डिटेक्टर, स्किल डायरेक्टरी के भीतर भेजा गया, ताकि सापेक्ष पथ हल हों।
 
-**CLI** — `dsh-plugin-upgrade-015-scan`:
+**CLI** — `dsh-plugin-upgrade-scan`:
 
 ```sh
-dsh-plugin-upgrade-015-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
+dsh-plugin-upgrade-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
 ```
 
 | फ़्लैग | अर्थ |

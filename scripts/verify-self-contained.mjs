@@ -54,8 +54,8 @@ for (const file of walk(root)) {
 
 // The packaged skill bundle and its assets must exist for the plugin to mount.
 for (const required of [
-  'skills/plugin-upgrade-015/SKILL.md',
-  'skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md',
+  'skills/plugin-upgrade/SKILL.md',
+  'skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md',
   'cordis.patch.yml',
 ]) {
   if (!existsSync(join(root, required))) problems.push(`missing packaged asset: ${required}`)

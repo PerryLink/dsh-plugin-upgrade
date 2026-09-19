@@ -2,7 +2,7 @@
   "name": "fixture-good-plugin",
   "version": "0.0.0",
   "private": true,
-  "description": "Synthetic LEG-B fixture for the dsh-plugin-upgrade-015 scanner self-test: a client half already adapted to 0.1.5-rc.1, with zero error-severity hits. Never shipped (the files whitelist excludes fixtures/).",
+  "description": "Synthetic LEG-B fixture for the dsh-plugin-upgrade scanner self-test: a client half already adapted to 0.1.5-rc.1, with zero error-severity hits. Never shipped (the files whitelist excludes fixtures/).",
   "type": "module",
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.2",

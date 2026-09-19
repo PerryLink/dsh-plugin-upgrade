@@ -1,7 +1,7 @@
-# Evidence · `dsh-plugin-upgrade-015` (merged `0.1.3-alpha.1` → `0.1.5-rc.1`)
+# Evidence · `dsh-plugin-upgrade` (merged `0.1.3-alpha.1` → `0.1.5-rc.1`)
 
 Every upstream claim in the merged version card
-(`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) and every
+(`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) and every
 `action` string in `lib/scan.mjs` traces to a command recorded here, re-run on
 **2026-09-09** (leg A's wave) and **2026-09-10** (leg B's tag-range diff) against the read-only
 harness checkout at `D:\deepseek-harness`, the leg-A checkout at `19d2e38480`, and the
@@ -264,10 +264,10 @@ Re-measured for the merged package name on 2026-09-11 (the merged repository kee
 record; the two retired names are the controls that prove the registry answers):
 
 ```console
-$ npm view dsh-plugin-upgrade-015 version
+$ npm view dsh-plugin-upgrade version
 npm error code E404
-npm error 404 Not Found - GET https://registry.npmjs.org/dsh-plugin-upgrade-015 - Not found
-npm error 404  The requested resource 'dsh-plugin-upgrade-015@*' could not be found or you do not have permission to access it.
+npm error 404 Not Found - GET https://registry.npmjs.org/dsh-plugin-upgrade - Not found
+npm error 404  The requested resource 'dsh-plugin-upgrade@*' could not be found or you do not have permission to access it.
 (exit 1)
 
 $ npm view dsh-plugin-upgrade version dist-tags.latest      # control: retired leg A still exists
@@ -304,8 +304,8 @@ $ curl -s -o /dev/null -w '%{http_code}\n' https://registry.npmjs.org/dsh-plugin
 
 The rejected name embedded **two dotted version numbers** (`0.1.3-0.1.5`), which npm's spam
 heuristics read as a version-shaped suffix. The package was therefore named
-`dsh-plugin-upgrade-015` — matching its own skill id (`plugin-upgrade-015`) and bin
-(`dsh-plugin-upgrade-015-scan`). The control is on the same account: the retired
+`dsh-plugin-upgrade` — matching its own skill id (`plugin-upgrade`) and bin
+(`dsh-plugin-upgrade-scan`). The control is on the same account: the retired
 `dsh-plugin-upgrade-rc1` (a single non-dotted suffix) published cleanly, so the **suffix
 shape**, not the account or the plugin family, is what the detector reacted to.
 
@@ -325,7 +325,7 @@ shape**, not the account or the plugin family, is what the detector reacted to.
 
 Leg A's provenance does **not** live in this file. It lives in the retired
 `dsh-plugin-upgrade` package's version card,
-`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-alpha.1.md`, which the merge
+`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-alpha.1.md`, which the merge
 brought in as the merged card's **§1 Leg A** — verbatim, including its `path:line` citations,
 its measured scale and its boundary notes.
 
@@ -338,7 +338,7 @@ package:
 | Run | 2026-09-09 wave over **40 real plugin repositories** |
 | Leg-A host checkout | `0.1.5-alpha.1`, HEAD `19d2e38480`; official tag `dsh-v0.1.5-alpha.1` = `5dda764ed3` |
 | Seams measured | `S1`–`S10` + `M1` (the merged card's §1 sections 1–5, with the per-seam host path and commit) |
-| Reproduce | CLI `dsh-plugin-upgrade-015-scan --repo <repo>` (then `dsh-plugin-upgrade-scan`), `file:line` output |
+| Reproduce | CLI `dsh-plugin-upgrade-scan --repo <repo>` (then `dsh-plugin-upgrade-scan`), `file:line` output |
 | `M1` scale | **11 of 40** repos hit the stale type line; fixing the paths exposed real TypeScript errors in **3** repos that had been "green" |
 | `S3` scale | one measured case (`dsh-claude-move`: import succeeded, `Session.fromRestore` refused to resume) |
 | `S8` scale | `dsh-background-agents` production code `src/tools.ts:713` (`TS2740`) plus two tests; `dsh-output-styles` `scripts/verify-session-log.mjs` threw a TypeError |

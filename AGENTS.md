@@ -1,9 +1,9 @@
 # AGENTS.md
 
-Standalone DeepSeek Harness plugin repository (`dsh-plugin-upgrade-015`). Development
+Standalone DeepSeek Harness plugin repository (`dsh-plugin-upgrade`). Development
 follows the dsh-plugin-guide skill and the official plugin contract; this file records
 repo-local decisions. Read `README.md` (external contract) and the packaged merged corridor
-card (`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) before changing
+card (`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) before changing
 behavior.
 
 ## A corridor never widens (and one package may carry several closed corridors)
@@ -59,8 +59,8 @@ Consequences accepted by this repository:
 index.mjs             single host face: Config schema + skill bundle reader + apply()
 types.d.ts            Config, SeamId, SeamHit, ScanReport and the public function surface
 lib/scan.mjs          zero-dependency merged seam catalog (both legs) + scanner + CLI main()
-scripts/scan-0.1.5.mjs   thin bin wrapper (npx dsh-plugin-upgrade-015-scan)
-skills/plugin-upgrade-015/scripts/scan-0.1.5.mjs  the same wrapper inside the skill
+scripts/scan-0.1.5.mjs   thin bin wrapper (npx dsh-plugin-upgrade-scan)
+skills/plugin-upgrade/scripts/scan-0.1.5.mjs  the same wrapper inside the skill
                       directory, so the skill body's `./scripts/...` resolves against its
                       resourceBase
 scripts/sweep-all.mjs    maintainer tool: sweep a workspace of plugin repos into a table
@@ -70,9 +70,9 @@ scripts/verify-artifacts.mjs       pack + inspect the published tarball (also as
                                    test/, fixtures/ and .github/ do NOT ship, and that a
                                    leg-A seam fails the packaged CLI)
 scripts/check-readme-sync.mjs      five-language README consistency
-skills/plugin-upgrade-015/SKILL.md  the bundled skill body (frontmatter name is the skill id;
+skills/plugin-upgrade/SKILL.md  the bundled skill body (frontmatter name is the skill id;
                                     it routes the caller to the leg matching its peer band)
-skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md  the merged card:
+skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md  the merged card:
                                     §1 Leg A, §2 Leg B, §3 the 20-seam index
 test/scan.test.mjs    synthetic bad/good fixtures for BOTH legs + --seams + a live negative
 test/plugin.test.mjs  real Cordis Context + real SkillRegistry: register, dispose, negatives
@@ -82,7 +82,7 @@ fixtures/             scanner fixtures — never published:
                         leg-a-bad-repo / leg-a-good-repo  leg A (TypeScript/session oriented)
 docs/EVIDENCE.md      the command→output record every card claim traces to
                       (§A = leg A's provenance, §1–§10 = leg B's records)
-cordis.patch.yml      bundle declaration (insert dsh-plugin-upgrade-015); every
+cordis.patch.yml      bundle declaration (insert dsh-plugin-upgrade); every
                       Config key inline
 pnpm-workspace.yaml   nearest-workspace root (isolates this repo from a surrounding harness checkout)
 package.json          npm metadata; files whitelist = published content
@@ -124,7 +124,7 @@ LICENSE               Apache-2.0
 - **Mount loud.** A missing `SKILL.md`, an empty body, or a frontmatter without `name` must
   abort the mount. Never register a placeholder skill.
 - **The skill id is the frontmatter name.** `skillName` selects the directory; the registered
-  name comes from the file. Keep the four in sync (`plugin-upgrade-015`: directory,
+  name comes from the file. Keep the four in sync (`plugin-upgrade`: directory,
   frontmatter `name`, `package.json` Config default, `cordis.patch.yml`).
 - **Registration is an effect.** `ctx.skills.register()` runs inside `ctx.effect()` so the
   disposer removes the contribution on unload; the test asserts that.
@@ -153,7 +153,7 @@ after every harness release.
 
 ## Release
 
-Version is currently `0.1.0`. The npm name `dsh-plugin-upgrade-015` is brand new, so
+Version is currently `0.1.0`. The npm name `dsh-plugin-upgrade` is brand new, so
 this package starts its own version line at `0.1.0`; the two retired packages' histories live
 in `CHANGELOG.md` under `[Unreleased]` and below. For a new version: bump
 `package.json#version`, stamp the CHANGELOG `[Unreleased]` section into `## [<x.y.z>] - <UTC
@@ -180,7 +180,7 @@ same commit.
 
 **Post-publish integration (not done in this repository's history yet).** The README badge
 row expects `PerryLink/dsh-plugin-doctor` to carry a
-`PerryLink__dsh-plugin-upgrade-015.svg` badge, and the family also enrols each package
+`PerryLink__dsh-plugin-upgrade.svg` badge, and the family also enrols each package
 in the Gitee mirror, the `dsh-catalog` directory and the omdsh workshop list. Those are
 release-side steps performed from the family workspace after the first tag. The two retired
 package names stay on the registry (unpublished content is not removed by publishing a new

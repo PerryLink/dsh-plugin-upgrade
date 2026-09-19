@@ -45,33 +45,33 @@ jobs:
       - name: Bare install + real-registry mount
         run: |
           set -euo pipefail
-          TARBALL="$(ls "$RUNNER_TEMP"/dsh-plugin-upgrade-015-*.tgz | head -n1)"
+          TARBALL="$(ls "$RUNNER_TEMP"/dsh-plugin-upgrade-*.tgz | head -n1)"
           mkdir -p "$RUNNER_TEMP/bare" && cd "$RUNNER_TEMP/bare"
           pnpm init >/dev/null
           pnpm add "$TARBALL" '@deepseek-ai/cordis@4.0.2' '@deepseek-ai/dsh-skill@0.1.6-alpha.2' >/dev/null
           cat > mount.mjs <<'JS'
           import { Context } from '@deepseek-ai/cordis'
           import SkillRegistry from '@deepseek-ai/dsh-skill'
-          import * as plugin from 'dsh-plugin-upgrade-015'
+          import * as plugin from 'dsh-plugin-upgrade'
           const ctx = new Context()
           await ctx.plugin(SkillRegistry)
           const fiber = await ctx.plugin(plugin)
           const list = await ctx.skills.list()
-          if (!list.some(s => s.name === 'plugin-upgrade-015')) {
-            console.error('FAIL: plugin-upgrade-015 not registered from the tarball')
+          if (!list.some(s => s.name === 'plugin-upgrade')) {
+            console.error('FAIL: plugin-upgrade not registered from the tarball')
             process.exit(1)
           }
-          const def = await ctx.skills.get('plugin-upgrade-015')
+          const def = await ctx.skills.get('plugin-upgrade')
           if (!def.content.includes('Plugin upgrade') || !def.content.includes('Locate your leg first')) {
             console.error('FAIL: skill body is not the packaged merged-corridor loop')
             process.exit(1)
           }
-          if (!def.resourceBase.path.endsWith('plugin-upgrade-015')) {
+          if (!def.resourceBase.path.endsWith('plugin-upgrade')) {
             console.error('FAIL: skill resourceBase does not point at the packaged skill directory')
             process.exit(1)
           }
           await fiber.dispose()
-          if ((await ctx.skills.list()).some(s => s.name === 'plugin-upgrade-015')) {
+          if ((await ctx.skills.list()).some(s => s.name === 'plugin-upgrade')) {
             console.error('FAIL: skill survived dispose')
             process.exit(1)
           }
@@ -91,11 +91,11 @@ jobs:
           export const mount = (ctx: any) => ctx.plugin(SystemPrompt, { persona: '' })
           TS
           set +e
-          pnpm exec dsh-plugin-upgrade-015-scan --repo bad-b --seams C1 --quiet
+          pnpm exec dsh-plugin-upgrade-scan --repo bad-b --seams C1 --quiet
           code_b="$?"
-          pnpm exec dsh-plugin-upgrade-015-scan --repo bad-a --seams S9 --quiet
+          pnpm exec dsh-plugin-upgrade-scan --repo bad-a --seams S9 --quiet
           code_a="$?"
-          pnpm exec dsh-plugin-upgrade-015-scan --repo bad-b --seams C3 --quiet
+          pnpm exec dsh-plugin-upgrade-scan --repo bad-b --seams C3 --quiet
           code_retired="$?"
           set -e
           if [ "$code_b" -ne 1 ]; then
@@ -146,7 +146,7 @@ jobs:
       - name: Install into a scratch profile (builds allowlisted)
         run: |
           set -euo pipefail
-          TARBALL="$(ls "$RUNNER_TEMP"/dsh-plugin-upgrade-015-*.tgz | head -n1)"
+          TARBALL="$(ls "$RUNNER_TEMP"/dsh-plugin-upgrade-*.tgz | head -n1)"
           export DSH_HOME="$RUNNER_TEMP/dsh-home"
           mkdir -p "$DSH_HOME/profiles/compat"
           cat > "$DSH_HOME/profiles/compat/pnpm-workspace.yaml" <<'YAML'
@@ -169,7 +169,7 @@ jobs:
           set -euo pipefail
           export DSH_HOME="$RUNNER_TEMP/dsh-home"
           dsh --profile compat --dump-config > dump.txt
-          grep -q "dsh-plugin-upgrade-015" dump.txt
+          grep -q "dsh-plugin-upgrade" dump.txt
 
       - name: Keyless headless smoke
         run: |
@@ -193,4 +193,4 @@ jobs:
         run: |
           set -euo pipefail
           export DSH_HOME="$RUNNER_TEMP/dsh-home"
-          dsh plugin --profile compat remove dsh-plugin-upgrade-015
+          dsh plugin --profile compat remove dsh-plugin-upgrade

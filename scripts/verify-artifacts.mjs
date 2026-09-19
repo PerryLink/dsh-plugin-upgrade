@@ -11,7 +11,7 @@ import { tmpdir } from 'node:os'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const staging = mkdtempSync(join(tmpdir(), 'dsh-plugin-upgrade-015-pack-'))
+const staging = mkdtempSync(join(tmpdir(), 'dsh-plugin-upgrade-pack-'))
 const failures = []
 try {
   execFileSync('npm', ['pack', '--pack-destination', staging], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true, shell: true })
@@ -27,9 +27,9 @@ try {
     'cordis.patch.yml',
     'lib/scan.mjs',
     'scripts/scan-0.1.5.mjs',
-    'skills/plugin-upgrade-015/SKILL.md',
-    'skills/plugin-upgrade-015/scripts/scan-0.1.5.mjs',
-    'skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md',
+    'skills/plugin-upgrade/SKILL.md',
+    'skills/plugin-upgrade/scripts/scan-0.1.5.mjs',
+    'skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md',
     'docs/EVIDENCE.md',
     'README.md',
     'CHANGELOG.md',
@@ -62,8 +62,8 @@ try {
   }
 
   // The packaged SKILL.md must keep its merged-corridor frontmatter.
-  const skill = readFileSync(join(pkgRoot, 'skills/plugin-upgrade-015/SKILL.md'), 'utf8')
-  if (!/^name:\s*plugin-upgrade-015\s*$/m.test(skill)) failures.push('packaged SKILL.md lost its frontmatter name')
+  const skill = readFileSync(join(pkgRoot, 'skills/plugin-upgrade/SKILL.md'), 'utf8')
+  if (!/^name:\s*plugin-upgrade\s*$/m.test(skill)) failures.push('packaged SKILL.md lost its frontmatter name')
   if (!/^  corridor:\s*"0\.1\.3-alpha\.1 -> 0\.1\.5-rc\.1"\s*$/m.test(skill)) failures.push('packaged SKILL.md lost its merged corridor frontmatter')
 
   // cordis.patch.yml must stay a top-level YAML ARRAY of loader patch entries:
@@ -73,7 +73,7 @@ try {
   const body = patch.split(/\r?\n/).filter(l => l.trim() !== '' && !l.trim().startsWith('#'))
   if (!body[0]?.startsWith('- ')) failures.push(`cordis.patch.yml is not a top-level YAML array (starts with ${JSON.stringify(body[0]?.slice(0, 30))})`)
   if (!body.some(l => /^-\s+insert:/.test(l))) failures.push('cordis.patch.yml has no top-level `- insert:` entry')
-  if (!body.some(l => /name:\s*dsh-plugin-upgrade-015\s*$/.test(l))) failures.push('cordis.patch.yml does not insert the dsh-plugin-upgrade-015 row')
+  if (!body.some(l => /name:\s*dsh-plugin-upgrade\s*$/.test(l))) failures.push('cordis.patch.yml does not insert the dsh-plugin-upgrade row')
 
   // The skill-relative scanner entry must work from inside the tarball, because
   // the skill body resolves `./scripts/...` against the skill directory.
@@ -81,7 +81,7 @@ try {
   mkdirSync(probe, { recursive: true })
   writeFileSync(join(probe, 'index.ts'), "ctx.slots.inject('conversation', () => {})\n")
   try {
-    execFileSync(process.execPath, [join(pkgRoot, 'skills/plugin-upgrade-015/scripts/scan-0.1.5.mjs'), '--repo', probe, '--quiet'], { stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true })
+    execFileSync(process.execPath, [join(pkgRoot, 'skills/plugin-upgrade/scripts/scan-0.1.5.mjs'), '--repo', probe, '--quiet'], { stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true })
     failures.push('packaged skill-relative scanner exited 0 on a real seam (C1)')
   } catch (error) {
     if (error.status !== 1) failures.push(`packaged skill-relative scanner exited ${error.status}, expected 1`)
@@ -98,7 +98,7 @@ try {
     '',
   ].join('\n'))
   try {
-    execFileSync(process.execPath, [join(pkgRoot, 'skills/plugin-upgrade-015/scripts/scan-0.1.5.mjs'), '--repo', legAProbe, '--quiet', '--seams', 'S9'], { stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true })
+    execFileSync(process.execPath, [join(pkgRoot, 'skills/plugin-upgrade/scripts/scan-0.1.5.mjs'), '--repo', legAProbe, '--quiet', '--seams', 'S9'], { stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true })
     failures.push('packaged skill-relative scanner exited 0 on a leg-A seam (S9)')
   } catch (error) {
     if (error.status !== 1) failures.push(`packaged skill-relative scanner exited ${error.status} on the leg-A probe, expected 1`)

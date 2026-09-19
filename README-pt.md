@@ -1,23 +1,23 @@
 <div align="center">
 
-# ⬆️ dsh-plugin-upgrade-015
-- **Canal da loja 1024**: rode `npm i -g dsh1024` uma vez e depois `dsh1024 plugin --profile web add dsh-plugin-upgrade-015` (conta para o ranking de instalações do [deepseek1024.com](https://deepseek1024.com)).
-[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade-015)
+# ⬆️ dsh-plugin-upgrade
+- **Canal da loja 1024**: rode `npm i -g dsh1024` uma vez e depois `dsh1024 plugin --profile web add dsh-plugin-upgrade` (conta para o ranking de instalações do [deepseek1024.com](https://deepseek1024.com)).
+[![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade)
 
 **Habilidade de atualização de plugins para o DeepSeek Harness, com versão travada e fundida — `0.1.3-alpha.1` → `0.1.5-rc.1`, carregada em duas pernas fechadas.**
 
 *Perna A `0.1.3-alpha.1` → `0.1.5-alpha.1`, perna B `0.1.5-alpha.1` → `0.1.5-rc.1`: um cartão de corredor mais um scanner de costuras sem dependências sobre o catálogo fundido de 20 costuras, para que uma metade de cliente que parou de montar em silêncio nunca seja confundida com «typecheck verde».*
 
-> **Repositório oficial.** Este é o único repositório oficial de dsh-plugin-upgrade-015, mantido pela PerryLink. Ele substitui os dois pacotes com versão travada `dsh-plugin-upgrade` (perna A) e `dsh-plugin-upgrade-rc1` (perna B). Repositórios com o mesmo nome em outras contas não são afiliados.
+> **Repositório oficial.** Este é o único repositório oficial de dsh-plugin-upgrade, mantido pela PerryLink. Ele substitui os dois pacotes com versão travada `dsh-plugin-upgrade` (perna A) e `dsh-plugin-upgrade-rc1` (perna B). Repositórios com o mesmo nome em outras contas não são afiliados.
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
-[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade-015.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
+[![dsh-doctor](https://raw.githubusercontent.com/PerryLink/dsh-plugin-doctor/main/badges/PerryLink__dsh-plugin-upgrade.svg)](https://github.com/PerryLink/dsh-plugin-doctor#verified-徽章)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade-015/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade-015/actions)
-[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade-015?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade-015/releases)
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
-[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade-015)](https://www.npmjs.com/package/dsh-plugin-upgrade-015)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-upgrade/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-upgrade/actions)
+[![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-upgrade?label=version)](https://github.com/PerryLink/dsh-plugin-upgrade/releases)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-upgrade)](https://www.npmjs.com/package/dsh-plugin-upgrade)
+[![npm downloads](https://img.shields.io/npm/dm/dsh-plugin-upgrade)](https://www.npmjs.com/package/dsh-plugin-upgrade)
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
@@ -36,14 +36,14 @@
 | Escopo | **Duas pernas fechadas, um único intervalo**: perna A `0.1.3-alpha.1` → `0.1.5-alpha.1` mais perna B `0.1.5-alpha.1` → `0.1.5-rc.1`. Um corredor nunca se alarga: um salto depois de `0.1.5-rc.1` é um novo pacote. |
 | Pernas | As duas pernas vivem neste pacote: a perna A mantém as costuras `S1`–`S10` + `M1`, a perna B mantém `C1`, `C2`, `C4`, `C5`, `H1`–`H4`, `P1` — cada uma com suas próprias evidências, seção de cartão, fixtures e caminho de rollback. Não há pacote irmão a instalar. |
 | `C3` | Aposentada: o cartão da perna B chamava de `C3` o verde falso da linha de tipos desatualizada, que é o mesmo defeito da `M1` da perna A. A fusão está registrada no cartão; `--seams C3` não corresponde a nada. |
-| Pacote anterior | Não monte o retirado `dsh-plugin-upgrade` no mesmo perfil: os dois registram a skill `plugin-upgrade-015`, então a segunda montagem colide nesse nome. Aquele pacote está obsoleto no npm e seu repositório foi retirado; este pacote substitui as suas duas pernas. |
+| Pacote anterior | Não monte o retirado `dsh-plugin-upgrade` no mesmo perfil: os dois registram a skill `plugin-upgrade`, então a segunda montagem colide nesse nome. Aquele pacote está obsoleto no npm e seu repositório foi retirado; este pacote substitui as suas duas pernas. |
 
 ## O que você recebe
 
 Duas metades, um único catálogo de costuras:
 
-- **Uma habilidade de agente empacotada (`plugin-upgrade-015`)** — o cartão do corredor fundido e um ciclo de corrigir-e-verificar. O corpo primeiro encaminha quem chama para a perna que corresponde à sua faixa de peers; o modelo só a carrega quando uma tarefa realmente precisa dela, e o pacote não contribui com nenhum parágrafo de prompt de sistema nem com nenhuma ferramenta.
-- **Uma CLI sem dependências (`dsh-plugin-upgrade-015-scan`)** — reporta fatos `file:line` das vinte costuras fundidas (`S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`, `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) relidas dos intervalos de tags do harness em 2026-09-09 (perna A) e 2026-09-10 (perna B). Sai com `1` em qualquer achado de severidade error, então entra direto no CI.
+- **Uma habilidade de agente empacotada (`plugin-upgrade`)** — o cartão do corredor fundido e um ciclo de corrigir-e-verificar. O corpo primeiro encaminha quem chama para a perna que corresponde à sua faixa de peers; o modelo só a carrega quando uma tarefa realmente precisa dela, e o pacote não contribui com nenhum parágrafo de prompt de sistema nem com nenhuma ferramenta.
+- **Uma CLI sem dependências (`dsh-plugin-upgrade-scan`)** — reporta fatos `file:line` das vinte costuras fundidas (`S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`, `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) relidas dos intervalos de tags do harness em 2026-09-09 (perna A) e 2026-09-10 (perna B). Sai com `1` em qualquer achado de severidade error, então entra direto no CI.
 
 O objetivo é o modo de falha que este corredor existe para matar: **a quebra deste intervalo é em grande parte silenciosa, pelas duas pontas.** A linha de tipos pode estar desatualizada, então o repositório compila contra o **catálogo antigo** (costura `M1`), e o slot de cliente puro `conversation` foi removido sem alias enquanto `ctx.slots.inject()` só executa o callback quando a declaração existe — então uma metade de cliente que ainda aponta para ele para de montar sem erro, sem linha de log e sem build quebrado (costura `C1`). Três classes de quebra sobrevivem a `typecheck` + `test`:
 
@@ -57,24 +57,24 @@ Medição honesta: a varredura do workspace da perna B encontrou que as metades 
 
 ```sh
 # 1. instale o bundle no seu perfil
-dsh plugin --profile web add dsh-plugin-upgrade-015
+dsh plugin --profile web add dsh-plugin-upgrade
 
 # 2. confirme que a linha montou
-dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade-015'
+dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade'
 
 # 3. escaneie o plugin que você vai atualizar
-npx dsh-plugin-upgrade-015-scan --repo ../my-plugin
+npx dsh-plugin-upgrade-scan --repo ../my-plugin
 ```
 
-Depois peça ao agente para usar a habilidade `plugin-upgrade-015`, ou conduza o ciclo você mesmo com o cartão em
-`skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (a perna A é a §1, a perna B é a §2, o índice fundido de costuras é a §3).
+Depois peça ao agente para usar a habilidade `plugin-upgrade`, ou conduza o ciclo você mesmo com o cartão em
+`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (a perna A é a §1, a perna B é a §2, o índice fundido de costuras é a §3).
 
 ## Instalação e desinstalação
 
 ```sh
-dsh plugin --profile web add dsh-plugin-upgrade-015            # do npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade-015#main"   # do código-fonte
-dsh plugin --profile web remove dsh-plugin-upgrade-015         # desinstalar (reversível)
+dsh plugin --profile web add dsh-plugin-upgrade            # do npm
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # do código-fonte
+dsh plugin --profile web remove dsh-plugin-upgrade         # desinstalar (reversível)
 ```
 
 Instalar o bundle apenas registra uma habilidade; remover a linha remove a habilidade. A CLI é um alvo `npx` normal e não precisa de perfil algum.
@@ -86,28 +86,28 @@ Toda chave é opcional e fica no patch do perfil:
 | Chave | Padrão | Significado |
 |---|---|---|
 | `enabled` | `true` | Registra a habilidade empacotada. Use `false` para manter a dependência montada porém silenciosa. |
-| `skillName` | `plugin-upgrade-015` | Diretório sob `skillsRoot` a registrar, e o nome exibido no catálogo. |
+| `skillName` | `plugin-upgrade` | Diretório sob `skillsRoot` a registrar, e o nome exibido no catálogo. |
 | `skillsRoot` | o `./skills` do próprio pacote | Onde vive `<skillName>/SKILL.md`. Aponte para o seu próprio cartão para reutilizar a infraestrutura. |
 | `userInvocable` | `true` | Se uma pessoa pode invocar a habilidade pelo nome além do modelo. |
 
 ```yaml
 - insert:
-    - id: dsh-plugin-upgrade-015
-      name: dsh-plugin-upgrade-015
+    - id: dsh-plugin-upgrade
+      name: dsh-plugin-upgrade
       config:
-        skillName: plugin-upgrade-015
+        skillName: plugin-upgrade
 ```
 
 O plugin monta de forma ruidosa: um `SKILL.md` ausente, um corpo vazio ou um frontmatter sem `name` fazem a montagem falhar em vez de registrar uma habilidade vazia.
 
 ## Superfícies
 
-**Habilidade** — `plugin-upgrade-015` (invocável pelo modelo e por pessoas por padrão). Corpo: tabela de encaminhamento por perna, as 8 regras rígidas e o ciclo de 6 passos. Referências: o cartão do corredor fundido. Scripts: o detector, enviado dentro do diretório da habilidade para que os caminhos relativos resolvam.
+**Habilidade** — `plugin-upgrade` (invocável pelo modelo e por pessoas por padrão). Corpo: tabela de encaminhamento por perna, as 8 regras rígidas e o ciclo de 6 passos. Referências: o cartão do corredor fundido. Scripts: o detector, enviado dentro do diretório da habilidade para que os caminhos relativos resolvam.
 
-**CLI** — `dsh-plugin-upgrade-015-scan`:
+**CLI** — `dsh-plugin-upgrade-scan`:
 
 ```sh
-dsh-plugin-upgrade-015-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
+dsh-plugin-upgrade-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
 ```
 
 | Flag | Significado |

@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-09-19
+
+### Changed
+
+- The retired name returns as the new-generation single package: one package, one corridor index. It absorbs the merged corridor 0.1.3-alpha.1 -> 0.1.5-rc.1 that lived in dsh-plugin-upgrade-015 (legs A+B, 20 seams) and it is the package the later corridor 0.1.5-rc.2 -> 0.1.6-alpha.2 (E1-E5, from dsh-plugin-upgrade-016) is folded into.
+- The skill and the CLI are one entry point: the scanner detects the caller peer band and routes to the matching corridor; the corridor index is the growth point (a new corridor adds a card and an index row, not a new package).
+- Names: the skill id is plugin-upgrade and the CLI is dsh-plugin-upgrade-scan.
+
+### Supersedes
+
+- dsh-plugin-upgrade-015 (npm 0.1.1) - its corridors are carried here.
+- dsh-plugin-upgrade-rc1 and the old 0.1.x line of this name.
+
 ## [0.1.1] - 2026-09-12
 
 ## [0.1.0] - 2026-09-11
@@ -26,11 +39,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `0.1.5-alpha.*`. `C3` is no longer a seam id — `--seams C3` matches nothing, `types.d.ts`
   does not accept it, and the merged card records the old spelling only in its fold notes.
 - **Merged card with two labelled legs** —
-  `skills/plugin-upgrade-015/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`: a preamble (the
+  `skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`: a preamble (the
   span, why it ends at rc.1, how to read it), **§1 Leg A** and **§2 Leg B** each carrying the
   retired card's full text, evidence and `path:line` citations, and **§3 the merged 20-seam
   index**.
-- **Leg-routing skill body** — the skill is now `plugin-upgrade-015` (renamed directory,
+- **Leg-routing skill body** — the skill is now `plugin-upgrade` (renamed directory,
   frontmatter, Config default and bundle row). Its body routes the caller to the leg that
   matches the peer band, and both legs' original frontmatter routing hints are preserved in
   the body.
@@ -41,9 +54,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The scanner CLI is now `dsh-plugin-upgrade-015-scan` (`scripts/scan-0.1.5.mjs`, plus the
-  skill-local `skills/plugin-upgrade-015/scripts/scan-0.1.5.mjs`); the cordis row is
-  `dsh-plugin-upgrade-015`.
+- The scanner CLI is now `dsh-plugin-upgrade-scan` (`scripts/scan-0.1.5.mjs`, plus the
+  skill-local `skills/plugin-upgrade/scripts/scan-0.1.5.mjs`); the cordis row is
+  `dsh-plugin-upgrade`.
 - The dev/test pin and the monthly compat probe move to the published `0.1.5-rc.2` line (the
   newest published types verify the same seam catalog), while `dshWorkshop.compatibility.dshVersions`
   lists `0.1.2-rc.1` and `0.1.5-rc.2`. The peer band still keeps both segments
@@ -54,13 +67,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > *Historical entry, kept as published: every package name, CLI name and skill id below is as
 > it was in the retired leg-B package (`dsh-plugin-upgrade-rc1`, skill
-> `plugin-upgrade-015rc1`, CLI `dsh-plugin-upgrade-rc1-scan`). Their merged equivalents are in
+> `plugin-upgraderc1`, CLI `dsh-plugin-upgrade-rc1-scan`). Their merged equivalents are in
 > `[Unreleased]`. Leg B's seam `C3` below is the merged `M1`, and this entry is retained
 > verbatim apart from that fold.*
 
 ### Added
 
-- **Bundled agent skill `plugin-upgrade-015rc1`** — the version-locked `0.1.5-alpha.1 →
+- **Bundled agent skill `plugin-upgraderc1`** — the version-locked `0.1.5-alpha.1 →
   0.1.5-rc.1` corridor: a 6-step fix-and-verify loop plus the corridor card with the
   from→to mapping, the seam catalog and the rewrite recipes.
 - **Zero-dependency seam scanner** (`dsh-plugin-upgrade-rc1-scan`, also

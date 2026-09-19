@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
-// dsh-plugin-upgrade-015 bundle entry point.
+// dsh-plugin-upgrade bundle entry point.
 //
 // Publishes the merged `0.1.3-alpha.1 -> 0.1.5-rc.1` corridor as an on-demand
-// agent skill named `plugin-upgrade-015`. The corridor is one span carried by
+// agent skill named `plugin-upgrade`. The corridor is one span carried by
 // two closed legs (leg A `0.1.3-alpha.1 -> 0.1.5-alpha.1`, leg B
 // `0.1.5-alpha.1 -> 0.1.5-rc.1`); the skill body is this package's
-// `skills/plugin-upgrade-015/SKILL.md`, and its relative references
+// `skills/plugin-upgrade/SKILL.md`, and its relative references
 // (`./references/...`) and scripts (`./scripts/...`) resolve against the
 // packaged skills directory through the directory resourceBase, so the agent
 // loads the merged version card and the scanner only when a task needs them.
@@ -17,7 +17,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Schema from '@deepseek-ai/schemastery'
 
-export const name = 'dsh-plugin-upgrade-015'
+export const name = 'dsh-plugin-upgrade'
 export const inject = ['skills']
 
 /** Package root, used as the resourceBase for relative skill references. */
@@ -31,7 +31,7 @@ export const Config = Schema.object({
   /** Register the packaged skill (default true). */
   enabled: Schema.boolean().default(true),
   /** Skill name published to the model catalog. Defaults to the packaged corridor name. */
-  skillName: Schema.string().default('plugin-upgrade-015'),
+  skillName: Schema.string().default('plugin-upgrade'),
   /** Skill root inside the package; must contain `<skillName>/SKILL.md`. */
   skillsRoot: Schema.string().default(join(packageRoot, 'skills')),
   /** Mark the skill user-invocable in addition to model-invocable (default true). */
@@ -72,13 +72,13 @@ export function readSkillBundle(skillsRoot, skillName) {
   try {
     raw = readFileSync(skillPath, 'utf8')
   } catch (error) {
-    throw new Error(`dsh-plugin-upgrade-015: cannot read skill bundle at ${skillPath}: ${error instanceof Error ? error.message : String(error)}`)
+    throw new Error(`dsh-plugin-upgrade: cannot read skill bundle at ${skillPath}: ${error instanceof Error ? error.message : String(error)}`)
   }
   const text = raw.replace(/\r\n/g, '\n')
   const { description, whenToUse, body } = splitFrontmatter(text)
-  if (body.trim() === '') throw new Error(`dsh-plugin-upgrade-015: skill body is empty at ${skillPath}`)
+  if (body.trim() === '') throw new Error(`dsh-plugin-upgrade: skill body is empty at ${skillPath}`)
   const frontmatterName = /^name:\s*(\S+)\s*$/m.exec(text.slice(0, text.indexOf('\n---', 4) + 1))?.[1]
-  if (frontmatterName === undefined) throw new Error(`dsh-plugin-upgrade-015: skill frontmatter is missing a name at ${skillPath}`)
+  if (frontmatterName === undefined) throw new Error(`dsh-plugin-upgrade: skill frontmatter is missing a name at ${skillPath}`)
   return { frontmatterName, description, whenToUse, body, skillDir: join(skillsRoot, skillName) }
 }
 
@@ -91,7 +91,7 @@ export function readSkillBundle(skillsRoot, skillName) {
 export function apply(ctx, config = {}) {
   const resolved = {
     enabled: config.enabled ?? true,
-    skillName: config.skillName ?? 'plugin-upgrade-015',
+    skillName: config.skillName ?? 'plugin-upgrade',
     skillsRoot: config.skillsRoot ?? join(packageRoot, 'skills'),
     userInvocable: config.userInvocable ?? true,
   }
