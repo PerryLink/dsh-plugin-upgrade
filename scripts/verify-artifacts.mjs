@@ -54,7 +54,11 @@ try {
     const out = execFileSync(process.execPath, ['-e', `import(${JSON.stringify(entryUrl)}).then(m => console.log('exports:' + ['name','inject','Config','apply'].filter(k => k in m).join(',')))`], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true })
     if (!/exports:name,inject,Config,apply/.test(out)) failures.push(`entry export surface unexpected: ${out.trim()}`)
   } catch (error) {
-    failures.push(`packaged entry failed to import: ${error instanceof Error ? String(error.stderr || error.message).slice(0, 200) : String(error)}`)
+    // `execFileSync` attaches the failed child's stderr, which `Error` does not
+    // declare: narrow with `in` instead of casting so the message stays identical.
+    const stderr = error instanceof Error && 'stderr' in error ? error.stderr : undefined
+    const detail = error instanceof Error ? String(stderr || error.message) : String(error)
+    failures.push(`packaged entry failed to import: ${detail.slice(0, 200)}`)
   }
 
   // The packaged SKILL.md must keep its merged-corridor frontmatter.

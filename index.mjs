@@ -43,8 +43,8 @@ export const Config = Schema.object({
  * and body. Line endings are normalized first: a Windows checkout with
  * `core.autocrlf=true` hands us CRLF, and the frontmatter delimiters are `\n`.
  * A missing block falls back to the full text as the body.
- * @param text - raw SKILL.md content.
- * @returns the parsed description/whenToUse (when present) and the instruction body.
+ * @param {string} text - raw SKILL.md content.
+ * @returns {{ description: string | undefined, whenToUse: string | undefined, body: string }} the parsed description/whenToUse (when present) and the instruction body.
  */
 export function splitFrontmatter(text) {
   const source = text.replace(/\r\n/g, '\n')
@@ -53,6 +53,7 @@ export function splitFrontmatter(text) {
   if (end < 0) return { description: undefined, whenToUse: undefined, body: source }
   const meta = source.slice(4, end)
   const body = source.slice(end + 4).replace(/^\n+/, '')
+  /** @param {string} key @returns {string | undefined} */
   const scalar = (key) => new RegExp(`^${key}:\\s*(.+)$`, 'm').exec(meta)?.[1]?.trim().replace(/^["']|["']$/g, '')
   return { description: scalar('description'), whenToUse: scalar('whenToUse'), body }
 }
@@ -61,9 +62,9 @@ export function splitFrontmatter(text) {
  * Read and validate the packaged skill bundle. Fails loud: a missing SKILL.md,
  * an empty body, or a missing frontmatter `name` aborts the mount instead of
  * registering an empty skill.
- * @param skillsRoot - root directory holding `<skillName>/SKILL.md`.
- * @param skillName - expected skill directory name.
- * @returns the frontmatter name, routing fields, body, and the skill directory.
+ * @param {string} skillsRoot - root directory holding `<skillName>/SKILL.md`.
+ * @param {string} skillName - expected skill directory name.
+ * @returns {{ frontmatterName: string, description: string | undefined, whenToUse: string | undefined, body: string, skillDir: string }} the frontmatter name, routing fields, body, and the skill directory.
  */
 export function readSkillBundle(skillsRoot, skillName) {
   const skillPath = join(skillsRoot, skillName, 'SKILL.md')
@@ -84,8 +85,8 @@ export function readSkillBundle(skillsRoot, skillName) {
 /**
  * Register the packaged skill. Registration is an effect: the disposer returned
  * by `ctx.skills.register()` removes the contribution on unload.
- * @param ctx - Cordis context with the injected `skills` service.
- * @param config - validated plugin configuration.
+ * @param {{ effect: (factory: () => unknown) => unknown, skills: { register: (registration: Record<string, unknown>) => unknown } }} ctx - Cordis context with the injected `skills` service.
+ * @param {{ enabled?: boolean, skillName?: string, skillsRoot?: string, userInvocable?: boolean }} [config] - validated plugin configuration.
  */
 export function apply(ctx, config = {}) {
   const resolved = {

@@ -1,6 +1,6 @@
 name: Compat
 
-# Compatibility verification against the published 0.1.5-rc.2 line (monthly + on demand):
+# Compatibility verification against the published harness lines (weekly + per PR + on demand):
 #   1. bare-import: install the packed tarball plus the published peers into an empty
 #      project, import the entry, mount the REAL published SkillRegistry and assert the
 #      packaged skill registers with its body - catches devDependencies mistaken for
@@ -16,8 +16,9 @@ name: Compat
 #   4. uninstall: the profile install must be fully reversible.
 # Platform guard: every assertion here is platform-neutral.
 on:
+  pull_request:
   schedule:
-    - cron: '0 4 1 * *'
+    - cron: '0 4 * * 1'
   workflow_dispatch:
 
 jobs:
@@ -47,7 +48,7 @@ jobs:
           TARBALL="$(ls "$RUNNER_TEMP"/dsh-plugin-upgrade-015-*.tgz | head -n1)"
           mkdir -p "$RUNNER_TEMP/bare" && cd "$RUNNER_TEMP/bare"
           pnpm init >/dev/null
-          pnpm add "$TARBALL" '@deepseek-ai/cordis@4.0.2' '@deepseek-ai/dsh-skill@0.1.5-rc.2' >/dev/null
+          pnpm add "$TARBALL" '@deepseek-ai/cordis@4.0.2' '@deepseek-ai/dsh-skill@0.1.6-alpha.2' >/dev/null
           cat > mount.mjs <<'JS'
           import { Context } from '@deepseek-ai/cordis'
           import SkillRegistry from '@deepseek-ai/dsh-skill'
@@ -90,11 +91,11 @@ jobs:
           export const mount = (ctx: any) => ctx.plugin(SystemPrompt, { persona: '' })
           TS
           set +e
-          npx --no-install dsh-plugin-upgrade-015-scan --repo bad-b --seams C1 --quiet
+          pnpm exec dsh-plugin-upgrade-015-scan --repo bad-b --seams C1 --quiet
           code_b="$?"
-          npx --no-install dsh-plugin-upgrade-015-scan --repo bad-a --seams S9 --quiet
+          pnpm exec dsh-plugin-upgrade-015-scan --repo bad-a --seams S9 --quiet
           code_a="$?"
-          npx --no-install dsh-plugin-upgrade-015-scan --repo bad-b --seams C3 --quiet
+          pnpm exec dsh-plugin-upgrade-015-scan --repo bad-b --seams C3 --quiet
           code_retired="$?"
           set -e
           if [ "$code_b" -ne 1 ]; then
@@ -118,7 +119,7 @@ jobs:
       # the rc line npm installs by default and the older rc.1-line release the peer band
       # must keep working.
       matrix:
-        dsh: ['0.1.2-rc.1', '0.1.5-rc.2']
+        dsh: ['0.1.2-rc.1', '0.1.5-rc.2', '0.1.6-alpha.2']
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -152,6 +153,7 @@ jobs:
           packages:
             - .
           nodeLinker: hoisted
+          minimumReleaseAge: 0
           autoInstallPeers: false
           allowBuilds:
             '@deepseek-ai/dsh-subprocess-local': true

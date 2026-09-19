@@ -17,6 +17,11 @@ const declared = new Set([
 const BUILTIN = /^(node:|[a-z]+$)/
 const SKIP = new Set(['node_modules', '.git', 'fixtures'])
 
+/**
+ * Yield every source file under `dir`, skipping the package's own exclusions.
+ * @param {string} dir
+ * @returns {Generator<string, void, void>}
+ */
 function* walk(dir) {
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     if (e.isDirectory()) { if (!SKIP.has(e.name)) yield* walk(join(dir, e.name)) }

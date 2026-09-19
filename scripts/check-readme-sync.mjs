@@ -10,11 +10,13 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const FILES = ['README.md', 'README-zh.md', 'README-es.md', 'README-pt.md', 'README-hi.md']
 const INSTALL_COMMAND = 'dsh plugin --profile web add dsh-plugin-upgrade-015'
 const failures = []
+/** @param {string} file @returns {string} */
 const read = (file) => {
   const p = join(root, file)
   if (!existsSync(p)) { failures.push(`${file} is missing`); return '' }
   return readFileSync(p, 'utf8')
 }
+/** @param {string} text @returns {number} */
 const sectionCount = text => (text.match(/^## /gmu) ?? []).length
 
 const contents = FILES.map(read)
