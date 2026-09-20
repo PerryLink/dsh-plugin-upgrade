@@ -5,6 +5,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-09-20
+
+### Fixed
+
+- **The package description named the retired corridor card instead of this one.** `package.json`
+  described 2.0.0 as "the merged version-locked `0.1.3-alpha.1` -> `0.1.5-rc.1` corridor card …
+  over one 20-seam catalog" and never mentioned the second corridor. 2.0.0 is the opposite of
+  version-locked: the scanner reads the caller peer band and routes between two closed corridors
+  (`0.1.3-alpha.1` -> `0.1.5-rc.1` as legs A+B, and `0.1.5-rc.2` -> `0.1.6-alpha.2` as leg C).
+  The text was corrected in the repository on 2026-09-20 (`b543400`); npm metadata is immutable
+  per version, so 2.0.1 is the release that carries the corrected description to the registry,
+  and with it to every catalog that copies an author's own words.
+- No functional change: `lib/route.mjs`, `lib/scan.mjs`, `lib/scan-0.1.6.mjs`, the cards, the
+  skill body and the CLI are byte-identical to 2.0.0.
+
 ## [2.0.0] - 2026-09-19
 
 ### Changed
