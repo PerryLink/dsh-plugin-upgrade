@@ -1,7 +1,7 @@
 {
   "name": "dsh-plugin-upgrade",
   "version": "2.0.0",
-  "description": "Plugin-author upgrade skill for DeepSeek Harness: the merged version-locked 0.1.3-alpha.1 -> 0.1.5-rc.1 corridor card plus a zero-dependency seam scanner over one 20-seam catalog — leg A (V3 session format, assistant/message.stream, SessionHandleReadResult, ctx.agent, Inbox, SubprocessHandle.pid, SystemPrompt persona, PTC rename, EpochHeader.system, and the tsconfig stale-path false green) and leg B (the removed bare `conversation` client slot, the sidebar textpreview -> documentpreview package rename, the stale-type-line false green, the new global main-panel model and usePanelInfo standard prop, the new `present` tool key, two new session event types, and the peer-range trap where >=0.1.2-rc.1 <0.2.0 alone rejects 0.1.5-rc.1) — packaged as a bundle skill and an npx CLI.",
+  "description": "Plugin-author upgrade skill for DeepSeek Harness: one package, one corridor index - the scanner detects the caller peer band and routes to the matching closed corridor card (0.1.3-alpha.1 -> 0.1.5-rc.1 as legs A+B, and 0.1.5-rc.2 -> 0.1.6-alpha.2 as leg C), with a zero-dependency seam scanner shipped as a bundle skill and an npx CLI.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PerryLink/dsh-plugin-upgrade.git"
