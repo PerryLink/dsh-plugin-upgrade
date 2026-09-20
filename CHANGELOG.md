@@ -33,6 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`dshWorkshop.capability.expected`, and `compatibility.dshVersions` gains
   `0.1.6-alpha.2`, which `peerDependencies` already admitted). The gate chain is re-run in
   full; the published `2.0.1` tarball is unaffected and this lands with the next release.
+- **The family-size claim was one release behind.** All five READMEs said this package is
+  "one of the **40** DeepSeek Harness plugins"; the family roster is **41** (`PerryLink/dsh-kit`
+  states 41 in both the tagline and the same family line, and `dsh-wechat` left the family).
+  Corrected in all five in the same commit.
 
 ## [2.0.1] - 2026-09-20
 
