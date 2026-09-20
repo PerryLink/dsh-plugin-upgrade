@@ -5,6 +5,35 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **The documentation still described the retired "one package per hop" model.** `2.0.0`
+  introduced the corridor index (`lib/route.mjs`) and folded the `0.1.5-rc.2` →
+  `0.1.6-alpha.2` corridor in as `legC`, but the surrounding prose had not caught up: the
+  internal `AGENTS.md` still said the package "upgrades plugins across `0.1.3-alpha.1` →
+  `0.1.5-rc.1` and nothing else" and that "a hop after `0.1.5-rc.1` … is a new package"; the
+  `legC` card still called itself the new package `dsh-plugin-upgrade-016`; the skill
+  frontmatter still carried a single `corridor:` key and a `whenToUse` that told the model a
+  later hop is a new package; and all five READMEs described one merged corridor with two
+  legs, never naming `legC`. Corrected here, with the two corridors now named consistently
+  everywhere (`legAB` = `0.1.3-alpha.1` → `0.1.5-rc.1`, `legC` = `0.1.5-rc.2` →
+  `0.1.6-alpha.2`) and the "a new corridor adds a card and an index row, not a package" rule
+  stated wherever the old rule was.
+- **`test/card.test.mjs` had no gate for the second corridor.** The evidence-binding parity
+  check only pinned the `legAB` card to `lib/scan.mjs`. It now also pins the `legC` card to
+  `lib/scan-0.1.6.mjs` (ids, order, severities), asserts `legC`'s `CARD_ONLY` is empty,
+  asserts the two catalogs share no seam id, and asserts the skill frontmatter names both
+  corridors while the superseded "a new package" phrasing is gone.
+  `scripts/verify-artifacts.mjs` checks the packaged `SKILL.md` frontmatter for both
+  corridors instead of the retired single `corridor:` key.
+- No functional change: `index.mjs`, `lib/**`, `cordis.patch.yml`, `fixtures/**` and the
+  cards' seam facts are untouched. `package.json` changes only documentation fields
+  (`dshWorkshop.capability.expected`, and `compatibility.dshVersions` gains
+  `0.1.6-alpha.2`, which `peerDependencies` already admitted). The gate chain is re-run in
+  full; the published `2.0.1` tarball is unaffected and this lands with the next release.
+
 ## [2.0.1] - 2026-09-20
 
 ### Fixed

@@ -2,37 +2,50 @@
 
 Standalone DeepSeek Harness plugin repository (`dsh-plugin-upgrade`). Development
 follows the dsh-plugin-guide skill and the official plugin contract; this file records
-repo-local decisions. Read `README.md` (external contract) and the packaged merged corridor
-card (`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md`) before changing
-behavior.
+repo-local decisions. Read `README.md` (external contract) and **both** packaged corridor
+cards (`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` and
+`skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md`) before changing behavior.
 
-## A corridor never widens (and one package may carry several closed corridors)
+## One package, one corridor index (a corridor still never widens)
 
-- **A corridor never widens.** This package upgrades plugins across `0.1.3-alpha.1 →
-  0.1.5-rc.1` and nothing else. Do not widen the peer band or the card to "all versions":
-  a drifting card is worse than no card. A hop that adds a seam is a new package.
-- **One package may carry several *closed* corridors.** That is what this repository is: one
-  npm package holding leg A (`0.1.3-alpha.1 → 0.1.5-alpha.1`) and leg B (`0.1.5-alpha.1 →
-  0.1.5-rc.1`) as **two closed corridors of one span**, each keeping its own evidence, card
-  section, fixtures and rollback path. Neither leg may absorb a third hop.
-- **This supersedes the family's earlier rule.** The retired `dsh-plugin-upgrade` and
-  `dsh-plugin-upgrade-rc1` each carried a "**The corridor is locked** … a new corridor is a
-  new package" section plus "**zero code dependency on the sibling corridor**: no `import`,
-  no vendoring, no shared `SEAMS`". The owner deliberately superseded the second half of that
-  pair: the merged package **does** share one `SEAMS` (one scanner, one catalog, one
-  id-parity gate) because the two legs are contiguous hops of one span. What survives
+- **A corridor never widens.** A corridor is one *closed, measured* span with its own card,
+  catalog, evidence, fixtures and rollback path. Never stretch a card to "all versions":
+  a drifting card is worse than no card.
+- **A new corridor adds a card and an index row, not a package.** Owner decision
+  (2026-09-19), recorded in `lib/route.mjs`: this package carries the corridor **index**.
+  `resolveCorridor()` reads the target repository's declared band (`engines.dsh`, the
+  `@deepseek-ai/dsh*` ranges) and routes to the matching corridor; `--span legAB|legC`
+  overrides the guess, and an undeclared band falls back to the older corridor.
+  - **`legAB`** — `0.1.3-alpha.1 → 0.1.5-rc.1`, carried as leg A (`0.1.3-alpha.1 →
+    0.1.5-alpha.1`) and leg B (`0.1.5-alpha.1 → 0.1.5-rc.1`): 20 seams, catalog
+    `lib/scan.mjs`, card `…/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (§1 leg A, §2 leg B,
+    §3 the 20-seam index), evidence `docs/EVIDENCE.md` §A + §1–§10.
+  - **`legC`** — `0.1.5-rc.2 → 0.1.6-alpha.2`: 5 seams (`E1`–`E5`, all `error`), catalog
+    `lib/scan-0.1.6.mjs`, card `…/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md`, evidence
+    `docs/EVIDENCE.md` §11. The retired `dsh-plugin-upgrade-016` name never reached the
+    registry; this corridor is folded in here.
+- **The seam arrays are never merged.** Two corridors mean two catalogs, two cards and two
+  parity gates, so every card claim stays traceable to its own measurement. What the
+  corridors *do* share is the entry point: one skill id (`plugin-upgrade`), one CLI
+  (`dsh-plugin-upgrade-scan`), one report shape.
+- **This supersedes the family's earlier rule.** The retired `dsh-plugin-upgrade`,
+  `dsh-plugin-upgrade-rc1` and `dsh-plugin-upgrade-016` each carried a "**The corridor is
+  locked** … a new corridor is a new package" section plus "**zero code dependency on the
+  sibling corridor**: no `import`, no vendoring, no shared `SEAMS`". The owner deliberately
+  superseded that pair: one package now carries the index, and each corridor keeps its own
+  `SEAMS` while the *plumbing* (router, entry point, report shape) is shared. What survives
   unchanged is the numbering discipline — a corridor is *closed*, not open-ended — and the
   per-leg ownership below.
 
 Consequences accepted by this repository:
 
-- The merged catalog (20 seams: `S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`,
+- The `legAB` catalog (20 seams: `S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`,
   `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) is evidence-bound to the two
   tag ranges it was measured on — leg A `dsh-v0.1.5-alpha.1` (2026-09-09 wave over 40 plugin
-  repos) and leg B `dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1` (2026-09-10). A hop after
-  `0.1.5-rc.1` (rc.2, the final release, anything later) is a **new package**, not a wider
-  card. The harness hop `0.1.5-rc.1 → 0.1.5-rc.2` added no plugin-facing seam, which is why
-  the span ends at rc.1 while the dev/test pin and the CI probe run on `0.1.5-rc.2`.
+  repos) and leg B `dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1` (2026-09-10). The harness hop
+  `0.1.5-rc.1 → 0.1.5-rc.2` added no plugin-facing seam, which is why that span ends at rc.1
+  while the dev/test pin and the CI probe run on `0.1.5-rc.2`. The `legC` catalog (`E1`–`E5`)
+  is evidence-bound to `dsh-v0.1.6-alpha.2` (2026-09-19, §11).
 - **Leg A owns the session-format seams** (`assistant/message.stream`, `S3`;
   `SessionHandleReadResult`, `S8`; `EpochHeader.system`, `S2`; `ctx.agent`, `S5`; `Inbox`,
   `S6`; `SystemPrompt.persona`, `S9`; the V3 log generation, `S1`) and **leg B does not
@@ -58,8 +71,14 @@ Consequences accepted by this repository:
 ```
 index.mjs             single host face: Config schema + skill bundle reader + apply()
 types.d.ts            Config, SeamId, SeamHit, ScanReport and the public function surface
-lib/scan.mjs          zero-dependency merged seam catalog (both legs) + scanner + CLI main()
-scripts/scan-0.1.5.mjs   thin bin wrapper (npx dsh-plugin-upgrade-scan)
+lib/route.mjs         the corridor index: CORRIDORS, declaredBand(), resolveCorridor(),
+                      --span/--repo parsing, loadCatalog()
+lib/scan.mjs          zero-dependency `legAB` seam catalog (legs A+B) + scanner + CLI main()
+lib/scan-0.1.6.mjs    zero-dependency `legC` seam catalog (E1–E5) + scanner + CLI main()
+scripts/scan-0.1.5.mjs   thin bin wrapper (npx dsh-plugin-upgrade-scan): resolves the
+                         corridor through lib/route.mjs and hands the same argv to that
+                         corridor's catalog main(). The filename is historical; the wrapper
+                         routes both corridors
 skills/plugin-upgrade/scripts/scan-0.1.5.mjs  the same wrapper inside the skill
                       directory, so the skill body's `./scripts/...` resolves against its
                       resourceBase
@@ -71,17 +90,19 @@ scripts/verify-artifacts.mjs       pack + inspect the published tarball (also as
                                    leg-A seam fails the packaged CLI)
 scripts/check-readme-sync.mjs      five-language README consistency
 skills/plugin-upgrade/SKILL.md  the bundled skill body (frontmatter name is the skill id;
-                                    it routes the caller to the leg matching its peer band)
-skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md  the merged card:
+                                    it routes the caller to the corridor matching its peer band)
+skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md  the `legAB` card:
                                     §1 Leg A, §2 Leg B, §3 the 20-seam index
+skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md  the `legC` card:
+                                    the 5-seam `E1`–`E5` index and the fix/verify recipes
 test/scan.test.mjs    synthetic bad/good fixtures for BOTH legs + --seams + a live negative
 test/plugin.test.mjs  real Cordis Context + real SkillRegistry: register, dispose, negatives
-test/card.test.mjs    the card↔catalog id/severity parity gate
+test/card.test.mjs    the card↔catalog id/severity parity gate for BOTH corridors
 fixtures/             scanner fixtures — never published:
                         bad-repo / good-repo            leg B (client-slot oriented)
                         leg-a-bad-repo / leg-a-good-repo  leg A (TypeScript/session oriented)
 docs/EVIDENCE.md      the command→output record every card claim traces to
-                      (§A = leg A's provenance, §1–§10 = leg B's records)
+                      (§A = leg A's provenance, §1–§10 = leg B's records, §11 = leg C's)
 cordis.patch.yml      bundle declaration (insert dsh-plugin-upgrade); every
                       Config key inline
 pnpm-workspace.yaml   nearest-workspace root (isolates this repo from a surrounding harness checkout)
@@ -118,9 +139,10 @@ LICENSE               Apache-2.0
   adaptation: this span's breakage is silent from both ends, so a session-log writer needs a
   resume round-trip (`S3`), a client half needs a real browser assertion, and the card's exit
   criterion is a real-host smoke on a temp `DSH_HOME`.
-- **The card and the catalog are one catalog.** `test/card.test.mjs` fails when their ids or
-  severities disagree, and when the card mints an id outside the merged 20. Change the card
-  first, then the catalog, in the same commit.
+- **The card and the catalog are one catalog — per corridor.** `test/card.test.mjs` fails when
+  a card's index and that corridor's catalog disagree on ids or severities, when a card mints
+  an id outside its own catalog, and when `legC`'s `CARD_ONLY` is not empty. The two corridors'
+  catalogs are never merged. Change the card first, then the catalog, in the same commit.
 - **Mount loud.** A missing `SKILL.md`, an empty body, or a frontmatter without `name` must
   abort the mount. Never register a placeholder skill.
 - **The skill id is the frontmatter name.** `skillName` selects the directory; the registered
@@ -153,9 +175,9 @@ after every harness release.
 
 ## Release
 
-Version is currently `0.1.0`. The npm name `dsh-plugin-upgrade` is brand new, so
-this package starts its own version line at `0.1.0`; the two retired packages' histories live
-in `CHANGELOG.md` under `[Unreleased]` and below. For a new version: bump
+Version is currently `2.0.1` (`2.0.0` was the package that returned as the corridor index;
+`2.0.1` re-published the corrected npm description). The retired packages' histories live in
+`CHANGELOG.md` under `[Unreleased]` and below. For a new version: bump
 `package.json#version`, stamp the CHANGELOG `[Unreleased]` section into `## [<x.y.z>] - <UTC
 date>`, re-run the full gate, commit `chore(release): <x.y.z>`, and `git tag -a v<x.y.z>`.
 `git push origin main --follow-tags` triggers `.github/workflows/release.yml`, which re-runs
@@ -182,9 +204,11 @@ same commit.
 row expects `PerryLink/dsh-plugin-doctor` to carry a
 `PerryLink__dsh-plugin-upgrade.svg` badge, and the family also enrols each package
 in the Gitee mirror, the `dsh-catalog` directory and the omdsh workshop list. Those are
-release-side steps performed from the family workspace after the first tag. The two retired
-package names stay on the registry (unpublished content is not removed by publishing a new
-name); their README/card wording is now historical.
+release-side steps performed from the family workspace after the first tag. The three
+retired package names (`dsh-plugin-upgrade` leg A, `dsh-plugin-upgrade-rc1` leg B, and the
+never-published `dsh-plugin-upgrade-016` corridor) stay on the registry or in history only
+(unpublished content is not removed by publishing a new name); their README/card wording is
+now historical.
 
 ## Docs
 
@@ -196,7 +220,7 @@ name); their README/card wording is now historical.
   `package.json` keywords; the ecosystem's visibility channel is the `dsh-plugin` topic).
 - License is Apache-2.0 (`LICENSE` + the package.json `license` field).
   `THIRD_PARTY_NOTICES.md` documents install-time dependencies; nothing is bundled.
-- Every factual claim in the card or the scanner traces to a command recorded in
+- Every factual claim in a card or the scanner traces to a command recorded in
   `docs/EVIDENCE.md` — §A for leg A's provenance (via the retired `dsh-plugin-upgrade` card,
-  now merged in as Leg A) and §1–§10 for leg B's records. Where a claim could not be verified
-  it is marked **unverified** and kept out of the card.
+  now merged in as Leg A), §1–§10 for leg B's records, and §11 for leg C's. Where a claim
+  could not be verified it is marked **unverified** and kept out of the card.

@@ -4,11 +4,11 @@
 - **Canal de la tienda 1024**: ejecuta `npm i -g dsh1024` una vez y luego `dsh1024 plugin --profile web add dsh-plugin-upgrade` (cuenta para el ranking de instalaciones de [deepseek1024.com](https://deepseek1024.com)).
 [![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade)
 
-**Habilidad de actualización de plugins para DeepSeek Harness, fusionada y con versión bloqueada — `0.1.3-alpha.1` → `0.1.5-rc.1`, llevada como dos tramos cerrados.**
+**Habilidad de actualización de plugins para DeepSeek Harness — un paquete, un índice de corredores, dos corredores cerrados: `0.1.3-alpha.1` → `0.1.5-rc.1` (`legAB`) y `0.1.5-rc.2` → `0.1.6-alpha.2` (`legC`).**
 
-*Tramo A `0.1.3-alpha.1` → `0.1.5-alpha.1`, tramo B `0.1.5-alpha.1` → `0.1.5-rc.1`: una tarjeta de corredor más un escáner de costuras sin dependencias sobre el catálogo fusionado de 20 costuras, para que una mitad de cliente que dejó de montarse en silencio nunca se confunda con «typecheck en verde».*
+*El escáner se enruta solo: lee la banda dsh declarada por el repositorio destino (o toma `--span`) y luego aplica el catálogo propio de ese corredor, vinculado a evidencia — las 20 costuras de `legAB` (tramo A `0.1.3-alpha.1` → `0.1.5-alpha.1` más tramo B `0.1.5-alpha.1` → `0.1.5-rc.1`) o las 5 costuras de `legC` (`E1`–`E5`). Un solo punto de entrada, para que una mitad de cliente que dejó de montarse en silencio nunca se confunda con «typecheck en verde».*
 
-> **Repositorio oficial.** Este es el único repositorio oficial de dsh-plugin-upgrade, mantenido por PerryLink. Sustituye a los dos paquetes con versión bloqueada `dsh-plugin-upgrade` (tramo A) y `dsh-plugin-upgrade-rc1` (tramo B). Los repositorios con el mismo nombre en otras cuentas no están afiliados.
+> **Repositorio oficial.** Este es el único repositorio oficial de dsh-plugin-upgrade, mantenido por PerryLink. Sustituye a los dos paquetes retirados con versión bloqueada `dsh-plugin-upgrade` (tramo A) y `dsh-plugin-upgrade-rc1` (tramo B), y es el paquete en el que se integró el corredor `0.1.5-rc.2` → `0.1.6-alpha.2` (tramo C): el nombre `dsh-plugin-upgrade-016` nunca llegó al registro. Los repositorios con el mismo nombre en otras cuentas no están afiliados.
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
@@ -29,21 +29,22 @@
 
 | Superficie | Estado |
 |---|---|
-| Harness | DeepSeek Harness `0.1.5-rc.1` (tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`; relevo tramo A→B `dsh-v0.1.5-alpha.1` = `5dda764ed3aa`; inicio del corredor `0.1.3-alpha.1`). Banda de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
+| Harness | DeepSeek Harness `0.1.5-rc.1` (tag `dsh-v0.1.5-rc.1` = `183f08e9c6dd`; relevo tramo A→B `dsh-v0.1.5-alpha.1` = `5dda764ed3aa`; inicio del corredor `0.1.3-alpha.1`) y, para `legC`, DeepSeek Harness `0.1.6-alpha.2` (tag `dsh-v0.1.6-alpha.2`). Banda de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | Plataformas | Donde corra Node; el escáner solo usa el sistema de archivos y es neutral respecto a la plataforma |
 | Modelo | Modelos solo de texto totalmente soportados; la habilidad es un Markdown, sin requisitos de herramientas ni visión |
-| Alcance | **Dos tramos cerrados, un solo lapso**: tramo A `0.1.3-alpha.1` → `0.1.5-alpha.1` más tramo B `0.1.5-alpha.1` → `0.1.5-rc.1`. Un corredor nunca se ensancha: un salto posterior a `0.1.5-rc.1` es un paquete nuevo. |
-| Tramos | Ambos tramos viven en este paquete: el tramo A conserva las costuras `S1`–`S10` + `M1`, el tramo B conserva `C1`, `C2`, `C4`, `C5`, `H1`–`H4`, `P1` — cada uno con su propia evidencia, sección de tarjeta, fixtures y ruta de reversión. No hay paquete hermano que instalar. |
+| Índice de corredores | Un paquete, un punto de entrada. `lib/route.mjs` contiene los corredores cerrados y la CLI enruta al que corresponde según la banda declarada del repo destino (`engines.dsh`, los rangos `@deepseek-ai/dsh*`); `--span legAB\|legC` anula la conjetura y una banda no declarada recae en el corredor más antiguo. Los dos catálogos nunca se fusionan: cada corredor conserva su propio array de costuras, tarjeta, evidencia, fixtures y puerta de paridad. |
+| Alcance | **Dos corredores cerrados**: `legAB` = `0.1.3-alpha.1` → `0.1.5-rc.1` (tramo A + tramo B), `legC` = `0.1.5-rc.2` → `0.1.6-alpha.2`. Un corredor nunca se ensancha: un salto que añade una costura es un corredor nuevo — una tarjeta nueva y una fila nueva en el índice, no un paquete nuevo. |
+| Tramos | Cada tramo vive en este paquete: el tramo A conserva las costuras `S1`–`S10` + `M1`, el tramo B conserva `C1`, `C2`, `C4`, `C5`, `H1`–`H4`, `P1`, y el tramo C conserva `E1`–`E5` — cada uno con su propia evidencia, sección de tarjeta, fixtures y ruta de reversión. No hay paquete hermano que instalar. |
 | `C3` | Retirada: la tarjeta del tramo B escribía como `C3` el falso verde de la línea de tipos obsoleta, que es el mismo defecto que el `M1` del tramo A. La fusión queda registrada en la tarjeta; `--seams C3` no coincide con nada. |
 | Paquete anterior | No montes el retirado `dsh-plugin-upgrade` en el mismo perfil: ambos registran la skill `plugin-upgrade`, así que el segundo montaje colisiona con ese nombre. Ese paquete está obsoleto en npm y su repositorio se retiró; este paquete sustituye sus dos tramos. |
 
 ## Lo que obtienes
 
-Dos mitades, un solo catálogo de costuras:
+Dos mitades, un catálogo de costuras por corredor:
 
 - **Una habilidad de agente incluida (`plugin-upgrade`)** — la tarjeta del corredor fusionado y un bucle de arreglar-y-verificar. El cuerpo primero enruta a quien la llama al tramo que corresponde a su banda de peers; el modelo la carga solo cuando una tarea la necesita de verdad, y el paquete no aporta ningún párrafo al prompt del sistema ni registra herramientas.
-- **Una CLI sin dependencias (`dsh-plugin-upgrade-scan`)** — informa hechos `file:line` de las veinte costuras fusionadas (`S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`, `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) releídas de los rangos de tags del harness el 2026-09-09 (tramo A) y el 2026-09-10 (tramo B). Sale con `1` ante cualquier hallazgo de severidad error, así que entra directo en CI.
+- **Una CLI sin dependencias (`dsh-plugin-upgrade-scan`)** — resuelve el corredor e informa hechos `file:line` de las costuras de ese corredor: las veinte de `legAB` (`S3`, `S8`, `S9`, `M1`, `S4`, `S5`, `S6`, `S7`, `S2`, `S1`, `S10`, `C1`, `C2`, `P1`, `C4`, `C5`, `H1`, `H2`, `H4`, `H3`) releídas de los rangos de tags del harness el 2026-09-09 (tramo A) y el 2026-09-10 (tramo B), o las cinco de `legC` (`E1`–`E5`) medidas en `dsh-v0.1.6-alpha.2` (2026-09-19). Sale con `1` ante cualquier hallazgo de severidad error, así que entra directo en CI.
 
 El objetivo es el modo de fallo que este corredor existe para matar: **la rotura de este lapso es mayormente silenciosa, y lo es por ambos extremos.** La línea de tipos puede estar obsoleta, así que el repo compila contra el **catálogo antiguo** (costura `M1`), y el slot de cliente desnudo `conversation` se eliminó sin alias mientras `ctx.slots.inject()` solo ejecuta su callback cuando la declaración existe: una mitad de cliente que aún lo apunta deja de montarse sin error, sin línea de log y sin build fallido (costura `C1`). Tres clases de rotura sobreviven a `typecheck` + `test`:
 
@@ -66,8 +67,8 @@ dsh --profile web --dump-config | grep -A3 'id: dsh-plugin-upgrade'
 npx dsh-plugin-upgrade-scan --repo ../my-plugin
 ```
 
-Luego pide al agente que use la habilidad `plugin-upgrade`, o lleva el bucle tú mismo con la tarjeta en
-`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (el tramo A es §1, el tramo B es §2, el índice de costuras fusionado es §3).
+Luego pide al agente que use la habilidad `plugin-upgrade`, o lleva el bucle tú mismo con la tarjeta que corresponda a tu banda:
+`skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (`legAB` — el tramo A es §1, el tramo B es §2, el índice de costuras fusionado es §3) o `skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md` (`legC`). El escáner elige el corredor por ti; añade `--span legC` cuando la banda declarada sea ambigua.
 
 ## Instalación y desinstalación
 
@@ -107,19 +108,20 @@ El plugin monta de forma ruidosa: un `SKILL.md` ausente, un cuerpo vacío o un f
 **CLI** — `dsh-plugin-upgrade-scan`:
 
 ```sh
-dsh-plugin-upgrade-scan [--repo <path>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
+dsh-plugin-upgrade-scan [--repo <path>] [--span legAB|legC|<span>] [--json <out.json>] [--seams S3,C1,P1] [--quiet]
 ```
 
 | Bandera | Significado |
 |---|---|
-| `--repo <path>` | Repositorio a escanear (por defecto: el directorio actual). |
+| `--repo <path>` | Repositorio a escanear (por defecto: el directorio actual). Su banda dsh declarada elige el corredor. |
+| `--span legAB\|legC\|<span>` | Fuerza un corredor en lugar de conjeturarlo desde la banda declarada. Una banda desconocida recae en `legAB`. |
 | `--json <out.json>` | También escribe el informe legible por máquina (`repo`, `scannedAt`, `files`, `hits[]`, `bySeam`). |
-| `--seams S3,C1,P1` | Restringe a costuras concretas del catálogo fusionado. |
+| `--seams S3,C1,P1` | Restringe a costuras concretas del catálogo del corredor resuelto (los ids nunca se comparten entre corredores). |
 | `--quiet` | Suprime la salida humana (combínala con `--json`). |
 
 Códigos de salida: `0` sin hallazgos de severidad error · `1` al menos un hallazgo de severidad error · `2` uso o fallo del escaneo. Un escaneo limpio es necesario pero no suficiente: el criterio de salida es un smoke real en el host, más un ida y vuelta de reanudación para los escritores de logs (tramo A) y una aserción en un navegador real para la mitad de cliente (tramo B).
 
-## Las veinte costuras
+## Las veinte costuras de `legAB`
 
 El orden sigue el catálogo de `lib/scan.mjs` (primero el tramo A, luego el tramo B), que es también el orden al que `test/card.test.mjs` fija la tarjeta.
 
@@ -148,9 +150,23 @@ El orden sigue el catálogo de `lib/scan.mjs` (primero el tramo A, luego el tram
 
 `S7`, `S2`, `S1`, `S10`, `C4`, `C5`, `H1`, `H2` y `H4` son deliberadamente asesorables: tienen coincidencias legítimas (un repo que ya usa la API nueva, una instantánea de documentación, la tabla de ids de modelo de un plugin, un `ChildProcess.pid` de Node), así que el escáner las reporta como pistas para revisión manual, no como fallos. `M1` y `P1` son comprobaciones **estructurales** — resuelven `package.json` y `tsconfig*.json` en lugar de coincidir texto — y `H3` es **solo de tarjeta**: documentada, con paridad de ids comprobada y deliberadamente sin detector (`CARD_ONLY = ['H3']`).
 
+## Las cinco costuras de `legC` (`0.1.5-rc.2` → `0.1.6-alpha.2`)
+
+El orden sigue el catálogo de `lib/scan-0.1.6.mjs`, que es también el orden al que `test/card.test.mjs` fija la tarjeta de `legC`. Aquí toda costura es `error` y todas se detectan (`CARD_ONLY = []`).
+
+| Id | Severidad | Qué cambió en el camino a `0.1.6-alpha.2` |
+|---|---|---|
+| `E1` | error | `agent/created` despacha sus listeners en serie: un listener que lanza — o que hace trabajo lento — bloquea por completo la creación del agente. Envuelve el trabajo síncrono en `try`/`catch` y aplaza el resto con `queueMicrotask`/`setImmediate` o tu propia cola. |
+| `E2` | error | Un `apply()` asíncrono cuyo primer `await` precede a sus registros: todo lo registrado después cae en la ventana de descarga y lanza `INACTIVE_EFFECT`, mientras el cierre antiguo sigue corriendo. Registra todo antes del primer `await`, dentro de un único `ctx.effect()`. |
+| `E3` | error | Claves de slot/estado eliminadas: `settings.plugin.item` pasó a ser el keyed→list `plugins.item`, y `SessionListState.current` desapareció — una tarjeta de ajustes desaparece **en silencio** (retorno temprano por `spec === undefined`), y los casts de `current` siguen compilando mientras la función está muerta. |
+| `E4` | error | API de cliente eliminada: `sessions.open` / `openSubagent` / `clear` pasaron a `retain` / `using` / `retainInfo`. |
+| `E5` | error | Literales de modelo eliminados: `deepseek-v4-flash*` y `deepseek-v4-vision-exp`. El catálogo de modelos por defecto se encogió de 4 a 2, y un id sin catalogar pasa tal cual como solo texto. |
+
+Se aplica la misma disciplina que en `legAB`: un escaneo limpio es necesario, no suficiente. La rotura de `legC` es silenciosa o solo en tiempo de ejecución (la línea de tipos publicada oculta las eliminaciones), así que el criterio de salida sigue siendo un smoke real en el host sobre un `DSH_HOME` temporal, más el ida y vuelta del escritor de logs y la aserción en navegador real donde correspondan.
+
 ## Lo que esto no cubre
 
-- **Un salto posterior a `0.1.5-rc.1`.** El lapso fusionado termina en rc.1 por construcción: el salto del harness `0.1.5-rc.1` → `0.1.5-rc.2` no añadió ninguna costura de cara a los plugins (el pin de dev/test y la sonda de CI de este propio paquete corren sobre la línea `0.1.5-rc.2`, de modo que el catálogo queda verificado contra los tipos publicados más recientes). Cualquier cosa que añada una costura más adelante es un **paquete nuevo**: una tarjeta que deriva es peor que ninguna tarjeta.
+- **Un salto más allá de todos los corredores de aquí.** `legAB` termina en `0.1.5-rc.1` por construcción: el salto del harness `0.1.5-rc.1` → `0.1.5-rc.2` no añadió ninguna costura de cara a los plugins (el pin de dev/test y la sonda de CI de este propio paquete corren sobre la línea `0.1.5-rc.2`, de modo que el catálogo de `legAB` queda verificado contra esos tipos publicados), y `legC` cubre `0.1.5-rc.2` → `0.1.6-alpha.2`. Un salto posterior que añada una costura **no** está cubierto: un corredor está cerrado, y ensanchar una tarjeta es peor que añadir una. Ese salto recibe una tarjeta nueva y una fila nueva en el índice — no un paquete nuevo.
 - **El salto `0.1.1` → `0.1.2`.** Usa la habilidad de convergencia de la comunidad.
 - **Repetir entre tramos.** El tramo A posee las costuras del formato de sesión (`assistant/message.stream`, `SessionHandleReadResult`, `EpochHeader.system`, `ctx.agent`, `Inbox`, `SystemPrompt.persona`, la generación de log V3) y el tramo B no las repite: todo el diff de `packages/core/session/src` en el rango del tramo B son dos literales de tipo de evento añadidos y una línea de comentario. La sección de tarjeta de cada tramo conserva su propia declaración de alcance.
 - **La ruta de actualización del usuario de DSH.** Este paquete actualiza *código fuente de plugins*, no la instalación del harness de un usuario.
@@ -175,7 +191,7 @@ npm run check:readmes              # consistencia de los README en cinco idiomas
 npm pack
 ```
 
-El escáner tiene un par de fixtures sintéticos **por tramo**: `fixtures/leg-a-bad-repo` (las costuras de sesión/configuración del tramo A, con todas las costuras de error presentes a propósito) junto con `fixtures/leg-a-good-repo` (adaptado), y `fixtures/bad-repo` (las costuras de slot de cliente del tramo B) junto con `fixtures/good-repo` (adaptado) — más un negativo en vivo sobre un repositorio de la familia ya fijado a `0.1.5-rc.1`, de modo que una regresión del catálogo falla en esta suite y no en un usuario aguas abajo. `test/card.test.mjs` afirma que el índice de la tarjeta fusionada y `lib/scan.mjs` nombran **exactamente** los mismos veinte ids de costura con las mismas severidades, y que `CARD_ONLY` es exactamente `['H3']`: la regla de vinculación de evidencia como puerta de máquina.
+El escáner tiene un par de fixtures sintéticos **por tramo de `legAB`**: `fixtures/leg-a-bad-repo` (las costuras de sesión/configuración del tramo A, con todas las costuras de error presentes a propósito) junto con `fixtures/leg-a-good-repo` (adaptado), y `fixtures/bad-repo` (las costuras de slot de cliente del tramo B) junto con `fixtures/good-repo` (adaptado) — más un negativo en vivo sobre un repositorio de la familia ya fijado a `0.1.5-rc.1`, de modo que una regresión del catálogo falla en esta suite y no en un usuario aguas abajo. `test/card.test.mjs` afirma que el índice de cada tarjeta y su propio catálogo (`lib/scan.mjs` para `legAB`, `lib/scan-0.1.6.mjs` para `legC`) nombran **exactamente** los mismos ids de costura con las mismas severidades, que el `CARD_ONLY` de `legAB` es exactamente `['H3']` mientras el de `legC` está vacío, y que los dos catálogos no comparten ningún id de costura — la regla de vinculación de evidencia como puerta de máquina, por corredor.
 
 ## Temas
 

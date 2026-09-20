@@ -14,21 +14,29 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SEAMS, SEAM_IDS, CARD_ONLY } from '../lib/scan.mjs'
+import { SEAMS as SEAMS_C, SEAM_IDS as SEAM_IDS_C, CARD_ONLY as CARD_ONLY_C } from '../lib/scan-0.1.6.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(here, '..')
 const cardPath = path.join(root, 'skills', 'plugin-upgrade', 'references', 'v0.1.3-alpha.1-to-v0.1.5-rc.1.md')
 const card = readFileSync(cardPath, 'utf8')
+const cardCPath = path.join(root, 'skills', 'plugin-upgrade', 'references', 'v0.1.5-rc.2-to-v0.1.6-alpha.2.md')
+const cardC = readFileSync(cardCPath, 'utf8')
 
-/** The merged index section, delimited by HTML comment markers. */
-function indexSection(text) {
-  const start = text.indexOf('<!-- MERGED-SEAM-INDEX:BEGIN -->')
-  const end = text.indexOf('<!-- MERGED-SEAM-INDEX:END -->')
-  assert.ok(start >= 0 && end > start, 'the merged card must keep its delimited seam index')
-  return text.slice(start, end)
+/**
+ * A card's index section, delimited by HTML comment markers. The `legAB` card
+ * marks its section `MERGED-SEAM-INDEX`; the `legC` card marks its own
+ * `SEAM-INDEX`. One package, two corridors, two independent indexes.
+ */
+function indexSection(text, begin, end) {
+  const start = text.indexOf(begin)
+  const stop = text.indexOf(end)
+  assert.ok(start >= 0 && stop > start, `the card must keep its delimited seam index (${begin})`)
+  return text.slice(start, stop)
 }
 
-const section = indexSection(card)
+const section = indexSection(card, '<!-- MERGED-SEAM-INDEX:BEGIN -->', '<!-- MERGED-SEAM-INDEX:END -->')
+const sectionC = indexSection(cardC, '<!-- SEAM-INDEX:BEGIN -->', '<!-- SEAM-INDEX:END -->')
 const rows = [...section.matchAll(/^\|\s*`([SMCHP]\d{1,2})`\s*\|\s*\*{0,2}(error|warn|info)\*{0,2}\s*\|/gmu)]
   .map(m => ({ id: m[1], severity: m[2] }))
 
@@ -106,7 +114,11 @@ test('the card is honest about the family-side blast radius being latent', () =>
 test('the skill directory, the frontmatter name and the bundle default agree', () => {
   const skill = readFileSync(path.join(root, 'skills', 'plugin-upgrade', 'SKILL.md'), 'utf8')
   assert.match(skill, /^name: plugin-upgrade$/m)
-  assert.match(skill, /^  corridor: "0\.1\.3-alpha\.1 -> 0\.1\.5-rc\.1"$/m)
+  // One package, one corridor index: the frontmatter names BOTH corridors.
+  assert.match(skill, /^ {2}corridors: "legAB `0\.1\.3-alpha\.1 -> 0\.1\.5-rc\.1`/m)
+  assert.match(skill, /legC `0\.1\.5-rc\.2 -> 0\.1\.6-alpha\.2`/)
+  assert.doesNotMatch(skill, /a hop after 0\.1\.5-rc\.1 \(a new corridor is a new package\)/,
+    'the superseded "a hop is a new package" rule must not survive in the routing hint')
   // Both legs' frontmatter routing hints survive in the body.
   assert.match(skill, /Routing hints carried over from the two legs' frontmatter/)
   assert.match(skill, /must support @deepseek-ai\/dsh 0\.1\.5-alpha\.1/)
@@ -117,4 +129,33 @@ test('the skill directory, the frontmatter name and the bundle default agree', (
   const entry = readFileSync(path.join(root, 'index.mjs'), 'utf8')
   assert.match(entry, /default\('plugin-upgrade'\)/, 'the Config default must name the packaged skill')
   assert.match(entry, /export const name = 'dsh-plugin-upgrade'/)
+})
+
+// ---- corridor 2: `legC`. Same evidence-binding rule, its own catalog. ----
+
+test('the legC card index names exactly the legC catalog seams, in catalog order', () => {
+  assert.deepEqual(SEAM_IDS_C, ['E1', 'E2', 'E3', 'E4', 'E5'])
+  const rowsC = [...sectionC.matchAll(/^\|\s*`([E]\d{1,2})`\s*\|\s*\*{0,2}(error|warn|info)\*{0,2}\s*\|/gmu)]
+    .map(m => ({ id: m[1], severity: m[2] }))
+  assert.deepEqual(rowsC.map(r => r.id), SEAM_IDS_C)
+  assert.deepEqual(
+    rowsC.map(r => `${r.id}:${r.severity}`),
+    SEAMS_C.map(s => `${s.id}:${s.severity}`),
+  )
+})
+
+test('the legC card mints no id outside its own catalog and declares no card-only seam', () => {
+  const mentioned = new Set([...cardC.matchAll(/`(E\d{1,2})`/g)].map(m => m[1]))
+  for (const id of mentioned) {
+    assert.ok(SEAM_IDS_C.includes(id), `the legC card names ${id}, which is not in the legC catalog`)
+  }
+  for (const id of SEAM_IDS_C) assert.ok(mentioned.has(id), `the legC card never names ${id}`)
+  assert.deepEqual(CARD_ONLY_C, [], 'every legC seam has a detector')
+  assert.match(cardC, /CARD_ONLY = \[\]/)
+})
+
+test('the two corridors keep separate catalogs and never merge their seam arrays', () => {
+  const overlap = SEAM_IDS.filter(id => SEAM_IDS_C.includes(id))
+  assert.deepEqual(overlap, [], 'the legAB and legC catalogs must not share seam ids')
+  assert.notDeepEqual(SEAM_IDS, SEAM_IDS_C)
 })

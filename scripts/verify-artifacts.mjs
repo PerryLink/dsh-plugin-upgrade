@@ -61,10 +61,11 @@ try {
     failures.push(`packaged entry failed to import: ${detail.slice(0, 200)}`)
   }
 
-  // The packaged SKILL.md must keep its merged-corridor frontmatter.
+  // The packaged SKILL.md must keep its corridor-index frontmatter (both corridors).
   const skill = readFileSync(join(pkgRoot, 'skills/plugin-upgrade/SKILL.md'), 'utf8')
   if (!/^name:\s*plugin-upgrade\s*$/m.test(skill)) failures.push('packaged SKILL.md lost its frontmatter name')
-  if (!/^  corridor:\s*"0\.1\.3-alpha\.1 -> 0\.1\.5-rc\.1"\s*$/m.test(skill)) failures.push('packaged SKILL.md lost its merged corridor frontmatter')
+  if (!/^  corridors:\s*"legAB `0\.1\.3-alpha\.1 -> 0\.1\.5-rc\.1`/m.test(skill)) failures.push('packaged SKILL.md lost its legAB corridor frontmatter')
+  if (!/legC `0\.1\.5-rc\.2 -> 0\.1\.6-alpha\.2`/m.test(skill)) failures.push('packaged SKILL.md lost its legC corridor frontmatter')
 
   // cordis.patch.yml must stay a top-level YAML ARRAY of loader patch entries:
   // a mapping (`insert:` at column 0) mounts nothing and dsh reports

@@ -77,14 +77,15 @@
     "compatibility": {
       "dshVersions": [
         "0.1.2-rc.1",
-        "0.1.5-rc.2"
+        "0.1.5-rc.2",
+        "0.1.6-alpha.2"
       ]
     },
     "capability": {
       "id": "plugin-upgrade",
       "kind": "service",
       "invocation": "ctx.skills.get('plugin-upgrade') resolves a complete SkillDefinition",
-      "expected": "the session skill catalog lists plugin-upgrade and the loaded body carries the merged 0.1.3-alpha.1 -> 0.1.5-rc.1 corridor card with a directory resourceBase"
+      "expected": "the session skill catalog lists plugin-upgrade and the loaded body carries the corridor index (lib/route.mjs) with both closed corridor cards - legAB 0.1.3-alpha.1 -> 0.1.5-rc.1 and legC 0.1.5-rc.2 -> 0.1.6-alpha.2 - over a directory resourceBase"
     },
     "evidence": {
       "install": null,
