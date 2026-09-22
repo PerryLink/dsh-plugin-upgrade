@@ -3,6 +3,7 @@
 # ⬆️ dsh-plugin-upgrade
 - **1024 स्टोर चैनल**: एक बार `npm i -g dsh1024` चलाएँ, फिर `dsh1024 plugin --profile web add dsh-plugin-upgrade` (यह [deepseek1024.com](https://deepseek1024.com) की इंस्टॉल रैंकिंग में गिना जाता है)।
 [![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-upgrade)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-plugin-upgrade?metric=downloads&lang=hi)](https://dshfind.com/hi/plugins/PerryLink/dsh-plugin-upgrade?ref=badge)
 
 **DeepSeek Harness के लिए प्लगइन अपग्रेड स्किल — एक पैकेज, एक कॉरिडोर सूचकांक, दो बंद कॉरिडोर: `0.1.3-alpha.1` → `0.1.5-rc.1` (`legAB`) और `0.1.5-rc.2` → `0.1.6-alpha.2` (`legC`)।**
 
