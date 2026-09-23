@@ -5,10 +5,20 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.2] - 2026-09-23
+
+### Added
+
+- A checkout ruler: `checkout/host-surface.mts`, `tsconfig.checkout.json` and `typecheck:checkout` (`tsc -p tsconfig.checkout.json --noEmit`). The probe mirrors the real call sites — the Schemastery `Config` from `index.mjs`, the exact `SkillRegistration` object `apply()` hands `ctx.skills.register()`, and a real `Context` + `SkillRegistry` + `ctx.effect()` as in `test/plugin.test.mjs` — and the three `@deepseek-ai/*` specifiers this package really imports (`index.mjs` → `schemastery`; `test/plugin.test.mjs` → `cordis`, `dsh-skill`) are aliased to the local harness checkout's built types. The `@deepseek-ai/*` names under `fixtures/` are synthetic scanner inputs, including packages that no longer exist, so they are deliberately not mapped. It is never executed; it exists so a host-line shape change fails against the checkout instead of at a user's first mount.
+
+### Changed
+
+- The published line this package checks against moves to `0.1.7-alpha.2`: the `@deepseek-ai/dsh-skill` dev/test pin moves from `0.1.5-rc.2`, `@deepseek-ai/cordis` to `^4.0.4` and `@deepseek-ai/schemastery` to `^3.18.4`; the `0.1.7` tuple gains its own clause on the `@deepseek-ai/dsh-skill` peer band; `dshWorkshop.compatibility.dshVersions` records `0.1.7-alpha.2`; and the `compat.yml` probe matrix now covers `0.1.2-rc.1`, `0.1.5-rc.2`, `0.1.6-alpha.2` and `0.1.7-alpha.2`. This is a correctness fix, not a tightening: under npm semver's prerelease rule a comparator set whose only prerelease comparators sit on earlier `[major, minor, patch]` tuples cannot admit a later alpha, so the three-clause band could not admit the very host this release targets. The three existing clauses are unchanged, in place and in order; `P1` still forbids collapsing them. The lockfile now resolves exactly one `cordis` and one `schemastery` copy, so the two-copy `Volatile` typing trap cannot occur here.
+- The five-language READMEs name the `0.1.7-alpha.2` line and quote the four-clause band; `AGENTS.md`, `THIRD_PARTY_NOTICES.md` and the checks block are brought in line with the declared state (the prose commit `070309e`), including the `AGENTS.md` peer-segment note that still said the package keeps "both segments" and the dev/test-pin sentence that still said `0.1.5-rc.2`.
 
 ### Fixed
 
+- `pnpm run check` (`tsc -p tsconfig.check.json`) had been red since the corridor index landed: 24 `TS7006` (implicitly-`any` parameter) errors, all of them in two committed checked-JS source files that no build step generates (`lib/route.mjs` 8, `lib/scan-0.1.6.mjs` 16). The same 24 errors reddened `pnpm run typecheck:ci`, whose config includes the same file set. The defects were genuine rather than checker noise — those two files were the only checked-JS sources in the repo whose functions carried no JSDoc. Every annotation was derived from the function body and its call sites and mirrors the sibling catalog `lib/scan.mjs`, which already passes the same checker; the change is comment-only (all 58 added lines sit inside JSDoc blocks), `allowJs`, `checkJs` and `noImplicitAny: true` are untouched, no file was dropped from `include`, and no `@ts-nocheck` or `@ts-ignore` was added. With the shipping surface type-checking, the checkout ruler compiles what actually ships (`index.mjs`, `lib/**`, `scripts/**`) instead of only the probe, which is what the ruler was for.
 - **The documentation still described the retired "one package per hop" model.** `2.0.0`
   introduced the corridor index (`lib/route.mjs`) and folded the `0.1.5-rc.2` →
   `0.1.6-alpha.2` corridor in as `legC`, but the surrounding prose had not caught up: the
