@@ -1,0 +1,29 @@
+{
+  // Checkout ruler. Every `@deepseek-ai/*` specifier this package imports is
+  // aliased to the local harness checkout's built types (four levels up:
+  // D:\Projects\dsh\plugins\<repo> -> D:\deepseek-harness), so the host-facing
+  // surface is compiled against the HOST LINE instead of the published copies in
+  // node_modules. Derivation: `grep -n "@deepseek-ai/"` over index.mjs, lib/,
+  // scripts/ and test/ yields exactly three real import statements —
+  //   index.mjs            -> @deepseek-ai/schemastery
+  //   test/plugin.test.mjs -> @deepseek-ai/cordis, @deepseek-ai/dsh-skill
+  // (the `@deepseek-ai/*` names under fixtures/ are synthetic scanner inputs,
+  // including packages that no longer exist, so they are deliberately NOT
+  // mapped and NOT part of this program).
+  //
+  // The program is `checkout/host-surface.mts` rather than the repo's own
+  // `lib/**`: `check`/`typecheck:ci` already fail on a PRE-EXISTING TS7006
+  // JSDoc-implicit-any defect in the committed lib/*.mjs sources (24 errors,
+  // unrelated to the host line), and a ruler that inherits that program could
+  // never report a host verdict. Nothing is loosened here relative to
+  // tsconfig.check.json — the same options are inherited unchanged.
+  "extends": "./tsconfig.check.json",
+  "compilerOptions": {
+    "paths": {
+      "@deepseek-ai/cordis": ["../../../../deepseek-harness/vendor/cordis/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-skill": ["../../../../deepseek-harness/packages/skill/skill/lib/types/index.d.ts"],
+      "@deepseek-ai/schemastery": ["../../../../deepseek-harness/vendor/schemastery/lib/types/index.d.ts"]
+    }
+  },
+  "include": ["checkout/host-surface.mts"]
+}

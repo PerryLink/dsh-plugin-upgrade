@@ -31,7 +31,7 @@
 
 | Superficie | Estado |
 |---|---|
-| Harness | DeepSeek Harness `0.1.5-rc.1` (tag `dsh-v0.1.7-alpha.1` = `183f08e9c6dd`; relevo tramo A→B `dsh-v0.1.7-alpha.1` = `5dda764ed3aa`; inicio del corredor `0.1.3-alpha.1`) y, para `legC`, DeepSeek Harness `0.1.6-alpha.2` (tag `dsh-v0.1.7-alpha.1`). Banda de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
+| Harness | DeepSeek Harness `0.1.5-rc.1` (tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`; relevo tramo A→B `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`; inicio del corredor `0.1.3-alpha.1`) y, para `legC`, DeepSeek Harness `0.1.6-alpha.2` (tag `dsh-v0.1.7-alpha.2`). Banda de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | Plataformas | Donde corra Node; el escáner solo usa el sistema de archivos y es neutral respecto a la plataforma |
 | Modelo | Modelos solo de texto totalmente soportados; la habilidad es un Markdown, sin requisitos de herramientas ni visión |
@@ -168,7 +168,7 @@ Se aplica la misma disciplina que en `legAB`: un escaneo limpio es necesario, no
 
 ## Lo que esto no cubre
 
-- **Un salto más allá de todos los corredores de aquí.** `legAB` termina en `0.1.5-rc.1` por construcción: el salto del harness `0.1.5-rc.1` → `0.1.5-rc.2` no añadió ninguna costura de cara a los plugins (el pin de dev/test y la sonda de CI de este propio paquete corren sobre la línea `0.1.5-rc.2`, de modo que el catálogo de `legAB` queda verificado contra esos tipos publicados), y `legC` cubre `0.1.5-rc.2` → `0.1.6-alpha.2`. Un salto posterior que añada una costura **no** está cubierto: un corredor está cerrado, y ensanchar una tarjeta es peor que añadir una. Ese salto recibe una tarjeta nueva y una fila nueva en el índice — no un paquete nuevo.
+- **Un salto más allá de todos los corredores de aquí.** `legAB` termina en `0.1.5-rc.1` por construcción: el salto del harness `0.1.5-rc.1` → `0.1.5-rc.2` no añadió ninguna costura de cara a los plugins (el pin de dev/test de este propio paquete corre ahora sobre la línea `0.1.7-alpha.2`, de modo que el catálogo queda verificado contra esos tipos publicados; la sonda del workflow compat sigue anclada en `0.1.6-alpha.2`), y `legC` cubre `0.1.5-rc.2` → `0.1.6-alpha.2`. Un salto posterior que añada una costura **no** está cubierto: un corredor está cerrado, y ensanchar una tarjeta es peor que añadir una. Ese salto recibe una tarjeta nueva y una fila nueva en el índice — no un paquete nuevo.
 - **El salto `0.1.1` → `0.1.2`.** Usa la habilidad de convergencia de la comunidad.
 - **Repetir entre tramos.** El tramo A posee las costuras del formato de sesión (`assistant/message.stream`, `SessionHandleReadResult`, `EpochHeader.system`, `ctx.agent`, `Inbox`, `SystemPrompt.persona`, la generación de log V3) y el tramo B no las repite: todo el diff de `packages/core/session/src` en el rango del tramo B son dos literales de tipo de evento añadidos y una línea de comentario. La sección de tarjeta de cada tramo conserva su propia declaración de alcance.
 - **La ruta de actualización del usuario de DSH.** Este paquete actualiza *código fuente de plugins*, no la instalación del harness de un usuario.

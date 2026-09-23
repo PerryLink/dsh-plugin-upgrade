@@ -31,7 +31,7 @@
 
 | 面 | 状态 |
 |---|---|
-| 宿主 | DeepSeek Harness `0.1.5-rc.1`（tag `dsh-v0.1.7-alpha.1` = `183f08e9c6dd`；leg A→B 交接点 `dsh-v0.1.7-alpha.1` = `5dda764ed3aa`；走廊起点 `0.1.3-alpha.1`），以及 `legC` 对应的 DeepSeek Harness `0.1.6-alpha.2`（tag `dsh-v0.1.7-alpha.1`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0`、`@deepseek-ai/cordis ^4.0.2`、`@deepseek-ai/schemastery ^3.18.2`。 |
+| 宿主 | DeepSeek Harness `0.1.5-rc.1`（tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`；leg A→B 交接点 `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`；走廊起点 `0.1.3-alpha.1`），以及 `legC` 对应的 DeepSeek Harness `0.1.6-alpha.2`（tag `dsh-v0.1.7-alpha.2`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`、`@deepseek-ai/cordis ^4.0.2`、`@deepseek-ai/schemastery ^3.18.2`。 |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | 平台 | 有 Node 即可；扫描器只读文件系统，与平台无关 |
 | 模型 | 纯文本模型完全支持；技能就是一段 Markdown，不要求工具或视觉能力 |
@@ -168,7 +168,7 @@ dsh-plugin-upgrade-scan [--repo <path>] [--span legAB|legC|<span>] [--json <out.
 
 ## 本包不覆盖什么
 
-- **越过本包任何一条走廊的一跳。** `legAB` 按构造终止于 `0.1.5-rc.1`：harness 从 `0.1.5-rc.1` 到 `0.1.5-rc.2` 的一跳没有新增任何面向插件的接缝（本包自己的 dev/test 钉版与 CI 探针跑在 `0.1.5-rc.2` 线上，因此 `legAB` 目录是对着那些已发布类型校验的），而 `legC` 覆盖 `0.1.5-rc.2` → `0.1.6-alpha.2`。之后任何新增接缝的一跳都**不**被覆盖：走廊是闭合的，加宽一张卡比新增一张卡更糟。它会得到一张新卡和一行新索引——而不是一个新包。
+- **越过本包任何一条走廊的一跳。** `legAB` 按构造终止于 `0.1.5-rc.1`：harness 从 `0.1.5-rc.1` 到 `0.1.5-rc.2` 的一跳没有新增任何面向插件的接缝（本包自己的 dev/test 钉版现已跑到 `0.1.7-alpha.2` 线，因此目录是对着那些已发布类型校验的；compat workflow 的探针仍锚定 `0.1.6-alpha.2`），而 `legC` 覆盖 `0.1.5-rc.2` → `0.1.6-alpha.2`。之后任何新增接缝的一跳都**不**被覆盖：走廊是闭合的，加宽一张卡比新增一张卡更糟。它会得到一张新卡和一行新索引——而不是一个新包。
 - **`0.1.1` → `0.1.2` 这一跳。** 请使用社区收敛技能。
 - **跨 leg 重述。** leg A 拥有会话格式接缝（`assistant/message.stream`、`SessionHandleReadResult`、`EpochHeader.system`、`ctx.agent`、`Inbox`、`SystemPrompt.persona`、V3 日志 generation），leg B 不重述它们——leg B 区间内 `packages/core/session/src` 的全部 diff 只有两个新增的事件类型字面量与一行注释。每条 leg 的卡片章节保留自己的范围声明。
 - **DSH 面向用户的升级路径。** 本包升级的是**插件源码**，不是用户的 harness 安装。

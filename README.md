@@ -32,7 +32,7 @@
 
 | Surface | Status |
 |---|---|
-| Harness | DeepSeek Harness `0.1.5-rc.1` (tag `dsh-v0.1.7-alpha.1` = `183f08e9c6dd`; leg A→B handoff `dsh-v0.1.7-alpha.1` = `5dda764ed3aa`; corridor start `0.1.3-alpha.1`) and, for `legC`, DeepSeek Harness `0.1.6-alpha.2` (tag `dsh-v0.1.7-alpha.1`). Peer band `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
+| Harness | DeepSeek Harness `0.1.5-rc.1` (tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`; leg A→B handoff `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`; corridor start `0.1.3-alpha.1`) and, for `legC`, DeepSeek Harness `0.1.6-alpha.2` (tag `dsh-v0.1.7-alpha.2`). Peer band `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | Platforms | Anywhere Node runs; the scanner is filesystem-only and platform-neutral |
 | Model | Text-only models fully supported; the skill is a Markdown body, no tool or vision requirement |
@@ -168,7 +168,7 @@ The same discipline applies as for `legAB`: a clean scan is necessary, not suffi
 
 ## What this does not cover
 
-- **A hop past every corridor here.** `legAB` ends at `0.1.5-rc.1` by construction: the harness hop `0.1.5-rc.1` → `0.1.5-rc.2` added no plugin-facing seam (this package's own dev/test pin and CI probe run on the `0.1.5-rc.2` line, so the `legAB` catalog is verified against those published types), and `legC` covers `0.1.5-rc.2` → `0.1.6-alpha.2`. A later hop that adds a seam is **not** covered: a corridor is closed, and widening a card is worse than adding one. It gets a new card and a new index row — not a new package.
+- **A hop past every corridor here.** `legAB` ends at `0.1.5-rc.1` by construction: the harness hop `0.1.5-rc.1` → `0.1.5-rc.2` added no plugin-facing seam (this package's own dev/test pin now runs on the `0.1.7-alpha.2` line, so the catalog is verified against those published types; the compat workflow's probe still anchors `0.1.6-alpha.2`), and `legC` covers `0.1.5-rc.2` → `0.1.6-alpha.2`. A later hop that adds a seam is **not** covered: a corridor is closed, and widening a card is worse than adding one. It gets a new card and a new index row — not a new package.
 - **The `0.1.1` → `0.1.2` hop.** Use the community convergence skill.
 - **Restating across legs.** Leg A owns the session-format seams (`assistant/message.stream`, `SessionHandleReadResult`, `EpochHeader.system`, `ctx.agent`, `Inbox`, `SystemPrompt.persona`, the V3 log generation) and leg B does not restate them — the whole `packages/core/session/src` diff in leg B's range is two added event-type literals and one comment line. Each leg's card section keeps its own scope statement.
 - **The DSH user-facing upgrade path.** This package upgrades *plugin source code*, not a user's harness installation.
