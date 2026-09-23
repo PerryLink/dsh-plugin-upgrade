@@ -182,7 +182,7 @@ after every harness release.
 
 ## Release
 
-Version is currently `2.0.1` (`2.0.0` was the package that returned as the corridor index;
+Version is currently `2.0.2` (`2.0.0` was the package that returned as the corridor index;
 `2.0.1` re-published the corrected npm description). The retired packages' histories live in
 `CHANGELOG.md` under `[Unreleased]` and below. For a new version: bump
 `package.json#version`, stamp the CHANGELOG `[Unreleased]` section into `## [<x.y.z>] - <UTC
