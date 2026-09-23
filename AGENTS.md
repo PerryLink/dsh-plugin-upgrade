@@ -44,7 +44,9 @@ Consequences accepted by this repository:
   tag ranges it was measured on — leg A `dsh-v0.1.5-alpha.1` (2026-09-09 wave over 40 plugin
   repos) and leg B `dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1` (2026-09-10). The harness hop
   `0.1.5-rc.1 → 0.1.5-rc.2` added no plugin-facing seam, which is why that span ends at rc.1
-  while the dev/test pin and the CI probe run on `0.1.5-rc.2`. The `legC` catalog (`E1`–`E5`)
+  while the dev/test pin runs on the `0.1.7-alpha.2` line and the compat probe matrix covers
+  every published line the peer band admits (`0.1.2-rc.1`, `0.1.5-rc.2`, `0.1.6-alpha.2`,
+  `0.1.7-alpha.2`). The `legC` catalog (`E1`–`E5`)
   is evidence-bound to `dsh-v0.1.6-alpha.2` (2026-09-19, §11).
 - **Leg A owns the session-format seams** (`assistant/message.stream`, `S3`;
   `SessionHandleReadResult`, `S8`; `EpochHeader.system`, `S2`; `ctx.agent`, `S5`; `Inbox`,
@@ -60,7 +62,9 @@ Consequences accepted by this repository:
 - The peer band is **unchanged** by both legs. `>=0.1.2-rc.1 <0.2.0` alone rejects
   `0.1.5-rc.1` under npm semver's prerelease-tuple rule (measured `false` on semver 7.8.5);
   the `|| >=0.1.5-alpha.1 <0.2.0` segment is what admits it. `P1` forbids dropping it, and
-  this package's own `peerDependencies` keeps both segments.
+  this package's own `peerDependencies` keeps all four segments
+  (`>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0`),
+  each newly published prerelease tuple having gained its own clause under the same rule.
 - The `C1` ruling (the bare `conversation` slot removal is a **public extension-point
   break**, kept at `error`, with a rewrite recipe and a real-browser exit criterion) is
   recorded in card §2 §3.3. Do not downgrade it to an advisory without new upstream
@@ -162,6 +166,9 @@ LICENSE               Apache-2.0
 ```sh
 npm install                        # or: pnpm install (pnpm-lock.yaml is committed)
 npm test                           # node --test: scanner (both legs) + card parity + real-registry mount
+npm run check                      # tsc -p tsconfig.check.json: the checked-JS shipping surface (index.mjs, lib/**, scripts/**)
+npm run typecheck:ci               # tsc -p tsconfig.check.ci.json: same program, published host types (empty paths)
+npm run typecheck:checkout         # tsc -p tsconfig.checkout.json: shipping surface + checkout/host-surface.mts, against the local harness checkout's built types
 npm run verify:self-contained      # every import resolves inside the package
 npm run verify:artifacts           # tarball contents + entry import + dev-only content excluded
 npm run check:readmes              # five-language README consistency
