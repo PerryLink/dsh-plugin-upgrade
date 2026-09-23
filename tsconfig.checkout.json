@@ -11,11 +11,16 @@
   // including packages that no longer exist, so they are deliberately NOT
   // mapped and NOT part of this program).
   //
-  // The program is `checkout/host-surface.mts` rather than the repo's own
-  // `lib/**`: `check`/`typecheck:ci` already fail on a PRE-EXISTING TS7006
+  // The program is the real shipping surface (`index.mjs`, `lib/**`, `scripts/**`)
+  // plus `checkout/host-surface.mts`. The probe was originally the ONLY program
+  // here: `check`/`typecheck:ci` failed on a pre-existing TS7006
   // JSDoc-implicit-any defect in the committed lib/*.mjs sources (24 errors,
-  // unrelated to the host line), and a ruler that inherits that program could
-  // never report a host verdict. Nothing is loosened here relative to
+  // unrelated to the host line), so a ruler inheriting that program could never
+  // report a host verdict. That defect was fixed on 2026-09-23 by annotating the
+  // checked-JS surfaces, so the ruler now compiles what actually ships. The probe
+  // is kept in the program rather than dropped: it mirrors the real call sites
+  // (`ctx.skills.register()`, the `SkillRegistration` shape) and so keeps a
+  // second, independent assertion alive. Nothing is loosened here relative to
   // tsconfig.check.json — the same options are inherited unchanged.
   "extends": "./tsconfig.check.json",
   "compilerOptions": {
@@ -25,5 +30,5 @@
       "@deepseek-ai/schemastery": ["../../../../deepseek-harness/vendor/schemastery/lib/types/index.d.ts"]
     }
   },
-  "include": ["checkout/host-surface.mts"]
+  "include": ["index.mjs", "lib/**/*.mjs", "scripts/**/*.mjs", "checkout/host-surface.mts"]
 }
