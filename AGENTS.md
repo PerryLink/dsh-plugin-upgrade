@@ -44,9 +44,9 @@ Consequences accepted by this repository:
   tag ranges it was measured on — leg A `dsh-v0.1.5-alpha.1` (2026-09-09 wave over 40 plugin
   repos) and leg B `dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1` (2026-09-10). The harness hop
   `0.1.5-rc.1 → 0.1.5-rc.2` added no plugin-facing seam, which is why that span ends at rc.1
-  while the dev/test pin runs on the `0.1.7-rc.1` line and the compat probe matrix covers
+  while the dev/test pin runs on the `0.1.7-rc.2` line and the compat probe matrix covers
   every published line the peer band admits (`0.1.2-rc.1`, `0.1.5-rc.2`, `0.1.6-alpha.2`,
-  `0.1.7-alpha.2`, `0.1.7-rc.1`). The `legC` catalog (`E1`–`E5`)
+  `0.1.7-alpha.2`, `0.1.7-rc.2`). The `legC` catalog (`E1`–`E5`)
   is evidence-bound to `dsh-v0.1.6-alpha.2` (2026-09-19, §11).
 - **Leg A owns the session-format seams** (`assistant/message.stream`, `S3`;
   `SessionHandleReadResult`, `S8`; `EpochHeader.system`, `S2`; `ctx.agent`, `S5`; `Inbox`,

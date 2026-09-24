@@ -12,7 +12,7 @@ of them is copied into the published artifact.
 | `@deepseek-ai/cordis` | `^4.0.2` (peer) | Plugin runtime (Context, effect, inject) | Apache-2.0 |
 | `@deepseek-ai/dsh-skill` | `>=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0` (peer) | `skills` service and `SkillRegistry` used by the tests | Apache-2.0 |
 | `@deepseek-ai/schemastery` | `^3.18.2` (peer) | `Config` schema | Apache-2.0 |
-| `@deepseek-ai/dsh-skill` | `0.1.7-rc.1` (dev) | Real-registry mount test against the published `0.1.7-rc.1` line (the newest published types verify the same merged seam catalog) | Apache-2.0 |
+| `@deepseek-ai/dsh-skill` | `0.1.7-rc.2` (dev) | Real-registry mount test against the published `0.1.7-rc.2` line (the newest published types verify the same merged seam catalog) | Apache-2.0 |
 
 The scanner (`lib/scan.mjs`) and the CLI import only Node.js built-ins (`node:fs`,
 `node:path`) and therefore add no transitive install-time dependency of their own.
