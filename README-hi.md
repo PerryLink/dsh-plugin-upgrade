@@ -9,7 +9,7 @@
 
 *स्कैनर स्वयं मार्ग चुनता है: यह लक्ष्य रिपॉज़िटरी का घोषित dsh बैंड पढ़ता है (या `--span` लेता है), और फिर उसी कॉरिडोर का अपना साक्ष्य-बद्ध कैटलॉग लागू करता है — `legAB` की 20 सीमें (पैर A `0.1.3-alpha.1` → `0.1.5-alpha.1` और पैर B `0.1.5-alpha.1` → `0.1.5-rc.1`) या `legC` की 5 सीमें (`E1`–`E5`)। एक ही प्रवेश बिंदु, ताकि चुपचाप माउंट होना बंद कर चुका क्लाइंट आधा हिस्सा कभी «typecheck हरा है» न समझा जाए।*
 
-> **आधिकारिक रिपॉज़िटरी।** यह dsh-plugin-upgrade की एकमात्र आधिकारिक रिपॉज़िटरी है, जिसे PerryLink संभालता है। यह दोनों सेवानिवृत्त संस्करण-लॉक्ड पैकेजों `dsh-plugin-upgrade` (पैर A) और `dsh-plugin-upgrade-rc1` (पैर B) का स्थान लेती है, और `0.1.5-rc.2` → `0.1.6-alpha.2` कॉरिडोर (पैर C) इसी पैकेज में समाहित किया गया — `dsh-plugin-upgrade-016` नाम रजिस्ट्री तक कभी नहीं पहुँचा। अन्य खातों की समान-नाम वाली रिपॉज़िटरियाँ इससे संबद्ध नहीं हैं।
+> **आधिकारिक रिपॉज़िटरी।** यह dsh-plugin-upgrade की एकमात्र आधिकारिक रिपॉज़िटरी है, जिसे PerryLink संभालता है। यह दोनों सेवानिवृत्त संस्करण-लॉक्ड पैकेजों `dsh-plugin-upgrade` (पैर A) और `dsh-plugin-upgrade-rc1` (पैर B) का स्थान लेती है, और `0.1.5-rc.2` → `0.1.6-alpha.2` कॉरिडोर (पैर C) इसी पैकेज में समाहित किया गया — `dsh-plugin-upgrade-016` नाम रजिस्ट्री तक कभी नहीं पहुँचा। अन्य खातों की समान-नाम वाली रिपॉज़िटरियाँ इससे संबद्ध नहीं हैं। **`dsh-plugin-upgrade-015` और `dsh-plugin-upgrade-016` दोनों 2026-10-05 को सेवानिवृत्त कर दिए गए हैं और अब इन्हें कोई सुधार, रिलीज़ या सुरक्षा अद्यतन नहीं मिलेगा**; सभी प्लगइन अपग्रेड अब इसी पैकेज में जारी रहते हैं, और कॉरिडोर वही तय करता है जो लक्ष्य रिपॉज़िटरी स्वयं घोषित करती है — इसलिए हर होस्ट छलांग के लिए अलग संस्करण-लॉक्ड पैकेज की आवश्यकता नहीं है।
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
@@ -245,7 +245,7 @@ This project is one of the **45 DeepSeek Harness plugins** maintained by [PerryL
 | **[dsh-plugin-guide](https://github.com/PerryLink/dsh-plugin-guide)** | Plugin-development knowledge base as an on-demand agent skill | |
 | **[dsh-plugin-kit](https://github.com/PerryLink/dsh-plugin-kit)** | Shared zero-runtime-dependency toolkit for the PerryLink DSH plugins | |
 | **[dsh-plugin-upgrade](https://github.com/PerryLink/dsh-plugin-upgrade)** | One-package, one-corridor-index plugin upgrade skill: routes a repository to the matching closed corridor card | |
-| **[dsh-plugin-upgrade-015](https://github.com/PerryLink/dsh-plugin-upgrade-015)** | Merged `0.1.3-alpha.1` → `0.1.5-rc.1` upgrade corridor card plus a zero-dependency seam scanner | |
+| **[dsh-plugin-upgrade-015](https://github.com/PerryLink/dsh-plugin-upgrade-015)** | Merged `0.1.3-alpha.1` → `0.1.5-rc.1` upgrade corridor card plus a zero-dependency seam scanner — **2026-10-05 को सेवानिवृत्त** — कॉरिडोर अब `dsh-plugin-upgrade` द्वारा | |
 | **[dsh-reach](https://github.com/PerryLink/dsh-reach)** | Multi-channel approval/question bridge: WeChat/Telegram/Feishu, session console | |
 | **[dsh-research-report](https://github.com/PerryLink/dsh-research-report)** | Verifiable research-report engine: content-addressed evidence ledger and sealed versions | |
 | **[dsh-score](https://github.com/PerryLink/dsh-score)** | Multi-dimensional quality scoring for DeepSeek Harness plugins. | |

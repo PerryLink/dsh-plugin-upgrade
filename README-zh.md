@@ -9,7 +9,7 @@
 
 *扫描器自行路由：它读取目标仓库声明的 dsh 区间（或接受 `--span`），然后套用那条走廊自己的、证据绑定的目录——`legAB` 的 20 条接缝（leg A `0.1.3-alpha.1` → `0.1.5-alpha.1` 加 leg B `0.1.5-alpha.1` → `0.1.5-rc.1`）或 `legC` 的 5 条接缝（`E1`–`E5`）。只有一个入口，因此「静默停止挂载的 client 半边」永远不会被误当成「typecheck 绿了」。*
 
-> **官方仓库。** 这是 dsh-plugin-upgrade 唯一的官方仓库，由 PerryLink 维护。它取代两个已退役的版本锁定包 `dsh-plugin-upgrade`（leg A）与 `dsh-plugin-upgrade-rc1`（leg B），并且 `0.1.5-rc.2` → `0.1.6-alpha.2` 走廊（leg C）就是并入本包的——`dsh-plugin-upgrade-016` 这个名字从未上过 registry。其他账号下的同名仓库与本项目无关。
+> **官方仓库。** 这是 dsh-plugin-upgrade 唯一的官方仓库，由 PerryLink 维护。它取代两个已退役的版本锁定包 `dsh-plugin-upgrade`（leg A）与 `dsh-plugin-upgrade-rc1`（leg B），并且 `0.1.5-rc.2` → `0.1.6-alpha.2` 走廊（leg C）就是并入本包的——`dsh-plugin-upgrade-016` 这个名字从未上过 registry。其他账号下的同名仓库与本项目无关。 **`dsh-plugin-upgrade-015` 与 `dsh-plugin-upgrade-016` 均已于 2026-10-05 退役，不再接受修复、发版或安全更新**；所有插件升级一律在本包继续，走廊由目标仓库自己声明的版本决定，因此不再需要「每个宿主跳跃一个版本锁定包」。
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
@@ -245,7 +245,7 @@ This project is one of the **45 DeepSeek Harness plugins** maintained by [PerryL
 | **[dsh-plugin-guide](https://github.com/PerryLink/dsh-plugin-guide)** | Plugin-development knowledge base as an on-demand agent skill | |
 | **[dsh-plugin-kit](https://github.com/PerryLink/dsh-plugin-kit)** | Shared zero-runtime-dependency toolkit for the PerryLink DSH plugins | |
 | **[dsh-plugin-upgrade](https://github.com/PerryLink/dsh-plugin-upgrade)** | One-package, one-corridor-index plugin upgrade skill: routes a repository to the matching closed corridor card | |
-| **[dsh-plugin-upgrade-015](https://github.com/PerryLink/dsh-plugin-upgrade-015)** | Merged `0.1.3-alpha.1` → `0.1.5-rc.1` upgrade corridor card plus a zero-dependency seam scanner | |
+| **[dsh-plugin-upgrade-015](https://github.com/PerryLink/dsh-plugin-upgrade-015)** | Merged `0.1.3-alpha.1` → `0.1.5-rc.1` upgrade corridor card plus a zero-dependency seam scanner — **2026-10-05 已退役** —— 走廊由 `dsh-plugin-upgrade` 承担 | |
 | **[dsh-reach](https://github.com/PerryLink/dsh-reach)** | Multi-channel approval/question bridge: WeChat/Telegram/Feishu, session console | |
 | **[dsh-research-report](https://github.com/PerryLink/dsh-research-report)** | Verifiable research-report engine: content-addressed evidence ledger and sealed versions | |
 | **[dsh-score](https://github.com/PerryLink/dsh-score)** | Multi-dimensional quality scoring for DeepSeek Harness plugins. | |

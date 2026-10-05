@@ -10,7 +10,7 @@
 
 *The scanner routes itself: it reads the target repository's declared dsh band (or takes `--span`), then applies that corridor's own evidence-bound catalog — `legAB`'s 20 seams (leg A `0.1.3-alpha.1` → `0.1.5-alpha.1` plus leg B `0.1.5-alpha.1` → `0.1.5-rc.1`) or `legC`'s 5 seams (`E1`–`E5`). One entry point, so a client half that stopped mounting silently is never mistaken for "typecheck is green".*
 
-> **Official repository.** This is the only official repository of dsh-plugin-upgrade, maintained by PerryLink. It supersedes the retired version-locked packages `dsh-plugin-upgrade` (leg A) and `dsh-plugin-upgrade-rc1` (leg B), and it is the package the `0.1.5-rc.2` → `0.1.6-alpha.2` corridor (leg C) was folded into — the `dsh-plugin-upgrade-016` name never reached the registry. Same-name repositories under other accounts are not affiliated.
+> **Official repository.** This is the only official repository of dsh-plugin-upgrade, maintained by PerryLink. It supersedes the retired version-locked packages `dsh-plugin-upgrade` (leg A) and `dsh-plugin-upgrade-rc1` (leg B), and it is the package the `0.1.5-rc.2` → `0.1.6-alpha.2` corridor (leg C) was folded into — the `dsh-plugin-upgrade-016` name never reached the registry. **Both `dsh-plugin-upgrade-015` and `dsh-plugin-upgrade-016` are retired as of 2026-10-05 and receive no further fixes, releases or security updates**; every plugin upgrade continues here, and the corridor is chosen by the version the target repository declares for itself, so no version-locked package per host hop is needed. Same-name repositories under other accounts are not affiliated.
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
@@ -246,7 +246,7 @@ This project is one of the **45 DeepSeek Harness plugins** maintained by [PerryL
 | **[dsh-plugin-guide](https://github.com/PerryLink/dsh-plugin-guide)** | Plugin-development knowledge base as an on-demand agent skill | |
 | **[dsh-plugin-kit](https://github.com/PerryLink/dsh-plugin-kit)** | Shared zero-runtime-dependency toolkit for the PerryLink DSH plugins | |
 | **[dsh-plugin-upgrade](https://github.com/PerryLink/dsh-plugin-upgrade)** | One-package, one-corridor-index plugin upgrade skill: routes a repository to the matching closed corridor card | |
-| **[dsh-plugin-upgrade-015](https://github.com/PerryLink/dsh-plugin-upgrade-015)** | Merged `0.1.3-alpha.1` → `0.1.5-rc.1` upgrade corridor card plus a zero-dependency seam scanner | |
+| **[dsh-plugin-upgrade-015](https://github.com/PerryLink/dsh-plugin-upgrade-015)** | Merged `0.1.3-alpha.1` → `0.1.5-rc.1` upgrade corridor card plus a zero-dependency seam scanner — **Retired 2026-10-05** — corridors carried by `dsh-plugin-upgrade` | |
 | **[dsh-reach](https://github.com/PerryLink/dsh-reach)** | Multi-channel approval/question bridge: WeChat/Telegram/Feishu, session console | |
 | **[dsh-research-report](https://github.com/PerryLink/dsh-research-report)** | Verifiable research-report engine: content-addressed evidence ledger and sealed versions | |
 | **[dsh-score](https://github.com/PerryLink/dsh-score)** | Multi-dimensional quality scoring for DeepSeek Harness plugins. | |

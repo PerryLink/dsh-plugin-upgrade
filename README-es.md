@@ -9,7 +9,7 @@
 
 *El escáner se enruta solo: lee la banda dsh declarada por el repositorio destino (o toma `--span`) y luego aplica el catálogo propio de ese corredor, vinculado a evidencia — las 20 costuras de `legAB` (tramo A `0.1.3-alpha.1` → `0.1.5-alpha.1` más tramo B `0.1.5-alpha.1` → `0.1.5-rc.1`) o las 5 costuras de `legC` (`E1`–`E5`). Un solo punto de entrada, para que una mitad de cliente que dejó de montarse en silencio nunca se confunda con «typecheck en verde».*
 
-> **Repositorio oficial.** Este es el único repositorio oficial de dsh-plugin-upgrade, mantenido por PerryLink. Sustituye a los dos paquetes retirados con versión bloqueada `dsh-plugin-upgrade` (tramo A) y `dsh-plugin-upgrade-rc1` (tramo B), y es el paquete en el que se integró el corredor `0.1.5-rc.2` → `0.1.6-alpha.2` (tramo C): el nombre `dsh-plugin-upgrade-016` nunca llegó al registro. Los repositorios con el mismo nombre en otras cuentas no están afiliados.
+> **Repositorio oficial.** Este es el único repositorio oficial de dsh-plugin-upgrade, mantenido por PerryLink. Sustituye a los dos paquetes retirados con versión bloqueada `dsh-plugin-upgrade` (tramo A) y `dsh-plugin-upgrade-rc1` (tramo B), y es el paquete en el que se integró el corredor `0.1.5-rc.2` → `0.1.6-alpha.2` (tramo C): el nombre `dsh-plugin-upgrade-016` nunca llegó al registro. Los repositorios con el mismo nombre en otras cuentas no están afiliados. **Tanto `dsh-plugin-upgrade-015` como `dsh-plugin-upgrade-016` quedaron retirados el 2026-10-05 y no reciben más correcciones, versiones ni actualizaciones de seguridad**; toda actualización de plugins continúa aquí, y el corredor lo decide la versión que el propio repositorio destino declara, por lo que ya no hace falta un paquete con versión bloqueada por cada salto del host.
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DSH plugin](https://img.shields.io/badge/dsh--plugin-✅-green)](https://github.com/topics/dsh-plugin)
@@ -250,7 +250,7 @@ This project is one of the **45 DeepSeek Harness plugins** maintained by [PerryL
 | **[dsh-plugin-guide](https://github.com/PerryLink/dsh-plugin-guide)** | Plugin-development knowledge base as an on-demand agent skill | |
 | **[dsh-plugin-kit](https://github.com/PerryLink/dsh-plugin-kit)** | Shared zero-runtime-dependency toolkit for the PerryLink DSH plugins | |
 | **[dsh-plugin-upgrade](https://github.com/PerryLink/dsh-plugin-upgrade)** | One-package, one-corridor-index plugin upgrade skill: routes a repository to the matching closed corridor card | |
-| **[dsh-plugin-upgrade-015](https://github.com/PerryLink/dsh-plugin-upgrade-015)** | Merged `0.1.3-alpha.1` → `0.1.5-rc.1` upgrade corridor card plus a zero-dependency seam scanner | |
+| **[dsh-plugin-upgrade-015](https://github.com/PerryLink/dsh-plugin-upgrade-015)** | Merged `0.1.3-alpha.1` → `0.1.5-rc.1` upgrade corridor card plus a zero-dependency seam scanner — **Retirado el 2026-10-05** — corredores asumidos por `dsh-plugin-upgrade` | |
 | **[dsh-reach](https://github.com/PerryLink/dsh-reach)** | Multi-channel approval/question bridge: WeChat/Telegram/Feishu, session console | |
 | **[dsh-research-report](https://github.com/PerryLink/dsh-research-report)** | Verifiable research-report engine: content-addressed evidence ledger and sealed versions | |
 | **[dsh-score](https://github.com/PerryLink/dsh-score)** | Multi-dimensional quality scoring for DeepSeek Harness plugins. | |

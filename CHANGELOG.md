@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`dsh-plugin-upgrade-015` and `dsh-plugin-upgrade-016` are retired (owner ruling, 2026-10-05) and will receive no further fixes, releases or security updates.** Every plugin upgrade continues here, which was already the design: `resolveCorridor()` reads the target repository's declared band (`engines.dsh`, the `@deepseek-ai/dsh*` ranges) and routes to the matching corridor, so the corridor follows the version a repository pins for itself rather than a pre-built package per host hop. Nothing changes in this package's behaviour or API; the ruling removes the last two version-locked siblings from the family. Both retired names are `deprecate`d on npm where they exist (`-015` is published at `0.1.1`; `-016` never reached the registry).
+
 ## [2.0.5] - 2026-10-04
 
 
