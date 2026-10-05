@@ -38,7 +38,7 @@
 
 | 面 | 状态 |
 |---|---|
-| 宿主 | DeepSeek Harness `0.1.5-rc.1`（tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`；leg A→B 交接点 `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`；走廊起点 `0.1.3-alpha.1`），以及 `legC` 对应的 DeepSeek Harness `0.1.6-alpha.2`（tag `dsh-v0.1.7-alpha.2`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`、`@deepseek-ai/cordis ^4.0.2`、`@deepseek-ai/schemastery ^3.18.2`。 |
+| 宿主 | DeepSeek Harness `dsh-v0.2.1-alpha.1`（当前线；dev/test 钉号 `0.2.1-alpha.1`）。走廊索引与它所度量的跨度绑定：`legAB` = `0.1.3-alpha.1 → 0.1.5-rc.1`（tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`；leg A→B 交接点 `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`），`legC` = `0.1.5-rc.2 → 0.1.6-alpha.2`（tag `dsh-v0.1.7-alpha.2`）。peer 区间 `@deepseek-ai/dsh-skill >=0.1.6-0 <0.2.0 \|\| >=0.2.0-0 <0.3.0 \|\| >=0.2.1-0 <0.3.0`、`@deepseek-ai/cordis ^4.0.5-alpha.1`、`@deepseek-ai/schemastery ^3.18.5-alpha.1`。 |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | 平台 | 有 Node 即可；扫描器只读文件系统，与平台无关 |
 | 模型 | 纯文本模型完全支持；技能就是一段 Markdown，不要求工具或视觉能力 |

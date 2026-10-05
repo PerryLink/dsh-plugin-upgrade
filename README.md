@@ -40,7 +40,7 @@
 
 | Surface | Status |
 |---|---|
-| Harness | DeepSeek Harness `0.1.5-rc.1` (tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`; leg A→B handoff `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`; corridor start `0.1.3-alpha.1`) and, for `legC`, DeepSeek Harness `0.1.6-alpha.2` (tag `dsh-v0.1.7-alpha.2`). Peer band `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
+| Harness | DeepSeek Harness `dsh-v0.2.1-alpha.1` (current line; dev/test pins `0.2.1-alpha.1`). The corridor index is evidence-bound to the spans it measured: `legAB` = `0.1.3-alpha.1 → 0.1.5-rc.1` (tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`; leg A→B handoff `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`) and `legC` = `0.1.5-rc.2 → 0.1.6-alpha.2` (tag `dsh-v0.1.7-alpha.2`). Peer band `@deepseek-ai/dsh-skill >=0.1.6-0 <0.2.0 \|\| >=0.2.0-0 <0.3.0 \|\| >=0.2.1-0 <0.3.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/schemastery ^3.18.5-alpha.1`. |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | Platforms | Anywhere Node runs; the scanner is filesystem-only and platform-neutral |
 | Model | Text-only models fully supported; the skill is a Markdown body, no tool or vision requirement |

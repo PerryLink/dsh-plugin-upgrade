@@ -38,7 +38,7 @@ Este plugin faz parte da [família de plugins DSH](https://github.com/PerryLink)
 
 | Superfície | Estado |
 |---|---|
-| Harness | DeepSeek Harness `0.1.5-rc.1` (tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`; passagem da perna A→B `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`; início do corredor `0.1.3-alpha.1`) e, para o `legC`, DeepSeek Harness `0.1.6-alpha.2` (tag `dsh-v0.1.7-alpha.2`). Faixa de peers `@deepseek-ai/dsh-skill >=0.1.2-rc.1 <0.2.0 \|\| >=0.1.5-alpha.1 <0.2.0 \|\| >=0.1.6-0 <0.2.0 \|\| >=0.1.7-0 <0.2.0`, `@deepseek-ai/cordis ^4.0.2`, `@deepseek-ai/schemastery ^3.18.2`. |
+| Harness | DeepSeek Harness `dsh-v0.2.1-alpha.1` (linha atual; pins de dev/test `0.2.1-alpha.1`). O índice de corredores está vinculado à evidência dos trechos que mediu: `legAB` = `0.1.3-alpha.1 → 0.1.5-rc.1` (tag `dsh-v0.1.7-alpha.2` = `183f08e9c6dd`; passagem da perna A→B `dsh-v0.1.7-alpha.2` = `5dda764ed3aa`) e `legC` = `0.1.5-rc.2 → 0.1.6-alpha.2` (tag `dsh-v0.1.7-alpha.2`). Faixa de peers `@deepseek-ai/dsh-skill >=0.1.6-0 <0.2.0 \|\| >=0.2.0-0 <0.3.0 \|\| >=0.2.1-0 <0.3.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/schemastery ^3.18.5-alpha.1`. |
 | Node | `^22.19.0 \|\| >=24.0.0` |
 | Plataformas | Onde o Node rodar; o scanner só usa o sistema de arquivos e é neutro em relação à plataforma |
 | Modelo | Modelos somente texto totalmente suportados; a habilidade é um Markdown, sem exigência de ferramentas ou visão |
