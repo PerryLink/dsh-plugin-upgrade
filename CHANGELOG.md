@@ -5,6 +5,15 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.7] - 2026-10-06
+
+### Changed
+
+- **The compatibility row advertised the wrong target line.** All five READMEs still named `0.1.5-rc.1` (with `legC` on `0.1.6-alpha.2`) as the host this package targets, and printed a four-clause peer band, while the dev/test pins had already moved to `0.2.1-alpha.1` and the band had gained its 0.2 clauses. The row now names `dsh-v0.2.1-alpha.1` and the real band.
+- The corridor spans themselves are untouched: `legAB` stays evidence-bound to `0.1.3-alpha.1 -> 0.1.5-rc.1` and `legC` to `0.1.5-rc.2 -> 0.1.6-alpha.2`. A corridor is a closed, measured span 鈥?the row records which host line the package runs on, not what the cards measure.
+- A `|| >=0.2.1-0 <0.3.0` clause is appended to the peer band, as every earlier prerelease tuple gained its own clause.
+
+
 ## [2.0.6] - 2026-10-05
 
 ### Changed
