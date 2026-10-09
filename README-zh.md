@@ -36,6 +36,7 @@
 这个插件是 [DSH 插件家族](https://github.com/PerryLink)的一员（40+ 个，全部 Apache-2.0）。如果你在用，**给个 star** —— 它不会解锁任何功能，但会让下一个人在搜索里更容易找到它。
 
 *English:* part of a 40+ plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
+
 ## What is dsh-plugin-upgrade?
 
 DeepSeek Harness 插件升级技能——一个包、一份走廊索引、两条闭合的走廊：`0.1.3-alpha.1` → `0.1.5-rc.1`（`legAB`）与 `0.1.5-rc.2` → `0.1.6-alpha.2`（`legC`）。
