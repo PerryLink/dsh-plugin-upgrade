@@ -36,6 +36,20 @@
 Este plugin faz parte da [família de plugins DSH](https://github.com/PerryLink) (mais de 40, todos Apache-2.0). Se for útil, **deixe uma estrela**: não desbloqueia nada, mas ajuda a próxima pessoa a encontrá-lo.
 
 *English:* part of a 40+ plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
+## What is dsh-plugin-upgrade?
+
+Habilidade de atualização de plugins para o DeepSeek Harness — um pacote, um índice de corredores, dois corredores fechados: `0.1.3-alpha.1` → `0.1.5-rc.1` (`legAB`) e `0.1.5-rc.2` → `0.1.6-alpha.2` (`legC`).
+
+O scanner se encaminha sozinho: lê a faixa dsh declarada pelo repositório alvo (ou aceita `--span`) e então aplica o catálogo próprio daquele corredor, vinculado a evidências — as 20 costuras do `legAB` (perna A `0.1.3-alpha.1` → `0.1.5-alpha.1` mais perna B `0.1.5-alpha.1` → `0.1.5-rc.1`) ou as 5 costuras do `legC` (`E1`–`E5`). Um único ponto de entrada, para que uma metade de cliente que parou de montar em silêncio nunca seja confundida com «typecheck verde».
+
+![Demonstração de terminal do dsh-plugin-upgrade: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
+
+## Comparison
+
+![Gráfico comparativo medido do dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-evidence.png)
+
+40 family repos swept · README §What you get (leg A, 2026-09-09)
+
 ## Compatibilidade
 
 | Superfície | Estado |
@@ -68,6 +82,10 @@ Medição honesta: a varredura do workspace da perna B encontrou que as metades 
 ## Início rápido
 
 ```sh
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade
+```
+
+```sh
 # 1. instale o bundle no seu perfil
 dsh plugin --profile web add dsh-plugin-upgrade
 
@@ -85,7 +103,7 @@ Depois peça ao agente para usar a habilidade `plugin-upgrade`, ou conduza o cic
 
 ```sh
 dsh plugin --profile web add dsh-plugin-upgrade            # do npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # do código-fonte
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # do código-fonte
 dsh plugin --profile web remove dsh-plugin-upgrade         # desinstalar (reversível)
 ```
 

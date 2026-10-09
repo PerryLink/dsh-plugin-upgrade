@@ -36,6 +36,20 @@
 यह प्लगइन [DSH प्लगइन परिवार](https://github.com/PerryLink) का हिस्सा है (40+ प्लगइन, सभी Apache-2.0)। अगर यह उपयोगी लगे, तो **एक स्टार दें** — इससे कोई सुविधा अनलॉक नहीं होती, पर अगला व्यक्ति इसे खोज में आसानी से पा लेता है।
 
 *English:* part of a 40+ plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
+## What is dsh-plugin-upgrade?
+
+DeepSeek Harness के लिए प्लगइन अपग्रेड स्किल — एक पैकेज, एक कॉरिडोर सूचकांक, दो बंद कॉरिडोर: `0.1.3-alpha.1` → `0.1.5-rc.1` (`legAB`) और `0.1.5-rc.2` → `0.1.6-alpha.2` (`legC`)।
+
+स्कैनर स्वयं मार्ग चुनता है: यह लक्ष्य रिपॉज़िटरी का घोषित dsh बैंड पढ़ता है (या `--span` लेता है), और फिर उसी कॉरिडोर का अपना साक्ष्य-बद्ध कैटलॉग लागू करता है — `legAB` की 20 सीमें (पैर A `0.1.3-alpha.1` → `0.1.5-alpha.1` और पैर B `0.1.5-alpha.1` → `0.1.5-rc.1`) या `legC` की 5 सीमें (`E1`–`E5`)। एक ही प्रवेश बिंदु, ताकि चुपचाप माउंट होना बंद कर चुका क्लाइंट आधा हिस्सा कभी «typecheck हरा है» न समझा जाए।
+
+![dsh-plugin-upgrade का टर्मिनल डेमो: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
+
+## Comparison
+
+![dsh-plugin-upgrade का मापा गया तुलना चार्ट](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-evidence.png)
+
+40 family repos swept · README §What you get (leg A, 2026-09-09)
+
 ## संगतता
 
 | सतह | स्थिति |
@@ -68,6 +82,10 @@
 ## त्वरित शुरुआत
 
 ```sh
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade
+```
+
+```sh
 # 1. बंडल को अपने प्रोफ़ाइल में इंस्टॉल करें
 dsh plugin --profile web add dsh-plugin-upgrade
 
@@ -85,7 +103,7 @@ npx dsh-plugin-upgrade-scan --repo ../my-plugin
 
 ```sh
 dsh plugin --profile web add dsh-plugin-upgrade            # npm से
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # स्रोत से
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # स्रोत से
 dsh plugin --profile web remove dsh-plugin-upgrade         # अनइंस्टॉल (प्रतिवर्ती)
 ```
 

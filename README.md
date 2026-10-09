@@ -38,6 +38,20 @@
 *English:* part of a 40+ plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
 
 
+## What is dsh-plugin-upgrade?
+
+Plugin upgrade skill for DeepSeek Harness — one package, one corridor index, two closed corridors: `0.1.3-alpha.1` → `0.1.5-rc.1` (`legAB`) and `0.1.5-rc.2` → `0.1.6-alpha.2` (`legC`).
+
+The scanner routes itself: it reads the target repository's declared dsh band (or takes `--span`), then applies that corridor's own evidence-bound catalog — `legAB`'s 20 seams (leg A `0.1.3-alpha.1` → `0.1.5-alpha.1` plus leg B `0.1.5-alpha.1` → `0.1.5-rc.1`) or `legC`'s 5 seams (`E1`–`E5`). One entry point, so a client half that stopped mounting silently is never mistaken for "typecheck is green".
+
+![Terminal demo of dsh-plugin-upgrade: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
+
+## Comparison
+
+![Measured comparison chart for dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-evidence.png)
+
+40 family repos swept · README §What you get (leg A, 2026-09-09)
+
 ## Compatibility
 
 | Surface | Status |
@@ -70,6 +84,10 @@ Honest sizing: leg B's workspace sweep found that the family's client halves use
 ## Quick start
 
 ```sh
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade
+```
+
+```sh
 # 1. install the bundle into your profile
 dsh plugin --profile web add dsh-plugin-upgrade
 
@@ -86,7 +104,7 @@ Then ask the agent to use the `plugin-upgrade` skill, or drive the loop yourself
 
 ```sh
 dsh plugin --profile web add dsh-plugin-upgrade            # from npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # from source
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # from source
 dsh plugin --profile web remove dsh-plugin-upgrade         # uninstall (reversible)
 ```
 

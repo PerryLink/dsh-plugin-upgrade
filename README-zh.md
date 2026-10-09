@@ -36,6 +36,20 @@
 这个插件是 [DSH 插件家族](https://github.com/PerryLink)的一员（40+ 个，全部 Apache-2.0）。如果你在用，**给个 star** —— 它不会解锁任何功能，但会让下一个人在搜索里更容易找到它。
 
 *English:* part of a 40+ plugin family for DeepSeek Harness. If it is useful, **a star helps the next person find it** — nothing is gated behind it.
+## What is dsh-plugin-upgrade?
+
+DeepSeek Harness 插件升级技能——一个包、一份走廊索引、两条闭合的走廊：`0.1.3-alpha.1` → `0.1.5-rc.1`（`legAB`）与 `0.1.5-rc.2` → `0.1.6-alpha.2`（`legC`）。
+
+扫描器自行路由：它读取目标仓库声明的 dsh 区间（或接受 `--span`），然后套用那条走廊自己的、证据绑定的目录——`legAB` 的 20 条接缝（leg A `0.1.3-alpha.1` → `0.1.5-alpha.1` 加 leg B `0.1.5-alpha.1` → `0.1.5-rc.1`）或 `legC` 的 5 条接缝（`E1`–`E5`）。只有一个入口，因此「静默停止挂载的 client 半边」永远不会被误当成「typecheck 绿了」。
+
+![dsh-plugin-upgrade 终端演示：dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
+
+## Comparison
+
+![dsh-plugin-upgrade 的实测对比柱状图](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-evidence.png)
+
+40 family repos swept · README §What you get (leg A, 2026-09-09)
+
 ## 兼容性
 
 | 面 | 状态 |
@@ -68,6 +82,10 @@
 ## 快速开始
 
 ```sh
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade
+```
+
+```sh
 # 1. 把 bundle 装进你的 profile
 dsh plugin --profile web add dsh-plugin-upgrade
 
@@ -85,7 +103,7 @@ npx dsh-plugin-upgrade-scan --repo ../my-plugin
 
 ```sh
 dsh plugin --profile web add dsh-plugin-upgrade            # 从 npm
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-upgrade#main"   # 从源码
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # 从源码
 dsh plugin --profile web remove dsh-plugin-upgrade         # 卸载（可逆）
 ```
 
