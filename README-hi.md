@@ -45,6 +45,10 @@ DeepSeek Harness के लिए प्लगइन अपग्रेड स�
 
 ![dsh-plugin-upgrade का टर्मिनल डेमो: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
 
+![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
+
+*वही रन, एनिमेटेड।*
+
 ## Comparison
 
 ![dsh-plugin-upgrade का मापा गया तुलना चार्ट](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-evidence.png)

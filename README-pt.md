@@ -45,6 +45,10 @@ O scanner se encaminha sozinho: lê a faixa dsh declarada pelo repositório alvo
 
 ![Demonstração de terminal do dsh-plugin-upgrade: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
 
+![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
+
+*A mesma execução, animada.*
+
 ## Comparison
 
 ![Gráfico comparativo medido do dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-evidence.png)

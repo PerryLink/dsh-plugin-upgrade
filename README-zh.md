@@ -45,6 +45,10 @@ DeepSeek Harness 插件升级技能——一个包、一份走廊索引、两条
 
 ![dsh-plugin-upgrade 终端演示：dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
 
+![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
+
+*同一次运行，动图版。*
+
 ## Comparison
 
 ![dsh-plugin-upgrade 的实测对比柱状图](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-evidence.png)
