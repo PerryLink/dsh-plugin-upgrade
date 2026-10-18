@@ -43,7 +43,7 @@ Habilidad de actualización de plugins para DeepSeek Harness — un paquete, un 
 
 El escáner se enruta solo: lee la banda dsh declarada por el repositorio destino (o toma `--span`) y luego aplica el catálogo propio de ese corredor, vinculado a evidencia — las 20 costuras de `legAB` (tramo A `0.1.3-alpha.1` → `0.1.5-alpha.1` más tramo B `0.1.5-alpha.1` → `0.1.5-rc.1`) o las 5 costuras de `legC` (`E1`–`E5`). Un solo punto de entrada, para que una mitad de cliente que dejó de montarse en silencio nunca se confunda con «typecheck en verde».
 
-![Demostración de terminal de dsh-plugin-upgrade: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
+![Demostración de terminal de dsh-plugin-upgrade: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-hero.png)
 
 ![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
 

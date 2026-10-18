@@ -15,6 +15,7 @@ import {
   CORRIDORS,
   corridorById,
   declaredBand,
+  beyondCorridors,
   repoFromArgv,
   resolveCorridor,
   spanFromArgv,
@@ -75,4 +76,17 @@ test('the leg C card names every seam its catalog detects', () => {
   for (const id of legC.SEAM_IDS) {
     assert.ok(card.includes(id), `the leg C card does not name ${id}`)
   }
+})
+
+test('a band past every corridor is reported, not silently routed', () => {
+  const makeRepo = range => {
+    const dir = mkdtempSync(path.join(tmpdir(), 'corridor-beyond-'))
+    writeFileSync(path.join(dir, 'package.json'), JSON.stringify({ name: 'sample', engines: { dsh: range } }))
+    return dir
+  }
+  assert.equal(beyondCorridors(makeRepo('0.2.1-rc.2')), true)
+  assert.equal(beyondCorridors(makeRepo('>=0.1.7-0 <0.2.0')), true)
+  assert.equal(beyondCorridors(makeRepo('>=0.1.6-alpha.2 <0.2.0')), false)
+  assert.equal(beyondCorridors(makeRepo('>=0.1.2-rc.1 <0.2.0')), false)
+  assert.equal(beyondCorridors(mkdtempSync(path.join(tmpdir(), 'corridor-empty-'))), false)
 })

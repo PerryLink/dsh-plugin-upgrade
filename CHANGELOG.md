@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.1.1] - 2026-10-18
+
+### Changed
+
+- Add a 1280×720 hero and a 960×540, 4-second terminal GIF rendered from the test run; `screenshots.json` is an object array and `capture.json` records the command.
+
+## [2.1.0] - 2026-10-17
+
+### Added
+
+- **`beyondCorridors` in scanner output.** When the target band is newer than every carried corridor, the CLI prints `warning: declared band is newer than every corridor here (max 0.1.6-alpha.2)` and `--json` carries `"beyondCorridors": true`. The exit code still reflects error-severity seam hits only, so existing CI semantics do not change.
+
+### Changed
+
+- **The skill no longer sells pre-0.1.6 activation.** `whenToUse`, the routing table and the preserved hints now name `0.1.6-alpha.2` as the supported entry line and mark legs A/B as historical reference. This matches `2.0.6`'s measured host floor and removes the self-contradiction.
+- Compatibility: `engines.dsh` -> `>=0.2.1-0 <0.3.0`; devDependencies to `0.2.1-rc.2`; add `@deepseek-ai/dsh-working-directory`; `dshVersions` end at `0.2.1-rc.2`.
+
 All notable changes to this project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),

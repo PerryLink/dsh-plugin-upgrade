@@ -43,7 +43,7 @@ DeepSeek Harness 插件升级技能——一个包、一份走廊索引、两条
 
 扫描器自行路由：它读取目标仓库声明的 dsh 区间（或接受 `--span`），然后套用那条走廊自己的、证据绑定的目录——`legAB` 的 20 条接缝（leg A `0.1.3-alpha.1` → `0.1.5-alpha.1` 加 leg B `0.1.5-alpha.1` → `0.1.5-rc.1`）或 `legC` 的 5 条接缝（`E1`–`E5`）。只有一个入口，因此「静默停止挂载的 client 半边」永远不会被误当成「typecheck 绿了」。
 
-![dsh-plugin-upgrade 终端演示：dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
+![dsh-plugin-upgrade 终端演示：dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-hero.png)
 
 ![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
 

@@ -43,7 +43,7 @@ DeepSeek Harness के लिए प्लगइन अपग्रेड स�
 
 स्कैनर स्वयं मार्ग चुनता है: यह लक्ष्य रिपॉज़िटरी का घोषित dsh बैंड पढ़ता है (या `--span` लेता है), और फिर उसी कॉरिडोर का अपना साक्ष्य-बद्ध कैटलॉग लागू करता है — `legAB` की 20 सीमें (पैर A `0.1.3-alpha.1` → `0.1.5-alpha.1` और पैर B `0.1.5-alpha.1` → `0.1.5-rc.1`) या `legC` की 5 सीमें (`E1`–`E5`)। एक ही प्रवेश बिंदु, ताकि चुपचाप माउंट होना बंद कर चुका क्लाइंट आधा हिस्सा कभी «typecheck हरा है» न समझा जाए।
 
-![dsh-plugin-upgrade का टर्मिनल डेमो: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.png)
+![dsh-plugin-upgrade का टर्मिनल डेमो: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-hero.png)
 
 ![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
 

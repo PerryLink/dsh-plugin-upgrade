@@ -121,8 +121,8 @@ test('the skill directory, the frontmatter name and the bundle default agree', (
     'the superseded "a hop is a new package" rule must not survive in the routing hint')
   // Both legs' frontmatter routing hints survive in the body.
   assert.match(skill, /Routing hints carried over from the two legs' frontmatter/)
-  assert.match(skill, /must support @deepseek-ai\/dsh 0\.1\.5-alpha\.1/)
-  assert.match(skill, /must support the 0\.1\.5-rc\.1 host line/)
+  assert.match(skill, /supported entry line is 0\.1\.6-alpha\.2/)
+  assert.match(skill, /not a pre-0\.1\.6 activation promise/)
   const patch = readFileSync(path.join(root, 'cordis.patch.yml'), 'utf8')
   assert.match(patch, /^\s+- id: dsh-plugin-upgrade$/m)
   assert.match(patch, /skillName: plugin-upgrade/)

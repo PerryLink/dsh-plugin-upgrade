@@ -45,7 +45,7 @@ Consequences accepted by this repository:
   repos) and leg B `dsh-v0.1.5-alpha.1..dsh-v0.1.5-rc.1` (2026-09-10). The harness hop
   `0.1.5-rc.1 → 0.1.5-rc.2` added no plugin-facing seam, which is why that span ends at rc.1
   while the dev/test pin runs on the `0.1.7-rc.2` line and the compat probe matrix covers
-  every published line the peer band admits (`0.1.2-rc.1`, `0.1.5-rc.2`, `0.1.6-alpha.2`,
+  the measured entry line `0.1.6-alpha.2` (pre-0.1.6 lines are outside this package; the peer band no longer promises activation there; historical names: `0.1.2-rc.1`, `0.1.5-rc.2`,
   `0.1.7-alpha.2`, `0.1.7-rc.2`). The `legC` catalog (`E1`–`E5`)
   is evidence-bound to `dsh-v0.1.6-alpha.2` (2026-09-19, §11).
 - **Leg A owns the session-format seams** (`assistant/message.stream`, `S3`;

@@ -1,6 +1,14 @@
-{
-  "screenshots": [
-    "docs/assets/dsh-plugin-upgrade-demo.png",
-    "docs/assets/dsh-plugin-upgrade-evidence.png"
-  ]
-}
+[
+  {
+    "path": "docs/assets/dsh-plugin-upgrade-hero.png",
+    "kind": "hero",
+    "alt": "dsh-plugin-upgrade terminal output",
+    "caption": "Real dsh-plugin-upgrade test run; test suite green."
+  },
+  {
+    "path": "docs/assets/dsh-plugin-upgrade-demo.gif",
+    "kind": "demo",
+    "alt": "Animated dsh-plugin-upgrade terminal session",
+    "caption": "The same run, assembled line by line."
+  }
+]

@@ -37,8 +37,8 @@ test('registers the packaged skill on the real skills service and removes it on 
   assert.equal(def.invocation.modelInvocable, true)
   assert.equal(def.invocation.userInvocable, true)
   assert.match(def.description, /0\.1\.3-alpha\.1 -> 0\.1\.5-rc\.1/)
-  assert.match(def.whenToUse, /0\.1\.5-rc\.1/)
-  assert.match(def.whenToUse, /0\.1\.5-alpha\.1/)
+  assert.match(def.whenToUse, /0\.1\.6-alpha\.2/)
+  assert.match(def.whenToUse, /pre-0\.1\.6 activation promise/)
   // Relative references in the body resolve against the skill's own directory.
   assert.equal(path.basename(def.resourceBase.path), SKILL)
   assert.ok(existsSync(path.join(def.resourceBase.path, CARD)))
