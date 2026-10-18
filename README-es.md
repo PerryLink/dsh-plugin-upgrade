@@ -23,6 +23,11 @@
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
+```sh
+dsh plugin --profile <name> add dsh-plugin-upgrade
+```
+
+
 </div>
 
 ---
@@ -31,6 +36,16 @@
 **📖 Base de conocimiento del ecosistema** — datos medidos, no marketing: [guía de desarrollo · datos de selección · criterios de mantenimiento](https://perrylink.github.io/dsh-plugin-guide/).
 
 <!-- star-cta -->
+## Instalación y desinstalación
+
+```sh
+dsh plugin --profile web add dsh-plugin-upgrade            # desde npm
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # desde el código
+dsh plugin --profile web remove dsh-plugin-upgrade         # desinstalar (reversible)
+```
+
+Instalar el bundle solo registra una habilidad; quitar la fila quita la habilidad. La CLI es un destino `npx` normal y no necesita perfil.
+
 ## ⭐ 如果它帮到了你
 
 Este plugin forma parte de la [familia de plugins DSH](https://github.com/PerryLink) (más de 40, todos Apache-2.0). Si te resulta útil, **dale una estrella**: no desbloquea nada, pero ayuda a que la siguiente persona lo encuentre antes.
@@ -103,16 +118,6 @@ npx dsh-plugin-upgrade-scan --repo ../my-plugin
 
 Luego pide al agente que use la habilidad `plugin-upgrade`, o lleva el bucle tú mismo con la tarjeta que corresponda a tu banda:
 `skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (`legAB` — el tramo A es §1, el tramo B es §2, el índice de costuras fusionado es §3) o `skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md` (`legC`). El escáner elige el corredor por ti; añade `--span legC` cuando la banda declarada sea ambigua.
-
-## Instalación y desinstalación
-
-```sh
-dsh plugin --profile web add dsh-plugin-upgrade            # desde npm
-dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # desde el código
-dsh plugin --profile web remove dsh-plugin-upgrade         # desinstalar (reversible)
-```
-
-Instalar el bundle solo registra una habilidad; quitar la fila quita la habilidad. La CLI es un destino `npx` normal y no necesita perfil.
 
 ## Configuración
 

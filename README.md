@@ -24,6 +24,11 @@
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
+```sh
+dsh plugin --profile <name> add dsh-plugin-upgrade
+```
+
+
 </div>
 
 ---
@@ -31,6 +36,16 @@
 **📖 Ecosystem knowledge base** — measured data, not marketing: [plugin development guide · plugin-selection data · maintenance criteria](https://perrylink.github.io/dsh-plugin-guide/).
 
 <!-- star-cta -->
+## Install & uninstall
+
+```sh
+dsh plugin --profile web add dsh-plugin-upgrade            # from npm
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # from source
+dsh plugin --profile web remove dsh-plugin-upgrade         # uninstall (reversible)
+```
+
+Installing the bundle only registers a skill; removing the row removes the skill. The CLI is a normal `npx` target and needs no profile at all.
+
 ## ⭐ 如果它帮到了你
 
 这个插件是 [DSH 插件家族](https://github.com/PerryLink)的一员（40+ 个，全部 Apache-2.0）。如果你在用，**给个 star** —— 它不会解锁任何功能，但会让下一个人在搜索里更容易找到它。
@@ -103,16 +118,6 @@ npx dsh-plugin-upgrade-scan --repo ../my-plugin
 ```
 
 Then ask the agent to use the `plugin-upgrade` skill, or drive the loop yourself with the card that matches your band: `skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (`legAB` — leg A is §1, leg B is §2, the merged seam index is §3) or `skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md` (`legC`). The scanner picks the corridor for you; add `--span legC` when the declared band is ambiguous.
-
-## Install & uninstall
-
-```sh
-dsh plugin --profile web add dsh-plugin-upgrade            # from npm
-dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # from source
-dsh plugin --profile web remove dsh-plugin-upgrade         # uninstall (reversible)
-```
-
-Installing the bundle only registers a skill; removing the row removes the skill. The CLI is a normal `npx` target and needs no profile at all.
 
 ## Configuration
 

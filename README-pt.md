@@ -23,6 +23,11 @@
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
+```sh
+dsh plugin --profile <name> add dsh-plugin-upgrade
+```
+
+
 </div>
 
 ---
@@ -31,6 +36,16 @@
 **📖 Base de conhecimento do ecossistema** — dados medidos, não marketing: [guia de desenvolvimento · dados de seleção · critérios de manutenção](https://perrylink.github.io/dsh-plugin-guide/).
 
 <!-- star-cta -->
+## Instalação e desinstalação
+
+```sh
+dsh plugin --profile web add dsh-plugin-upgrade            # do npm
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # do código-fonte
+dsh plugin --profile web remove dsh-plugin-upgrade         # desinstalar (reversível)
+```
+
+Instalar o bundle apenas registra uma habilidade; remover a linha remove a habilidade. A CLI é um alvo `npx` normal e não precisa de perfil algum.
+
 ## ⭐ 如果它帮到了你
 
 Este plugin faz parte da [família de plugins DSH](https://github.com/PerryLink) (mais de 40, todos Apache-2.0). Se for útil, **deixe uma estrela**: não desbloqueia nada, mas ajuda a próxima pessoa a encontrá-lo.
@@ -103,16 +118,6 @@ npx dsh-plugin-upgrade-scan --repo ../my-plugin
 
 Depois peça ao agente para usar a habilidade `plugin-upgrade`, ou conduza o ciclo você mesmo com o cartão que corresponde à sua faixa:
 `skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (`legAB` — a perna A é a §1, a perna B é a §2, o índice de costuras fundido é a §3) ou `skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md` (`legC`). O scanner escolhe o corredor por você; acrescente `--span legC` quando a faixa declarada for ambígua.
-
-## Instalação e desinstalação
-
-```sh
-dsh plugin --profile web add dsh-plugin-upgrade            # do npm
-dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # do código-fonte
-dsh plugin --profile web remove dsh-plugin-upgrade         # desinstalar (reversível)
-```
-
-Instalar o bundle apenas registra uma habilidade; remover a linha remove a habilidade. A CLI é um alvo `npx` normal e não precisa de perfil algum.
 
 ## Configuração
 

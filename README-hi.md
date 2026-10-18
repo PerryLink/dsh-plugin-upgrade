@@ -23,6 +23,11 @@
 
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
+```sh
+dsh plugin --profile <name> add dsh-plugin-upgrade
+```
+
+
 </div>
 
 ---
@@ -31,6 +36,16 @@
 **📖 इकोसिस्टम नॉलेज बेस** — मापे गए आँकड़े, मार्केटिंग नहीं: [डेवलपमेंट गाइड · चयन डेटा · रखरखाव मानदंड](https://perrylink.github.io/dsh-plugin-guide/)।
 
 <!-- star-cta -->
+## इंस्टॉल और अनइंस्टॉल
+
+```sh
+dsh plugin --profile web add dsh-plugin-upgrade            # npm से
+dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # स्रोत से
+dsh plugin --profile web remove dsh-plugin-upgrade         # अनइंस्टॉल (प्रतिवर्ती)
+```
+
+बंडल इंस्टॉल करने से केवल एक स्किल पंजीकृत होती है; पंक्ति हटाने से स्किल हट जाती है। CLI एक सामान्य `npx` लक्ष्य है और उसे किसी प्रोफ़ाइल की आवश्यकता नहीं।
+
 ## ⭐ 如果它帮到了你
 
 यह प्लगइन [DSH प्लगइन परिवार](https://github.com/PerryLink) का हिस्सा है (40+ प्लगइन, सभी Apache-2.0)। अगर यह उपयोगी लगे, तो **एक स्टार दें** — इससे कोई सुविधा अनलॉक नहीं होती, पर अगला व्यक्ति इसे खोज में आसानी से पा लेता है।
@@ -103,16 +118,6 @@ npx dsh-plugin-upgrade-scan --repo ../my-plugin
 
 फिर एजेंट से `plugin-upgrade` स्किल इस्तेमाल करने को कहें, या अपने बैंड से मेल खाते कार्ड के साथ स्वयं चक्र चलाएँ:
 `skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (`legAB` — पैर A §1 है, पैर B §2 है, विलयित सीम सूचकांक §3 है) या `skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md` (`legC`)। स्कैनर आपके लिए कॉरिडोर चुन लेता है; जब घोषित बैंड अस्पष्ट हो तो `--span legC` जोड़ें।
-
-## इंस्टॉल और अनइंस्टॉल
-
-```sh
-dsh plugin --profile web add dsh-plugin-upgrade            # npm से
-dsh plugin --profile web add github:PerryLink/dsh-plugin-upgrade   # स्रोत से
-dsh plugin --profile web remove dsh-plugin-upgrade         # अनइंस्टॉल (प्रतिवर्ती)
-```
-
-बंडल इंस्टॉल करने से केवल एक स्किल पंजीकृत होती है; पंक्ति हटाने से स्किल हट जाती है। CLI एक सामान्य `npx` लक्ष्य है और उसे किसी प्रोफ़ाइल की आवश्यकता नहीं।
 
 ## कॉन्फ़िगरेशन
 
