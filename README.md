@@ -345,6 +345,8 @@ This project is one of the **87 actively maintained** DeepSeek Harness plugins f
 
 </details>
 
-</details>## License
+</details>
+
+## License
 
 Apache-2.0 — see [LICENSE](LICENSE). Install-time dependencies and their licenses are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); nothing is bundled.

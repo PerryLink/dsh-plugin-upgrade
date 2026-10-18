@@ -345,6 +345,8 @@ npm pack
 
 </details>
 
-</details>## लाइसेंस
+</details>
+
+## लाइसेंस
 
 Apache-2.0 — देखें [LICENSE](LICENSE)। इंस्टॉल-समय निर्भरताएँ और उनके लाइसेंस [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) में सूचीबद्ध हैं; कुछ भी बंडल नहीं किया गया।

@@ -345,6 +345,8 @@ npm pack
 
 </details>
 
-</details>## 许可证
+</details>
+
+## 许可证
 
 Apache-2.0 —— 见 [LICENSE](LICENSE)。安装期依赖及其许可证列在 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)；本包不打包任何第三方代码。
