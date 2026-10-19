@@ -58,9 +58,10 @@ DeepSeek Harness के लिए प्लगइन अपग्रेड स�
 
 स्कैनर स्वयं मार्ग चुनता है: यह लक्ष्य रिपॉज़िटरी का घोषित dsh बैंड पढ़ता है (या `--span` लेता है), और फिर उसी कॉरिडोर का अपना साक्ष्य-बद्ध कैटलॉग लागू करता है — `legAB` की 20 सीमें (पैर A `0.1.3-alpha.1` → `0.1.5-alpha.1` और पैर B `0.1.5-alpha.1` → `0.1.5-rc.1`) या `legC` की 5 सीमें (`E1`–`E5`)। एक ही प्रवेश बिंदु, ताकि चुपचाप माउंट होना बंद कर चुका क्लाइंट आधा हिस्सा कभी «typecheck हरा है» न समझा जाए।
 
-![dsh-plugin-upgrade का टर्मिनल डेमो: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-hero.png)
+![dsh-plugin-upgrade कार्यप्रवाह आरेख: कॉल → प्लगइन → परिणाम।](docs/assets/dsh-plugin-upgrade-flow.svg)
 
-![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
+*कार्यप्रवाह: कॉल → प्लगइन → परिणाम। नीचे के उदाहरण वास्तविक कमांड सतह का उपयोग करते हैं।*
+
 
 *वही रन, एनिमेटेड।*
 
@@ -118,6 +119,18 @@ npx dsh-plugin-upgrade-scan --repo ../my-plugin
 
 फिर एजेंट से `plugin-upgrade` स्किल इस्तेमाल करने को कहें, या अपने बैंड से मेल खाते कार्ड के साथ स्वयं चक्र चलाएँ:
 `skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (`legAB` — पैर A §1 है, पैर B §2 है, विलयित सीम सूचकांक §3 है) या `skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md` (`legC`)। स्कैनर आपके लिए कॉरिडोर चुन लेता है; जब घोषित बैंड अस्पष्ट हो तो `--span legC` जोड़ें।
+
+### उदाहरण
+
+ये वास्तविक प्रवेश बिंदु हैं; इंस्टॉल के बाद एक चलाएँ।
+
+#### विस्तृत उदाहरण
+
+- `dsh-plugin-upgrade-scan`
+
+#### संक्षिप्त उदाहरण
+
+- `plugin-upgrade`
 
 ## कॉन्फ़िगरेशन
 

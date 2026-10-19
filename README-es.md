@@ -58,9 +58,10 @@ Habilidad de actualización de plugins para DeepSeek Harness — un paquete, un 
 
 El escáner se enruta solo: lee la banda dsh declarada por el repositorio destino (o toma `--span`) y luego aplica el catálogo propio de ese corredor, vinculado a evidencia — las 20 costuras de `legAB` (tramo A `0.1.3-alpha.1` → `0.1.5-alpha.1` más tramo B `0.1.5-alpha.1` → `0.1.5-rc.1`) o las 5 costuras de `legC` (`E1`–`E5`). Un solo punto de entrada, para que una mitad de cliente que dejó de montarse en silencio nunca se confunda con «typecheck en verde».
 
-![Demostración de terminal de dsh-plugin-upgrade: dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-hero.png)
+![Diagrama de flujo de dsh-plugin-upgrade: llamada → plugin → resultado.](docs/assets/dsh-plugin-upgrade-flow.svg)
 
-![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
+*Resumen del flujo: llamada → plugin → resultado. Los ejemplos siguientes usan la superficie de comandos real.*
+
 
 *La misma ejecución, animada.*
 
@@ -118,6 +119,18 @@ npx dsh-plugin-upgrade-scan --repo ../my-plugin
 
 Luego pide al agente que use la habilidad `plugin-upgrade`, o lleva el bucle tú mismo con la tarjeta que corresponda a tu banda:
 `skills/plugin-upgrade/references/v0.1.3-alpha.1-to-v0.1.5-rc.1.md` (`legAB` — el tramo A es §1, el tramo B es §2, el índice de costuras fusionado es §3) o `skills/plugin-upgrade/references/v0.1.5-rc.2-to-v0.1.6-alpha.2.md` (`legC`). El escáner elige el corredor por ti; añade `--span legC` cuando la banda declarada sea ambigua.
+
+### Ejemplos
+
+Son los puntos de entrada reales; instala y llama a uno.
+
+#### Ejemplo detallado
+
+- `dsh-plugin-upgrade-scan`
+
+#### Ejemplos breves
+
+- `plugin-upgrade`
 
 ## Configuración
 

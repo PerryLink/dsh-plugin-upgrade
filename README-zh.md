@@ -48,9 +48,10 @@ DeepSeek Harness 插件升级技能——一个包、一份走廊索引、两条
 
 扫描器自行路由：它读取目标仓库声明的 dsh 区间（或接受 `--span`），然后套用那条走廊自己的、证据绑定的目录——`legAB` 的 20 条接缝（leg A `0.1.3-alpha.1` → `0.1.5-alpha.1` 加 leg B `0.1.5-alpha.1` → `0.1.5-rc.1`）或 `legC` 的 5 条接缝（`E1`–`E5`）。只有一个入口，因此「静默停止挂载的 client 半边」永远不会被误当成「typecheck 绿了」。
 
-![dsh-plugin-upgrade 终端演示：dsh-plugin-upgrade — corridor scan of a sibling plugin repo](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-hero.png)
+![dsh-plugin-upgrade 工作流图：调用 → 插件 → 结果。](docs/assets/dsh-plugin-upgrade-flow.svg)
 
-![Animated terminal demo of dsh-plugin-upgrade](https://raw.githubusercontent.com/PerryLink/dsh-plugin-upgrade/main/docs/assets/dsh-plugin-upgrade-demo.gif)
+*工作流概览：调用 → 插件 → 结果。下面的示例使用实际命令面。*
+
 
 *同一次运行，动图版。*
 
@@ -118,6 +119,18 @@ dsh plugin --profile web remove dsh-plugin-upgrade         # 卸载（可逆）
 ```
 
 安装 bundle 只注册一个技能；移除插件行即移除技能。CLI 是普通 `npx` 目标，完全不需要 profile。
+
+### 示例
+
+以下为插件真实入口；安装后调用一个即可。
+
+#### 详细示例
+
+- `dsh-plugin-upgrade-scan`
+
+#### 简短示例
+
+- `plugin-upgrade`
 
 ## 配置
 
