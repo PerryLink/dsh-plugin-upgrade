@@ -147,6 +147,22 @@ H3 [info] card-only: the rc.1 additive capabilities are listed on the version ca
 
 *स्रोत `README.md:159-173 (Surfaces/CLI); test/scan.test.mjs:158; fixtures/leg-a-bad-repo/src/index.ts:30`*
 
+#### विफलता शाखा
+
+**इनपुट**
+
+~~~text
+node scripts/scan-0.1.5.mjs --repo /nonexistent-upgrade-repo
+~~~
+
+**आउटपुट**
+
+~~~text
+repo not found: /nonexistent-upgrade-repo
+~~~
+
+*स्रोत `plugins/dsh-plugin-upgrade/lib/scan.mjs:510-514,523; plugins/dsh-plugin-upgrade/README.md:181-192`*
+
 #### संक्षिप्त उदाहरण
 
 - `plugin-upgrade`
