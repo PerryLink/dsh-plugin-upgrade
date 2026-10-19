@@ -126,7 +126,26 @@ dsh plugin --profile web remove dsh-plugin-upgrade         # 卸载（可逆）
 
 #### 详细示例
 
-- `dsh-plugin-upgrade-scan`
+**命令**
+
+~~~sh
+dsh-plugin-upgrade-scan --repo fixtures/leg-a-bad-repo --seams S3
+~~~
+
+**输出**
+
+~~~text
+# scan-0.1.5 · /mnt/d/Projects/dsh/plugins/dsh-plugin-upgrade/fixtures/leg-a-bad-repo
+files scanned: 3 · hits: 1
+
+## S3 [error] assistant/message 缺 stream（V3 必填） — 1 hit(s)
+   action: 写入会话日志的 assistant/message 必须带 `stream: []`（或真实分片）；缺了导入成功但会话不可续聊（Session.fromRestore 抛 invalid settlement fields）。
+   fixtures/leg-a-bad-repo/src/index.ts:30  type: 'assistant/message',
+
+H3 [info] card-only: the rc.1 additive capabilities are listed on the version card and are never auto-detected.
+~~~
+
+*来源 `README.md:159-173 (Surfaces/CLI); test/scan.test.mjs:158; fixtures/leg-a-bad-repo/src/index.ts:30`*
 
 #### 简短示例
 
